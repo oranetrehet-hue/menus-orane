@@ -1,0 +1,14 @@
+{
+  "name": "Menus Orane",
+  "short_name": "Menus",
+  "description": "Menus de la semaine et liste de courses",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#faf7f2",
+  "theme_color": "#2d2a26",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

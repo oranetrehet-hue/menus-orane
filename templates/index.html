@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% set subpage = false %}
+{% block title %}Semaine en cours – Menus{% endblock %}
+
+{% block topright %}
+  {% if archives %}<a href="#archives" class="topright-link">Archives</a>{% endif %}
+{% endblock %}
+
+{% block content %}
+  {% if not current %}
+    <section class="card">
+      <p class="muted">Aucun menu généré pour le moment.</p>
+    </section>
+  {% else %}
+    <section class="hero">
+      <p class="eyebrow">Semaine {{ current.week }} · {{ current.label }}</p>
+      <h1>Cette semaine</h1>
+    </section>
+
+    {% if current.context %}
+    <section class="card context">
+      {{ current.context|safe }}
+    </section>
+    {% endif %}
+
+    {% if current.recipes %}
+    <section class="section">
+      <h2 class="section-title">Recettes</h2>
+      <div class="recipes">
+        {% for r in current.recipes %}
+        <details class="recipe-card">
+          <summary>
+            <span class="recipe-title">{{ r.title_html|safe }}</span>
+            <span class="chev">▾</span>
+          </summary>
+          <div class="recipe-body">{{ r.html|safe }}</div>
+        </details>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+
+    {% if current.shopping %}
+    <section class="section" id="courses">
+      <div class="section-head">
+        <h2 class="section-title">Liste de courses</h2>
+        <button class="reset-btn" data-reset-key="shopping-{{ current.slug }}">Tout décocher</button>
+      </div>
+      <div class="shopping" data-storage-key="shopping-{{ current.slug }}">
+        {% for sec in current.shopping %}
+        <div class="shop-group">
+          <h3 class="shop-group-title">{{ sec.title }}</h3>
+          <ul class="shop-list">
+            {% for item in sec.entries %}
+              {% if item.is_note %}
+                <li class="shop-note">{{ item.text|safe }}</li>
+              {% else %}
+                <li class="shop-item">
+                  <label>
+                    <input type="checkbox" data-item="{{ loop.index0 }}-{{ loop.index }}-{{ sec.title }}">
+                    <span>{{ item.text|safe }}</span>
+                  </label>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}
+  {% endif %}
+
+  {% if archives %}
+  <section class="section" id="archives">
+    <h2 class="section-title">Archives récentes</h2>
+    <ul class="archive-list">
+      {% for m in archives %}
+      <li><a href="menus/{{ m.slug }}.html">Semaine {{ m.week }} · {{ m.label }}</a></li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if favoris_html %}
+  <section class="section" id="favoris">
+    <h2 class="section-title">Favoris</h2>
+    <div class="card">{{ favoris_html|safe }}</div>
+  </section>
+  {% endif %}
+{% endblock %}

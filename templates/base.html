@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#2d2a26">
+  <title>{% block title %}Menus{% endblock %}</title>
+  <link rel="manifest" href="{{ '../' if subpage else '' }}manifest.json">
+  <link rel="apple-touch-icon" href="{{ '../' if subpage else '' }}icon-192.png">
+  <link rel="icon" href="{{ '../' if subpage else '' }}favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ '../' if subpage else '' }}styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a href="{{ '../' if subpage else '' }}index.html" class="home-link">🍽️ Menus</a>
+    {% block topright %}{% endblock %}
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="footer">
+    <small>Généré le {{ generated_at }}</small>
+  </footer>
+
+  <script src="{{ '../' if subpage else '' }}app.js"></script>
+</body>
+</html>

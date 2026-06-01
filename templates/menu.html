@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% set subpage = true %}
+{% block title %}Semaine {{ menu.week }} – Menus{% endblock %}
+
+{% block topright %}
+  <a href="../index.html" class="topright-link">← Cette semaine</a>
+{% endblock %}
+
+{% block content %}
+  <section class="hero">
+    <p class="eyebrow">Semaine {{ menu.week }} · {{ menu.label }}</p>
+    <h1>Archive</h1>
+  </section>
+
+  {% if menu.context %}
+  <section class="card context">
+    {{ menu.context|safe }}
+  </section>
+  {% endif %}
+
+  {% if menu.recipes %}
+  <section class="section">
+    <h2 class="section-title">Recettes</h2>
+    <div class="recipes">
+      {% for r in menu.recipes %}
+      <details class="recipe-card">
+        <summary>
+          <span class="recipe-title">{{ r.title_html|safe }}</span>
+          <span class="chev">▾</span>
+        </summary>
+        <div class="recipe-body">{{ r.html|safe }}</div>
+      </details>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  {% if menu.shopping %}
+  <section class="section">
+    <div class="section-head">
+      <h2 class="section-title">Liste de courses</h2>
+      <button class="reset-btn" data-reset-key="shopping-{{ menu.slug }}">Tout décocher</button>
+    </div>
+    <div class="shopping" data-storage-key="shopping-{{ menu.slug }}">
+      {% for sec in menu.shopping %}
+      <div class="shop-group">
+        <h3 class="shop-group-title">{{ sec.title }}</h3>
+        <ul class="shop-list">
+          {% for item in sec.entries %}
+            {% if item.is_note %}
+              <li class="shop-note">{{ item.text|safe }}</li>
+            {% else %}
+              <li class="shop-item">
+                <label>
+                  <input type="checkbox" data-item="{{ loop.index0 }}-{{ loop.index }}-{{ sec.title }}">
+                  <span>{{ item.text|safe }}</span>
+                </label>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+{% endblock %}
