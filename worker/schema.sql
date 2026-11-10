@@ -7,7 +7,16 @@ CREATE TABLE IF NOT EXISTS achats (
   cree_le TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
--- Retours sur les recettes : ♡ (favori) ou remarque libre. Claude les marque traités une fois pris en compte.
+-- Cases cochées de la liste de courses, communes aux deux téléphones (par = O ou L).
+CREATE TABLE IF NOT EXISTS coches (
+  semaine TEXT NOT NULL,
+  item TEXT NOT NULL,
+  par TEXT,
+  maj TEXT NOT NULL DEFAULT (datetime('now')),
+  PRIMARY KEY (semaine, item)
+);
+
+-- Retours sur les recettes : ♡ (favori), « à refaire bientôt » (proposer) ou remarque libre. Claude les marque traités une fois pris en compte.
 CREATE TABLE IF NOT EXISTS retours (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   semaine TEXT,

@@ -51,7 +51,7 @@ def lire() -> None:
         print("  (vide)")
     print("\nRetours sur les recettes (pas encore pris en compte) :")
     for r in d["retours"]:
-        quoi = "♡ adoré" if r["type"] == "favori" else f"remarque : {r['texte']}"
+        quoi = {"favori": "♡ adoré", "proposer": "à refaire bientôt"}.get(r["type"], f"remarque : {r['texte']}")
         print(f"  [{r['id']}] {r['semaine'] or '?'} · {r['recette']} → {quoi}  ({r['cree_le']} UTC)")
     if not d["retours"]:
         print("  (aucun)")

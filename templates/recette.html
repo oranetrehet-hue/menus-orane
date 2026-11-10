@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}{{ r.nom }} – Menus{% endblock %}
+
+{% block content %}
+<div class="page-recette" data-retour data-recette="{{ r.nom }}" data-semaine="{{ menu.slug }}">
+  <div class="barre-haut">
+    <a href="{{ root }}index.html" class="bouton-rond" aria-label="Retour à la semaine">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>
+    </a>
+    <button type="button" class="bouton-rond coeur" data-retour-fav aria-pressed="false" aria-label="On a adoré">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg>
+    </button>
+  </div>
+
+  {% if r.photo %}
+  <img class="photo-recette" src="{{ r.photo }}" alt="" referrerpolicy="no-referrer">
+  {% else %}
+  <div class="photo-recette photo-vide">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.6"></circle><path d="M21 16l-5-5-8 8"></path></svg>Photo du plat
+  </div>
+  {% endif %}
+
+  <div class="recette-tete">
+    {% if r.source_url %}
+    <a class="source" href="{{ r.source_url }}" target="_blank" rel="noopener">{{ r.source_label }}
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"></path></svg></a>
+    {% else %}
+    <span class="source">{{ r.source_label }}</span>
+    {% endif %}
+    <h1 class="titre-recette">{{ r.nom }}</h1>
+    <div class="puces">
+      {% if r.temps %}<span class="puce puce-contour">{{ r.temps }}</span>{% endif %}
+      <span class="puce puce-contour">4 portions</span>
+      {% if r.jours_txt %}<span class="puce puce-accent">{{ r.jours_txt }}</span>{% endif %}
+    </div>
+  </div>
+
+  <div class="segments" role="tablist" aria-label="Recette">
+    <button type="button" role="tab" id="onglet-ingredients" aria-selected="true" aria-controls="panneau-ingredients" data-onglet="ingredients">Ingrédients</button>
+    <button type="button" role="tab" id="onglet-etapes" aria-selected="false" aria-controls="panneau-etapes" data-onglet="etapes">Étapes</button>
+  </div>
+
+  <section class="carte liste" id="panneau-ingredients" role="tabpanel" aria-labelledby="onglet-ingredients" data-panneau="ingredients">
+    {% for it in r.ingredients %}
+      {% if it.is_note %}
+      <p class="note">{{ it.text|safe }}</p>
+      {% else %}
+      <label class="ligne-case"><input type="checkbox" data-ingredient="{{ r.page }}-{{ loop.index }}"><span>{{ it.text|safe }}</span></label>
+      {% endif %}
+    {% else %}
+      <p class="note">Tout est dans les étapes.</p>
+    {% endfor %}
+  </section>
+
+  <section class="carte etapes" id="panneau-etapes" role="tabpanel" aria-labelledby="onglet-etapes" data-panneau="etapes" hidden>
+    <ol>
+      {% for e in r.etapes %}<li>{{ e }}</li>{% endfor %}
+    </ol>
+  </section>
+
+  {% if r.part_ludo %}
+  <div class="astuce">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M5 20c1-4 4-6 7-6s6 2 7 6"></path></svg>
+    <div class="astuce-textes"><span class="astuce-quand">Part Ludo</span><span>{{ r.part_ludo }}</span></div>
+  </div>
+  {% endif %}
+
+  {% if r.astuce %}
+  <div class="astuce">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"></path></svg>
+    <div class="astuce-textes"><span class="astuce-quand">À anticiper{% if r.astuce_quand %} · {{ r.astuce_quand }}{% endif %}</span><span>{{ r.astuce }}</span></div>
+  </div>
+  {% endif %}
+
+  <form class="retour-form" data-retour-form hidden>
+    <label for="remarque">Ta remarque sur cette recette</label>
+    <textarea id="remarque" maxlength="1000" rows="3" placeholder="Ex. : pas assez de riz, trop épicé pour Ludo…"></textarea>
+    <button type="submit" class="bouton-principal">Envoyer à Claude</button>
+  </form>
+  <p class="retour-msg" data-retour-msg role="status"></p>
+
+  <div class="barre-actions">
+    <button type="button" class="bouton-secondaire" data-retour-ouvrir>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"></path></svg>Une remarque</button>
+    <button type="button" class="bouton-sombre" data-mode-cuisine aria-pressed="false">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>Mode cuisine</button>
+  </div>
+</div>
+{% endblock %}
+
+{% block bas %}{% endblock %}

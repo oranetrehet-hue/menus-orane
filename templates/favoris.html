@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Favoris – Menus{% endblock %}
+
+{% block content %}
+<header class="tete">
+  <div class="tete-textes">
+    <p class="surtitre">Vos pépites · {{ favoris|length }} recette{{ "s" if favoris|length > 1 }}</p>
+    <h1 class="titre-ecran">Favoris</h1>
+  </div>
+</header>
+
+{% if tags %}
+<div class="filtres" data-filtres>
+  <button type="button" aria-pressed="true" data-filtre="">Tout</button>
+  {% for t in tags %}<button type="button" aria-pressed="false" data-filtre="{{ t }}">{{ t|capitalize }}</button>{% endfor %}
+</div>
+{% endif %}
+
+<div class="liste-favoris">
+  {% for f in favoris %}
+  <article class="carte favori" data-tags="{{ f.tags|join('|') }}" data-retour data-recette="{{ f.nom }}" data-semaine="favoris">
+    {% if f.photo %}
+    <img class="vignette" src="{{ f.photo }}" alt="" loading="lazy" referrerpolicy="no-referrer">
+    {% else %}
+    <div class="vignette photo-vide"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.6"></circle><path d="M21 16l-5-5-8 8"></path></svg></div>
+    {% endif %}
+    <div class="favori-textes">
+      <div class="favori-ligne1">
+        <span class="puce-source">{{ f.source_label }}</span>
+        {% if f.temps %}<span class="petit discret">{{ f.temps }}</span>{% endif %}
+      </div>
+      {% if f.source_url %}
+      <a class="favori-nom" href="{{ f.source_url }}" target="_blank" rel="noopener">{{ f.nom }}</a>
+      {% else %}
+      <span class="favori-nom">{{ f.nom }}</span>
+      {% endif %}
+      {% if f.date_txt %}<span class="petit discret">Dernière fois : {{ f.date_txt }}</span>{% endif %}
+      <button type="button" class="lien-action" data-proposer>À refaire bientôt</button>
+      <p class="retour-msg" data-retour-msg role="status"></p>
+    </div>
+  </article>
+  {% else %}
+  <p class="vide">Pas encore de favori : touche ♡ sur une recette que vous avez adorée.</p>
+  {% endfor %}
+</div>
+{% endblock %}

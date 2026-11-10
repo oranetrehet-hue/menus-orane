@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Semaine {{ menu.week }} – Menus{% endblock %}
+
+{% block content %}
+<header class="tete">
+  <div class="tete-textes">
+    <p class="surtitre"><a href="{{ root }}semaines.html">Semaines précédentes</a></p>
+    <h1 class="titre-ecran">Semaine {{ menu.week }}</h1>
+    <p class="discret petit">{{ menu.label }}</p>
+  </div>
+</header>
+
+<div class="liste-favoris">
+  {% for r in menu.recettes %}
+  <a class="carte favori" href="{{ root }}recettes/{{ r.page }}">
+    {% if r.photo %}
+    <img class="vignette" src="{{ r.photo }}" alt="" loading="lazy" referrerpolicy="no-referrer">
+    {% else %}
+    <div class="vignette photo-vide"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.6"></circle><path d="M21 16l-5-5-8 8"></path></svg></div>
+    {% endif %}
+    <div class="favori-textes">
+      <div class="favori-ligne1">
+        <span class="puce-source">{{ r.source_label }}</span>
+        {% if r.temps %}<span class="petit discret">{{ r.temps }}</span>{% endif %}
+      </div>
+      <span class="favori-nom">{{ r.nom }}</span>
+      {% if r.jours_txt %}<span class="petit discret">{{ r.jours_txt }}</span>{% endif %}
+    </div>
+  </a>
+  {% endfor %}
+</div>
+{% endblock %}

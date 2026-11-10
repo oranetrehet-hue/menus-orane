@@ -1,12 +1,14 @@
-/* boite.js — la boîte partagée de l'appli (service Cloudflare « menus-orane »).
-   - « À penser pour le prochain drive » : une liste commune aux deux téléphones.
-   - Sur chaque recette : « ♡ On a adoré » et « Une remarque », qui remontent à Claude.
-   Le code de la maison se tape une fois par téléphone (gardé dans localStorage).
-*/
+/* boite.js — tout ce qui est partagé entre les téléphones d'Orane et de Ludo,
+   via le service Cloudflare « menus-orane » :
+   - la liste de courses cochée en commun (avec l'initiale de qui a coché) ;
+   - « À penser pour le prochain drive » ;
+   - les retours sur les recettes : ♡ adorée, remarque, « à refaire bientôt ».
+   Le code de la maison et « je suis Orane / Ludo » se donnent une fois par téléphone. */
 
 (function () {
   var API = "https://menus-orane.lirelivre.workers.dev";
   var CLE_CODE = "menus-code";
+  var CLE_QUI = "menus-qui";
 
   function lire(cle) {
     try { return localStorage.getItem(cle) || ""; } catch (_e) { return ""; }
@@ -34,14 +36,25 @@
     });
   }
 
-  // Titre lisible : sans le numéro, les précisions en italique ni le « ⭐ favori ».
-  function nettoyer(titre) {
-    return (titre || "")
-      .replace(/^\s*\d+\.\s*/, "")
-      .replace(/\*\([^)]*\)\*/g, "")
-      .replace(/⭐.*$/, "")
-      .replace(/\s+/g, " ")
-      .trim();
+  var SANS_CODE = "Entre d'abord le code de la maison (onglet Courses, en bas).";
+
+  /* ---------- Code de la maison ---------- */
+  var codeForm = document.querySelector("[data-code-form]");
+  var surCode = [];  // ce qu'il faut recharger une fois le code donné
+  if (codeForm) {
+    codeForm.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var code = codeForm.querySelector("#boite-code").value.trim().toLowerCase();
+      var qui = codeForm.querySelector('input[name="qui"]:checked');
+      if (!code) return;
+      ecrire(CLE_CODE, code);
+      if (qui) ecrire(CLE_QUI, qui.value);
+      codeForm.hidden = true;
+      surCode.forEach(function (f) { f(); });
+    });
+  }
+  function demanderCode() {
+    if (codeForm) codeForm.hidden = false;
   }
 
   /* ---------- À penser pour le prochain drive ---------- */
@@ -49,7 +62,6 @@
   if (boite) {
     var liste = boite.querySelector("[data-boite-liste]");
     var ajout = boite.querySelector("[data-boite-ajout]");
-    var codeForm = boite.querySelector("[data-boite-code]");
     var msg = boite.querySelector("[data-boite-msg]");
 
     var afficher = function (achats) {
@@ -73,27 +85,27 @@
       });
       msg.textContent = achats.length
         ? "Claude les ajoutera au prochain drive."
-        : "Rien pour l'instant. Ajoute ce qui manque (essuie-tout, piles…) : Claude le mettra dans le prochain drive.";
-    };
-
-    var demanderCode = function (texte) {
-      ajout.hidden = true;
-      liste.innerHTML = "";
-      codeForm.hidden = false;
-      msg.textContent = texte || "";
+        : "Rien pour l'instant. Ajoute ce qui manque : Claude le mettra dans le prochain drive.";
     };
 
     var erreur = function (e) {
-      if (e && e.code === 401) demanderCode("Code incorrect, réessaie.");
-      else msg.textContent = "Pas de connexion pour l'instant, réessaie dans un moment.";
+      if (e && e.code === 401) {
+        ajout.hidden = true;
+        liste.innerHTML = "";
+        msg.textContent = "Code incorrect, réessaie.";
+        demanderCode();
+      } else {
+        msg.textContent = "Pas de connexion pour l'instant, réessaie dans un moment.";
+      }
     };
 
     var charger = function () {
       if (!lire(CLE_CODE)) {
+        ajout.hidden = true;
+        msg.textContent = "";
         demanderCode();
         return;
       }
-      codeForm.hidden = true;
       ajout.hidden = false;
       appel("GET", "/api/tout").then(function (d) { afficher(d.achats); }).catch(erreur);
     };
@@ -110,77 +122,175 @@
       });
     });
 
-    codeForm.addEventListener("submit", function (ev) {
-      ev.preventDefault();
-      var code = codeForm.querySelector("input").value.trim().toLowerCase();
-      if (!code) return;
-      ecrire(CLE_CODE, code);
-      charger();
-    });
-
+    surCode.push(charger);
     document.addEventListener("visibilitychange", function () {
       if (!document.hidden && lire(CLE_CODE)) charger();
     });
-
     charger();
+  }
+
+  /* ---------- Liste de courses cochée en commun ---------- */
+  var courses = document.querySelector("[data-courses]");
+  if (courses) {
+    var semaine = courses.getAttribute("data-semaine");
+    var cases = Array.prototype.slice.call(document.querySelectorAll("input[data-cle]"));
+    var progression = courses.querySelector("[data-progression]");
+    var jauge = courses.querySelector("[data-jauge]");
+    var synchro = courses.querySelector("[data-synchro]");
+    var coursesMsg = courses.querySelector("[data-courses-msg]");
+    var cleLocale = "coches:" + semaine;
+    var local = {};
+    try { local = JSON.parse(lire(cleLocale) || "{}"); } catch (_e) { local = {}; }
+
+    var marquer = function (c, par) {
+      c.checked = !!par;
+      var pastille = c.parentNode.querySelector("[data-qui]");
+      if (!pastille) return;
+      if (par === "O" || par === "L") {
+        pastille.textContent = par;
+        pastille.className = "qui qui-" + par.toLowerCase();
+        pastille.setAttribute("aria-label", par === "O" ? "rangé par Orane" : "rangé par Ludo");
+        pastille.hidden = false;
+      } else {
+        pastille.hidden = true;
+      }
+    };
+    var compter = function () {
+      var n = cases.filter(function (c) { return c.checked; }).length;
+      progression.textContent = n + " sur " + cases.length + " rangé" + (n > 1 ? "s" : "");
+      jauge.style.width = (cases.length ? Math.round((100 * n) / cases.length) : 0) + "%";
+    };
+    var appliquer = function (coches) {
+      var parCle = {};
+      coches.forEach(function (x) { parCle[x.item] = x.par || "?"; });
+      cases.forEach(function (c) { marquer(c, parCle[c.getAttribute("data-cle")] || ""); });
+      compter();
+    };
+    var horsLigne = function (texte) {
+      synchro.hidden = true;
+      coursesMsg.textContent = texte;
+      coursesMsg.hidden = false;
+      cases.forEach(function (c) { marquer(c, local[c.getAttribute("data-cle")] || ""); });
+      compter();
+    };
+    var rafraichir = function () {
+      if (!lire(CLE_CODE)) {
+        horsLigne("Cochées sur ce téléphone seulement : entre le code de la maison en bas pour les partager avec Ludo.");
+        return;
+      }
+      appel("GET", "/api/coches?semaine=" + encodeURIComponent(semaine))
+        .then(function (d) {
+          synchro.hidden = false;
+          coursesMsg.hidden = true;
+          appliquer(d.coches);
+        })
+        .catch(function (e) {
+          if (e && e.code === 401) demanderCode();
+          horsLigne("Pas de connexion : les cases ne sont pas partagées pour l'instant.");
+        });
+    };
+
+    cases.forEach(function (c) {
+      c.addEventListener("change", function () {
+        var cle = c.getAttribute("data-cle");
+        var qui = lire(CLE_QUI) || "?";
+        marquer(c, c.checked ? qui : "");
+        compter();
+        if (c.checked) local[cle] = qui; else delete local[cle];
+        ecrire(cleLocale, JSON.stringify(local));
+        if (lire(CLE_CODE)) {
+          appel("POST", "/api/coches", { semaine: semaine, item: cle, coche: c.checked, par: qui })
+            .catch(function () { horsLigne("Pas de connexion : la case n'a pas été partagée."); });
+        }
+      });
+    });
+
+    surCode.push(rafraichir);
+    rafraichir();
+    setInterval(function () { if (!document.hidden) rafraichir(); }, 15000);
+    document.addEventListener("visibilitychange", function () { if (!document.hidden) rafraichir(); });
   }
 
   /* ---------- Retours sur les recettes ---------- */
   document.querySelectorAll("[data-retour]").forEach(function (bloc) {
-    var recette = nettoyer(bloc.getAttribute("data-recette"));
-    var semaine = bloc.getAttribute("data-semaine") || "";
-    var cleFavori = "favori:" + semaine + ":" + recette;
+    var recette = bloc.getAttribute("data-recette") || "";
+    var semaineRecette = bloc.getAttribute("data-semaine") || "";
     var fav = bloc.querySelector("[data-retour-fav]");
     var ouvrir = bloc.querySelector("[data-retour-ouvrir]");
     var form = bloc.querySelector("[data-retour-form]");
-    var zone = form.querySelector("textarea");
-    var envoyerBtn = form.querySelector("button");
+    var proposer = bloc.querySelector("[data-proposer]");
     var msg = bloc.querySelector("[data-retour-msg]");
+    var cleFavori = "favori:" + semaineRecette + ":" + recette;
+    var cleProposer = "proposer:" + recette;
 
-    var marquerFavori = function () {
-      fav.textContent = "♥ Adorée";
-      fav.setAttribute("aria-pressed", "true");
-      fav.disabled = true;
-    };
-    if (lire(cleFavori)) marquerFavori();
+    var dire = function (texte) { if (msg) msg.textContent = texte; };
 
-    var envoyer = function (type, texte, bouton) {
+    var envoyer = function (type, texte, bouton, reussi) {
       if (!lire(CLE_CODE)) {
-        msg.textContent = "Entre d'abord le code de la maison (page d'accueil, « À penser pour le prochain drive »).";
+        dire(SANS_CODE);
         return;
       }
-      bouton.disabled = true;
-      msg.textContent = "Envoi…";
-      appel("POST", "/api/retours", { semaine: semaine, recette: recette, type: type, texte: texte })
-        .then(function () {
-          if (type === "favori") {
-            ecrire(cleFavori, "1");
-            marquerFavori();
-            msg.textContent = "Noté ! Claude l'ajoutera à vos favoris.";
-          } else {
-            zone.value = "";
-            form.hidden = true;
-            bouton.disabled = false;
-            msg.textContent = "Merci, Claude en tiendra compte.";
-          }
-        })
+      if (bouton) bouton.disabled = true;
+      dire("Envoi…");
+      appel("POST", "/api/retours", { semaine: semaineRecette, recette: recette, type: type, texte: texte })
+        .then(reussi)
         .catch(function (e) {
-          bouton.disabled = false;
-          msg.textContent = e && e.code === 401
-            ? "Code incorrect : entre-le à nouveau sur la page d'accueil."
-            : "Pas envoyé (pas de connexion ?). Réessaie.";
+          if (bouton) bouton.disabled = false;
+          dire(e && e.code === 401 ? "Code incorrect : entre-le à nouveau dans l'onglet Courses." : "Pas envoyé (pas de connexion ?). Réessaie.");
         });
     };
 
-    fav.addEventListener("click", function () { envoyer("favori", "", fav); });
-    ouvrir.addEventListener("click", function () {
-      form.hidden = !form.hidden;
-      if (!form.hidden) zone.focus();
-    });
-    form.addEventListener("submit", function (ev) {
-      ev.preventDefault();
-      var texte = zone.value.trim();
-      if (texte) envoyer("remarque", texte, envoyerBtn);
-    });
+    if (fav) {
+      var marquerFavori = function () {
+        fav.setAttribute("aria-pressed", "true");
+        fav.setAttribute("aria-label", "Adorée");
+        fav.disabled = true;
+      };
+      if (lire(cleFavori)) marquerFavori();
+      fav.addEventListener("click", function () {
+        envoyer("favori", "", fav, function () {
+          ecrire(cleFavori, "1");
+          marquerFavori();
+          dire("Noté ! Claude l'ajoutera à vos favoris.");
+        });
+      });
+    }
+
+    if (ouvrir && form) {
+      var zone = form.querySelector("textarea");
+      var bouton = form.querySelector("button");
+      ouvrir.addEventListener("click", function () {
+        form.hidden = !form.hidden;
+        if (!form.hidden) {
+          zone.focus();
+          form.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      });
+      form.addEventListener("submit", function (ev) {
+        ev.preventDefault();
+        var texte = zone.value.trim();
+        if (!texte) return;
+        envoyer("remarque", texte, bouton, function () {
+          zone.value = "";
+          form.hidden = true;
+          bouton.disabled = false;
+          dire("Merci, Claude en tiendra compte.");
+        });
+      });
+    }
+
+    if (proposer) {
+      if (lire(cleProposer)) {
+        proposer.textContent = "Demandé à Claude ✓";
+        proposer.disabled = true;
+      }
+      proposer.addEventListener("click", function () {
+        envoyer("proposer", "", proposer, function () {
+          ecrire(cleProposer, "1");
+          proposer.textContent = "Demandé à Claude ✓";
+          dire("");
+        });
+      });
+    }
   });
 })();

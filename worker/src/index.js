@@ -75,8 +75,31 @@ export default {
       return json(req, { ok: true });
     }
 
+    if (m === "GET" && p === "/api/coches") {
+      const semaine = propre(url.searchParams.get("semaine"), 20);
+      const r = await db.prepare("SELECT item, par FROM coches WHERE semaine = ?").bind(semaine).all();
+      return json(req, { coches: r.results });
+    }
+
+    if (m === "POST" && p === "/api/coches") {
+      const semaine = propre(corps.semaine, 20);
+      const item = propre(corps.item, 200);
+      if (!semaine || !item) return json(req, { erreur: "vide" }, 400);
+      if (corps.coche) {
+        await db
+          .prepare(
+            "INSERT INTO coches (semaine, item, par) VALUES (?, ?, ?) ON CONFLICT(semaine, item) DO UPDATE SET par = excluded.par, maj = datetime('now')",
+          )
+          .bind(semaine, item, propre(corps.par, 4))
+          .run();
+      } else {
+        await db.prepare("DELETE FROM coches WHERE semaine = ? AND item = ?").bind(semaine, item).run();
+      }
+      return json(req, { ok: true });
+    }
+
     if (m === "POST" && p === "/api/retours") {
-      const type = corps.type === "favori" ? "favori" : "remarque";
+      const type = ["favori", "proposer"].includes(corps.type) ? corps.type : "remarque";
       const recette = propre(corps.recette, 200);
       const texte = propre(corps.texte, 1000);
       if (!recette || (type === "remarque" && !texte)) return json(req, { erreur: "vide" }, 400);

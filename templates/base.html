@@ -3,30 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#2d2a26">
+  <meta name="theme-color" content="#faf7f2">
+  <meta name="color-scheme" content="light">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <title>{% block title %}Menus{% endblock %}</title>
-  <link rel="manifest" href="{{ '../' if subpage else '' }}manifest.json">
-  <link rel="apple-touch-icon" href="{{ '../' if subpage else '' }}icon-192.png">
-  <link rel="icon" href="{{ '../' if subpage else '' }}favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="{{ root }}manifest.json">
+  <link rel="apple-touch-icon" href="{{ root }}icon-192.png">
+  <link rel="icon" href="{{ root }}favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Inter:wght@400;500;600;700&display=swap">
   {# ?v=… : force les téléphones à recharger la mise en forme et les scripts à chaque publication #}
-  {% set v = generated_at|replace(' ', '')|replace(':', '')|replace('-', '') %}
-  <link rel="stylesheet" href="{{ '../' if subpage else '' }}styles.css?v={{ v }}">
+  <link rel="stylesheet" href="{{ root }}styles.css?v={{ version }}">
 </head>
-<body>
-  <header class="topbar">
-    <a href="{{ '../' if subpage else '' }}index.html" class="home-link">🍽️ Menus</a>
-    {% block topright %}{% endblock %}
-  </header>
-
-  <main>
+<body class="page-{{ page }}">
+  <main class="ecran">
     {% block content %}{% endblock %}
   </main>
 
-  <footer class="footer">
-    <small>Généré le {{ generated_at }}</small>
-  </footer>
+  {% block bas %}
+  <nav class="onglets" aria-label="Navigation">
+    <a href="{{ root }}index.html"{% if page == 'semaine' %} aria-current="page"{% endif %}>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="3"></rect><path d="M4 10h16M9 3v4M15 3v4"></path></svg>Semaine</a>
+    <a href="{{ root }}courses.html"{% if page == 'courses' %} aria-current="page"{% endif %}>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 7h14l-1.5 11a2 2 0 0 1-2 1.7h-7a2 2 0 0 1-2-1.7z"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg>Courses</a>
+    <a href="{{ root }}favoris.html"{% if page == 'favoris' %} aria-current="page"{% endif %}>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg>Favoris</a>
+  </nav>
+  {% endblock %}
 
-  <script src="{{ '../' if subpage else '' }}app.js?v={{ v }}"></script>
-  <script src="{{ '../' if subpage else '' }}boite.js?v={{ v }}"></script>
+  <script src="{{ root }}app.js?v={{ version }}"></script>
+  <script src="{{ root }}boite.js?v={{ version }}"></script>
 </body>
 </html>

@@ -3,560 +3,292 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="theme-color" content="#2d2a26">
-  <title>Semaine en cours – Menus</title>
+  <meta name="theme-color" content="#faf7f2">
+  <meta name="color-scheme" content="light">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <title>Ce soir – Menus</title>
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=202611101408">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="styles.css?v=202611101437">
 </head>
-<body>
-  <header class="topbar">
-    <a href="index.html" class="home-link">🍽️ Menus</a>
-<a href="#archives" class="topright-link">Archives</a>  </header>
+<body class="page-semaine">
+  <main class="ecran">
+  <header class="tete">
+    <div class="tete-textes">
+      <p class="surtitre" data-aujourdhui data-semaine-num="46">Semaine 46 · 10 – 18 novembre</p>
+      <h1 class="titre-ecran" data-titre-jour>Ce soir</h1>
+    </div>
+    <div class="avatars" aria-hidden="true">
+      <span class="avatar avatar-o">O</span>
+      <span class="avatar avatar-l">L</span>
+    </div>
+  </header>
 
-  <main>
-    <section class="hero">
-      <p class="eyebrow">Semaine 46 · 9 – 15 novembre 2026</p>
-      <h1>Cette semaine</h1>
-    </section>
-
-    <section class="section" id="a-penser">
-      <h2 class="section-title">À penser pour le prochain drive</h2>
-      <div class="card boite" data-boite>
-        <form class="boite-ajout" data-boite-ajout hidden>
-          <label for="boite-texte" class="sr-only">Article à ajouter</label>
-          <input id="boite-texte" type="text" maxlength="120" placeholder="Essuie-tout, piles…" autocomplete="off">
-          <button type="submit">Ajouter</button>
-        </form>
-        <ul class="boite-liste" data-boite-liste></ul>
-        <form class="boite-code" data-boite-code hidden>
-          <label for="boite-code">Code de la maison (à taper une seule fois sur ce téléphone)</label>
-          <div class="boite-ligne">
-            <input id="boite-code" type="text" autocomplete="off" autocapitalize="none" spellcheck="false">
-            <button type="submit">Valider</button>
-          </div>
-        </form>
-        <p class="boite-msg" data-boite-msg role="status"></p>
+  <section class="jour" data-jour="2026-11-10" data-label="Mardi 10 novembre">
+    <a class="carte-plat" href="recettes/2026-S45-6.html">
+      <div class="photo-plat photo-vide">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.6"></circle><path d="M21 16l-5-5-8 8"></path></svg>Photo du plat
       </div>
-    </section>
-
-    <section class="card context">
-      <h1>Semaine 46 — mardi 10 → mercredi 18 novembre 2026</h1>
-<p><strong>Contexte de la semaine</strong>
-- Fin de S45 : poêlée tartiflette mardi 10, raviolis crème-champignons mercredi 11 (férié, 1 seul sachet → pas de restes). Salade de chèvre chaud annulée (ingrédients trop vieux).
-- Restes à écouler : gros sachet de gnocchis, lardons, 3 boîtes de crème fraîche, 2 sachets de parmesan, riz. Jambon de S45 mangé avec les raviolis → à racheter pour le risotto.
-- Jeudi 12 soir : resto. Drive Chronodrive Pessac jeudi 12 (mercredi 11 férié).
-- Envie : <strong>simple, réconfortant et healthy</strong>. Budget normal. P'tit-déj et à-côtés : Orane s'en occupe.
-- Thermomix dispo → à utiliser dans les propositions.
-- Mercredi 18 soir / jeudi 19 midi non couverts : prochain drive avancé.
-- Anti-répétition : rien de S44/S45 (fajitas, César, bœuf coréen, pâtes chèvre-poivrons, gnocchis sorrentina, poulet moutarde, boulettes, pâtes poireaux-lardons…). Chili refusé (fait récemment). Curry rouge, penne chèvre-thon et nouilles cacahuète = favoris, derniers &gt; 21 jours.</p>
-<p><strong>Couverture des repas</strong></p>
-<table>
-<thead>
-<tr>
-<th>Jour</th>
-<th>Midi</th>
-<th>Soir</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Mardi 10</td>
-<td>—</td>
-<td>🏠 Poêlée tartiflette (S45)</td>
-</tr>
-<tr>
-<td>Mercredi 11 (férié)</td>
-<td>Restes tartiflette</td>
-<td>🏠 Raviolis crème-champignons-parmesan (S45, pas de restes)</td>
-</tr>
-<tr>
-<td>Jeudi 12 (drive)</td>
-<td>🏠 Gnocchis carbo crémeux aux lardons (faits le midi)</td>
-<td>Resto</td>
-</tr>
-<tr>
-<td>Vendredi 13</td>
-<td>Restes gnocchis</td>
-<td>Poulet curry rouge coco &amp; haricots verts, riz</td>
-</tr>
-<tr>
-<td>Samedi 14</td>
-<td>Restes curry</td>
-<td>Risotto crémeux poireaux, jambon &amp; parmesan (Thermomix)</td>
-</tr>
-<tr>
-<td>Dimanche 15</td>
-<td>Restes risotto</td>
-<td>Penne courgettes, chèvre frais &amp; thon</td>
-</tr>
-<tr>
-<td>Lundi 16</td>
-<td>Restes penne</td>
-<td>Nouilles sautées poulet &amp; légumes, sauce cacahuète</td>
-</tr>
-<tr>
-<td>Mardi 17</td>
-<td>Restes nouilles</td>
-<td>Bowl tiède quinoa, poivrons-courgettes, feta &amp; sauce yaourt-citron</td>
-</tr>
-<tr>
-<td>Mercredi 18</td>
-<td>Restes bowl</td>
-<td>— (prochain drive avancé)</td>
-</tr>
-</tbody>
-</table>
-<p>🏠 = déjà à la maison. → 1 plat sur stock + 5 recettes achetées × 4 vraies portions (dîner + déj du lendemain).</p>
-<p><strong>Parts</strong> : à chaque recette, part Ludo plus légère en matière grasse (servie avant la crème / le fromage), part Orane normale voire généreuse.</p>
-<hr />
-<p>Bol : 200 g dattes + 80 g flocons d'avoine + 60 g beurre de cacahuète + 1 c. à s. cacao + 1 pincée de sel, 10 s/vit. 6, racler, encore 10 s. Si c'est trop sec : 1 c. à s. d'eau ; trop collant : un peu d'avoine. Rouler en boules de la taille d'une noix, frigo dans une boîte (1 semaine). 1–2 boules avant le sport.</p>
-<hr />
-<p><strong>Panier Chronodrive préparé le 2026-11-10</strong> (compte de Ludovic, <strong>Drive Pessac</strong>, relu sur /cartdetail) : <strong>29 articles, 82,41 €</strong> (sous-total 83,43 € − 1,02 € de remises). Non validé : Orane choisit le créneau de jeudi 12 et valide. Chèvre frais retiré ensuite : il reste du chèvre de la salade annulée.
-Produits : filets de poulet blanc Le Gaulois 720 g ×2 (frais — Auchan 670 g indisponible), haricots verts extra-fins Auchan 1 kg, poireaux rondelles Auchan 1 kg, courgettes rondelles Auchan 1 kg ×2, légumes pour wok Auchan 750 g, poivrons en lanières Auchan 600 g (tous surgelés), lait de coco Auchan 20 cl ×2, riz arborio Auchan 500 g, penne rigate Barilla Intégrale 500 g, thon entier au naturel Auchan 280 g, nouilles de riz Wei Ming 400 g, quinoa bio Auchan 500 g, jambon supérieur sans nitrite Auchan 4 tranches, feta AOP Auchan Gourmet 200 g, yaourts à la grecque nature Auchan 4×150 g, parmesan râpé Galbani 60 g, beurre moulé demi-sel Auchan 500 g, citrons ×2, dattes moelleuses Auchan 250 g, flocons d'avoine Auchan 500 g, beurre de cacahuète Andros Be Nuts 320 g, cacao non sucré Auchan 250 g, boisson coco-riz Alpro 1 L ×3.</p>
-<ul>
-<li>Pas pris (stock supposé, à vérifier) : pâte de curry rouge, oignons surgelés, bouillon cube, sauce soja, ail, paprika, cumin, riz basmati.</li>
-</ul>
-    </section>
-
-    <section class="section">
-      <h2 class="section-title">Recettes</h2>
-      <div class="recipes">
-        <details class="recipe-card">
-          <summary>
-            <span class="recipe-title">Gnocchis carbo crémeux aux lardons <em>(jeudi 12 midi + vendredi 13 midi — 15 min, 100 % stock)</em></span>
-            <span class="chev">▾</span>
-          </summary>
-          <div class="recipe-body">
-            <p>Recette maison. Lardons dorés à sec dans une grande poêle, + oignons surgelés 3 min. Ajouter les gnocchis directement (ou 2 min à l'eau bouillante avant), les laisser dorer 5–6 min. Hors du feu : crème épaisse + parmesan + beaucoup de poivre, une louche d'eau chaude pour napper.
-<strong>Part Ludo</strong> : servie avant d'ajouter le reste du parmesan, moins de crème.</p>
-            <div class="retour" data-retour data-recette="0. Gnocchis carbo crémeux aux lardons *(jeudi 12 midi + vendredi 13 midi — 15 min, 100 % stock)*" data-semaine="2026-S46">
-              <div class="retour-boutons">
-                <button type="button" class="retour-btn" data-retour-fav aria-pressed="false">♡ On a adoré</button>
-                <button type="button" class="retour-btn" data-retour-ouvrir>Une remarque</button>
-              </div>
-              <form class="retour-form" data-retour-form hidden>
-                <label class="sr-only" for="rem-2026-S46-1">Remarque sur la recette</label>
-                <textarea id="rem-2026-S46-1" maxlength="1000" rows="3" placeholder="Ex. : pas assez de riz, trop épicé pour Ludo…"></textarea>
-                <button type="submit" class="retour-envoyer">Envoyer à Claude</button>
-              </form>
-              <p class="retour-msg" data-retour-msg role="status"></p>
-            </div>
-          </div>
-        </details>
-        <details class="recipe-card">
-          <summary>
-            <span class="recipe-title">Poulet curry rouge, coco &amp; haricots verts, riz <em>(vendredi 13 soir + samedi midi — 20 min)</em> ⭐ favori</span>
-            <span class="chev">▾</span>
-          </summary>
-          <div class="recipe-body">
-            <p>Source : <a href="https://www.hellofresh.fr/recipes/curry-au-poulet-et-aux-haricots-verts-5c0109afe3f33939791482f2">HelloFresh</a> — riz à la place de la semoule, haricots verts surgelés</p>
-<p>Riz à cuire. Au wok, feu vif, filet d'huile : poulet en lanières + oignons surgelés + haricots verts surgelés, 4–5 min. 2–3 c. à s. de pâte de curry rouge, 1 min, puis le lait de coco. Couvrir, mijoter 6–10 min. Sel, filet de citron.
-<strong>Part Ludo</strong> : plus de haricots verts, moins de sauce coco.</p>
-<p>💡 <strong>À anticiper</strong> (vendredi midi, 3 min) : poulet en lanières + 1 c. à s. de pâte de curry + filet d'huile, au frigo jusqu'au soir.</p>
-            <div class="retour" data-retour data-recette="1. Poulet curry rouge, coco &amp; haricots verts, riz *(vendredi 13 soir + samedi midi — 20 min)* ⭐ favori" data-semaine="2026-S46">
-              <div class="retour-boutons">
-                <button type="button" class="retour-btn" data-retour-fav aria-pressed="false">♡ On a adoré</button>
-                <button type="button" class="retour-btn" data-retour-ouvrir>Une remarque</button>
-              </div>
-              <form class="retour-form" data-retour-form hidden>
-                <label class="sr-only" for="rem-2026-S46-2">Remarque sur la recette</label>
-                <textarea id="rem-2026-S46-2" maxlength="1000" rows="3" placeholder="Ex. : pas assez de riz, trop épicé pour Ludo…"></textarea>
-                <button type="submit" class="retour-envoyer">Envoyer à Claude</button>
-              </form>
-              <p class="retour-msg" data-retour-msg role="status"></p>
-            </div>
-          </div>
-        </details>
-        <details class="recipe-card">
-          <summary>
-            <span class="recipe-title">Risotto crémeux poireaux, jambon &amp; parmesan au Thermomix <em>(samedi 14 soir + dimanche midi — 30 min dont ~18 où il cuit seul)</em></span>
-            <span class="chev">▾</span>
-          </summary>
-          <div class="recipe-body">
-            <p>Recette maison Thermomix (adapter si Orane a sa propre recette). Bol : 1 c. à s. beurre + filet d'huile + oignons surgelés + 200 g poireaux surgelés, 5 min/120 °C/vit. 1. Ajouter 320 g de riz arborio, 3 min/120 °C/sens inverse/vit. 1. Ajouter 1 L d'eau + 2 cubes de bouillon, 17–18 min/100 °C/sens inverse/vit. mijotage, sans le gobelet (panier posé dessus). Verser dans un plat, ajouter le jambon en lanières, parmesan et une noix de beurre, laisser reposer 2 min.
-<strong>Part Ludo</strong> : servie avant le beurre final, moins de parmesan.</p>
-            <div class="retour" data-retour data-recette="2. Risotto crémeux poireaux, jambon &amp; parmesan au Thermomix *(samedi 14 soir + dimanche midi — 30 min dont ~18 où il cuit seul)*" data-semaine="2026-S46">
-              <div class="retour-boutons">
-                <button type="button" class="retour-btn" data-retour-fav aria-pressed="false">♡ On a adoré</button>
-                <button type="button" class="retour-btn" data-retour-ouvrir>Une remarque</button>
-              </div>
-              <form class="retour-form" data-retour-form hidden>
-                <label class="sr-only" for="rem-2026-S46-3">Remarque sur la recette</label>
-                <textarea id="rem-2026-S46-3" maxlength="1000" rows="3" placeholder="Ex. : pas assez de riz, trop épicé pour Ludo…"></textarea>
-                <button type="submit" class="retour-envoyer">Envoyer à Claude</button>
-              </form>
-              <p class="retour-msg" data-retour-msg role="status"></p>
-            </div>
-          </div>
-        </details>
-        <details class="recipe-card">
-          <summary>
-            <span class="recipe-title">Penne courgettes, chèvre frais &amp; thon <em>(dimanche 15 soir + lundi midi — 16 min)</em> ⭐ favori</span>
-            <span class="chev">▾</span>
-          </summary>
-          <div class="recipe-body">
-            <p>Source : <a href="https://jow.fr/recipes/pates-aux-courgettes-et-chevre-frais-8nxaf7ledk3nczqo01wf">Jow</a> + thon</p>
-<p>Pâtes Barilla à cuire. Courgettes surgelées à feu vif sans couvercle 8–10 min pour qu'elles dorent, ail râpé à la fin. Hors du feu : pâtes égouttées + courgettes + chèvre (le reste de la bûche, en petits morceaux, fond avec l'eau de cuisson) + thon émietté + une louche d'eau de cuisson → le chèvre fondu fait la sauce. Sel, poivre, zeste de citron si envie.
-<strong>Part Ludo</strong> : moins de chèvre, plus de courgettes.</p>
-            <div class="retour" data-retour data-recette="3. Penne courgettes, chèvre frais &amp; thon *(dimanche 15 soir + lundi midi — 16 min)* ⭐ favori" data-semaine="2026-S46">
-              <div class="retour-boutons">
-                <button type="button" class="retour-btn" data-retour-fav aria-pressed="false">♡ On a adoré</button>
-                <button type="button" class="retour-btn" data-retour-ouvrir>Une remarque</button>
-              </div>
-              <form class="retour-form" data-retour-form hidden>
-                <label class="sr-only" for="rem-2026-S46-4">Remarque sur la recette</label>
-                <textarea id="rem-2026-S46-4" maxlength="1000" rows="3" placeholder="Ex. : pas assez de riz, trop épicé pour Ludo…"></textarea>
-                <button type="submit" class="retour-envoyer">Envoyer à Claude</button>
-              </form>
-              <p class="retour-msg" data-retour-msg role="status"></p>
-            </div>
-          </div>
-        </details>
-        <details class="recipe-card">
-          <summary>
-            <span class="recipe-title">Nouilles sautées poulet &amp; légumes, sauce cacahuète <em>(lundi 16 soir + mardi midi — 15 min)</em> ⭐ favori</span>
-            <span class="chev">▾</span>
-          </summary>
-          <div class="recipe-body">
-            <p>Recette maison (favori). Nouilles de riz à réhydrater/cuire selon le paquet. Wok feu vif : poulet en lanières 5 min, + légumes wok surgelés 6–8 min. Sauce hors du feu : 3 c. à s. beurre de cacahuète + 3 c. à s. sauce soja + jus d'½ citron + eau chaude pour détendre. Tout mélanger.
-<strong>Part Ludo</strong> : plus de légumes, sauce dosée plus légèrement.</p>
-<p>💡 <strong>À anticiper</strong> : au retour du drive, regarder la DLC du 2e poulet. Si elle ne tient pas jusqu'à lundi → le congeler, et dimanche soir le passer du congélateur au frigo.</p>
-            <div class="retour" data-retour data-recette="4. Nouilles sautées poulet &amp; légumes, sauce cacahuète *(lundi 16 soir + mardi midi — 15 min)* ⭐ favori" data-semaine="2026-S46">
-              <div class="retour-boutons">
-                <button type="button" class="retour-btn" data-retour-fav aria-pressed="false">♡ On a adoré</button>
-                <button type="button" class="retour-btn" data-retour-ouvrir>Une remarque</button>
-              </div>
-              <form class="retour-form" data-retour-form hidden>
-                <label class="sr-only" for="rem-2026-S46-5">Remarque sur la recette</label>
-                <textarea id="rem-2026-S46-5" maxlength="1000" rows="3" placeholder="Ex. : pas assez de riz, trop épicé pour Ludo…"></textarea>
-                <button type="submit" class="retour-envoyer">Envoyer à Claude</button>
-              </form>
-              <p class="retour-msg" data-retour-msg role="status"></p>
-            </div>
-          </div>
-        </details>
-        <details class="recipe-card">
-          <summary>
-            <span class="recipe-title">Bowl tiède quinoa, poivrons-courgettes, feta &amp; sauce yaourt-citron <em>(mardi 17 soir + mercredi midi — 15 min)</em></span>
-            <span class="chev">▾</span>
-          </summary>
-          <div class="recipe-body">
-            <p>Recette maison. Quinoa à cuire (300 g, 12 min). Poivrons + courgettes surgelés à feu vif sans couvercle 10 min avec paprika + cumin, sel. Sauce : 1 yaourt grec + jus d'½ citron + ½ gousse d'ail râpée + filet d'huile d'olive + sel. Bowl : quinoa, légumes tièdes, feta émiettée, sauce par-dessus. Déj du lendemain : sauce à part.
-<strong>Part Ludo</strong> : moitié de feta, sauce yaourt à volonté (légère).</p>
-<p>💡 <strong>À anticiper</strong> (lundi soir, 2 min) : faire la sauce yaourt-citron-ail, elle est meilleure le lendemain.</p>
-<hr />
-            <div class="retour" data-retour data-recette="5. Bowl tiède quinoa, poivrons-courgettes, feta &amp; sauce yaourt-citron *(mardi 17 soir + mercredi midi — 15 min)*" data-semaine="2026-S46">
-              <div class="retour-boutons">
-                <button type="button" class="retour-btn" data-retour-fav aria-pressed="false">♡ On a adoré</button>
-                <button type="button" class="retour-btn" data-retour-ouvrir>Une remarque</button>
-              </div>
-              <form class="retour-form" data-retour-form hidden>
-                <label class="sr-only" for="rem-2026-S46-6">Remarque sur la recette</label>
-                <textarea id="rem-2026-S46-6" maxlength="1000" rows="3" placeholder="Ex. : pas assez de riz, trop épicé pour Ludo…"></textarea>
-                <button type="submit" class="retour-envoyer">Envoyer à Claude</button>
-              </form>
-              <p class="retour-msg" data-retour-msg role="status"></p>
-            </div>
-          </div>
-        </details>
+      <div class="puces">
+        <span class="puce puce-accent">Dîner + déj de demain</span>
+        <span class="puce">Recette maison</span>
       </div>
-    </section>
-
-    <section class="section" id="courses">
-      <div class="section-head">
-        <h2 class="section-title">Liste de courses</h2>
-        <button class="reset-btn" data-reset-key="shopping-2026-S46">Tout décocher</button>
+      <span class="plat-nom">Poêlée façon tartiflette</span>
+      <div class="infos">
+<span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>20 min</span>        <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 11h16M6 11v6a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3v-6M9 7c0-1 1-2 3-2s3 1 3 2"></path></svg>4 portions</span>
       </div>
-      <div class="shopping" data-storage-key="shopping-2026-S46">
-        <div class="shop-group">
-          <h3 class="shop-group-title">Gnocchis carbo (jeudi midi)</h3>
-          <ul class="shop-list">
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="0-1-Gnocchis carbo (jeudi midi)">
-                    <span><em>Rien à acheter : gnocchis, lardons, crème, parmesan, oignons à la maison.</em></span>
-                  </label>
-                </li>
-          </ul>
-        </div>
-        <div class="shop-group">
-          <h3 class="shop-group-title">Poulet curry rouge (vendredi)</h3>
-          <ul class="shop-list">
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="0-1-Poulet curry rouge (vendredi)">
-                    <span>~600 g filets de poulet frais</span>
-                  </label>
-                </li>
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="1-2-Poulet curry rouge (vendredi)">
-                    <span>1 sachet haricots verts surgelés</span>
-                  </label>
-                </li>
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="2-3-Poulet curry rouge (vendredi)">
-                    <span>1 brique de lait de coco (40 cl) pour cuisiner</span>
-                  </label>
-                </li>
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="3-4-Poulet curry rouge (vendredi)">
-                    <span><em>Riz : stock. Pâte de curry rouge : stock à vérifier (pot Real Thai du 20/10). Citron : voir Commun</em></span>
-                  </label>
-                </li>
-          </ul>
-        </div>
-        <div class="shop-group">
-          <h3 class="shop-group-title">Risotto poireaux jambon (samedi)</h3>
-          <ul class="shop-list">
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="0-1-Risotto poireaux jambon (samedi)">
-                    <span>1 paquet riz arborio (500 g)</span>
-                  </label>
-                </li>
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="1-2-Risotto poireaux jambon (samedi)">
-                    <span>1 sachet poireaux surgelés</span>
-                  </label>
-                </li>
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="2-3-Risotto poireaux jambon (samedi)">
-                    <span>1 paquet jambon blanc sans nitrite (4 tranches)</span>
-                  </label>
-                </li>
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="3-4-Risotto poireaux jambon (samedi)">
-                    <span><em>Parmesan : voir Commun. Bouillon cube : stock à vérifier. Beurre : voir au fil de l'eau</em></span>
-                  </label>
-                </li>
-          </ul>
-        </div>
-        <div class="shop-group">
-          <h3 class="shop-group-title">Penne courgettes chèvre thon (dimanche)</h3>
-          <ul class="shop-list">
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="0-1-Penne courgettes chèvre thon (dimanche)">
-                    <span>500 g penne Barilla</span>
-                  </label>
-                </li>
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="1-2-Penne courgettes chèvre thon (dimanche)">
-                    <span>1 sachet courgettes surgelées</span>
-                  </label>
-                </li>
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="2-3-Penne courgettes chèvre thon (dimanche)">
-                    <span>2 boîtes de thon au naturel</span>
-                  </label>
-                </li>
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="3-4-Penne courgettes chèvre thon (dimanche)">
-                    <span><em>Chèvre : stock (reste de la salade de chèvre chaud annulée). Ail : stock</em></span>
-                  </label>
-                </li>
-          </ul>
-        </div>
-        <div class="shop-group">
-          <h3 class="shop-group-title">Nouilles cacahuète poulet (lundi)</h3>
-          <ul class="shop-list">
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="0-1-Nouilles cacahuète poulet (lundi)">
-                    <span>~600 g filets de poulet frais</span>
-                  </label>
-                </li>
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="1-2-Nouilles cacahuète poulet (lundi)">
-                    <span>1 paquet nouilles de riz</span>
-                  </label>
-                </li>
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="2-3-Nouilles cacahuète poulet (lundi)">
-                    <span>1 sachet légumes pour wok surgelés</span>
-                  </label>
-                </li>
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="3-4-Nouilles cacahuète poulet (lundi)">
-                    <span><em>Beurre de cacahuète et sauce soja : stock à vérifier. Citron : voir Commun</em></span>
-                  </label>
-                </li>
-          </ul>
-        </div>
-        <div class="shop-group">
-          <h3 class="shop-group-title">Bowl quinoa (mardi)</h3>
-          <ul class="shop-list">
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="0-1-Bowl quinoa (mardi)">
-                    <span>1 paquet quinoa (500 g)</span>
-                  </label>
-                </li>
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="1-2-Bowl quinoa (mardi)">
-                    <span>1 sachet poivrons tricolores surgelés</span>
-                  </label>
-                </li>
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="2-3-Bowl quinoa (mardi)">
-                    <span>1 sachet courgettes surgelées (en plus de celui des penne)</span>
-                  </label>
-                </li>
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="3-4-Bowl quinoa (mardi)">
-                    <span>1 feta (200 g)</span>
-                  </label>
-                </li>
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="4-5-Bowl quinoa (mardi)">
-                    <span>1 yaourt grec</span>
-                  </label>
-                </li>
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="5-6-Bowl quinoa (mardi)">
-                    <span><em>Paprika, cumin, ail : stock. Citron : voir Commun</em></span>
-                  </label>
-                </li>
-          </ul>
-        </div>
-        <div class="shop-group">
-          <h3 class="shop-group-title">Commun</h3>
-          <ul class="shop-list">
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="0-1-Commun">
-                    <span>2 citrons</span>
-                  </label>
-                </li>
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="1-2-Commun">
-                    <span>1 parmesan râpé (en plus des 2 sachets à la maison)</span>
-                  </label>
-                </li>
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="2-3-Commun">
-                    <span><em>Oignons surgelés : stock à vérifier</em></span>
-                  </label>
-                </li>
-          </ul>
-        </div>
-        <div class="shop-group">
-          <h3 class="shop-group-title">Energy balls (en-cas sport)</h3>
-          <ul class="shop-list">
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="0-1-Energy balls (en-cas sport)">
-                    <span>250 g dattes moelleuses</span>
-                  </label>
-                </li>
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="1-2-Energy balls (en-cas sport)">
-                    <span>500 g flocons d'avoine</span>
-                  </label>
-                </li>
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="2-3-Energy balls (en-cas sport)">
-                    <span>1 pot beurre de cacahuète (sert aussi pour les nouilles)</span>
-                  </label>
-                </li>
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="3-4-Energy balls (en-cas sport)">
-                    <span>1 boîte cacao en poudre non sucré</span>
-                  </label>
-                </li>
-          </ul>
-        </div>
-        <div class="shop-group">
-          <h3 class="shop-group-title">Produits notés au fil de l&#39;eau</h3>
-          <ul class="shop-list">
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="0-1-Produits notés au fil de l&#39;eau">
-                    <span>3 × boisson végétale coco Alpro</span>
-                  </label>
-                </li>
-                <li class="shop-item">
-                  <label>
-                    <input type="checkbox" data-item="1-2-Produits notés au fil de l&#39;eau">
-                    <span>1 beurre demi-sel grand format</span>
-                  </label>
-                </li>
-          </ul>
-        </div>
-      </div>
-    </section>
+      <span class="bouton-principal">Voir la recette
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+      </span>
+    </a>
 
-  <section class="section" id="archives">
-    <h2 class="section-title">Archives récentes</h2>
-    <ul class="archive-list">
-      <li><a href="menus/2026-S45.html">Semaine 45 · 2 – 8 novembre 2026</a></li>
-      <li><a href="menus/2026-S44.html">Semaine 44 · 26 octobre – 1 novembre 2026</a></li>
-      <li><a href="menus/2026-S43.html">Semaine 43 · 19 – 25 octobre 2026</a></li>
-      <li><a href="menus/2026-S41.html">Semaine 41 · 5 – 11 octobre 2026</a></li>
-    </ul>
+
+  </section>
+  <section class="jour" data-jour="2026-11-11" data-label="Mercredi 11 novembre" hidden>
+    <a class="carte-plat" href="recettes/2026-S45-7.html">
+      <div class="photo-plat photo-vide">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.6"></circle><path d="M21 16l-5-5-8 8"></path></svg>Photo du plat
+      </div>
+      <div class="puces">
+        <span class="puce puce-accent">Dîner + déj de demain</span>
+        <span class="puce">Recette maison</span>
+      </div>
+      <span class="plat-nom">Raviolis frais crème-épinards-parmesan</span>
+      <div class="infos">
+<span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>12 min</span>        <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 11h16M6 11v6a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3v-6M9 7c0-1 1-2 3-2s3 1 3 2"></path></svg>4 portions</span>
+      </div>
+      <span class="bouton-principal">Voir la recette
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+      </span>
+    </a>
+
+    <p class="ce-midi">Ce midi : Restes tartiflette</p>
+
+  </section>
+  <section class="jour" data-jour="2026-11-12" data-label="Jeudi 12 novembre" hidden>
+    <div class="carte-plat carte-simple">
+      <span class="plat-nom">Resto</span>
+    </div>
+
+    <p class="ce-midi">Ce midi : <a href="recettes/2026-S46-1.html">Gnocchis carbo crémeux aux lardons (faits le midi)</a></p>
+
+  </section>
+  <section class="jour" data-jour="2026-11-13" data-label="Vendredi 13 novembre" hidden>
+    <a class="carte-plat" href="recettes/2026-S46-2.html">
+      <img class="photo-plat" src="https://img.hellofresh.com/hellofresh_s3/image/5c0109afe3f33939791482f2-83ef6d76.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
+      <div class="puces">
+        <span class="puce puce-accent">Dîner + déj de demain</span>
+        <span class="puce">HelloFresh</span>
+      </div>
+      <span class="plat-nom">Poulet curry rouge, coco &amp; haricots verts, riz</span>
+      <div class="infos">
+<span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>20 min</span>        <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 11h16M6 11v6a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3v-6M9 7c0-1 1-2 3-2s3 1 3 2"></path></svg>4 portions</span>
+      </div>
+      <span class="bouton-principal">Voir la recette
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+      </span>
+    </a>
+
+    <p class="ce-midi">Ce midi : Restes gnocchis</p>
+
+    <div class="astuce">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"></path></svg>
+      <div class="astuce-textes">
+        <span class="astuce-quand">À anticiper · vendredi midi, 3 min</span>
+        <span>poulet en lanières + 1 c. à s. de pâte de curry + filet d&#39;huile, au frigo jusqu&#39;au soir.</span>
+      </div>
+      <label class="fait"><input type="checkbox" data-fait="2026-S46-2026-11-13-2">Fait</label>
+    </div>
+  </section>
+  <section class="jour" data-jour="2026-11-14" data-label="Samedi 14 novembre" hidden>
+    <a class="carte-plat" href="recettes/2026-S46-3.html">
+      <div class="photo-plat photo-vide">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.6"></circle><path d="M21 16l-5-5-8 8"></path></svg>Photo du plat
+      </div>
+      <div class="puces">
+        <span class="puce puce-accent">Dîner + déj de demain</span>
+        <span class="puce">Recette maison</span>
+      </div>
+      <span class="plat-nom">Risotto crémeux poireaux, jambon &amp; parmesan au Thermomix</span>
+      <div class="infos">
+<span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>30 min</span>        <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 11h16M6 11v6a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3v-6M9 7c0-1 1-2 3-2s3 1 3 2"></path></svg>4 portions</span>
+      </div>
+      <span class="bouton-principal">Voir la recette
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+      </span>
+    </a>
+
+    <p class="ce-midi">Ce midi : Restes curry</p>
+
+  </section>
+  <section class="jour" data-jour="2026-11-15" data-label="Dimanche 15 novembre" hidden>
+    <a class="carte-plat" href="recettes/2026-S46-4.html">
+      <img class="photo-plat" src="https://static.jow.fr/1200x630/recipes/qVdnuqqBZGk1Fw.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
+      <div class="puces">
+        <span class="puce puce-accent">Dîner + déj de demain</span>
+        <span class="puce">Jow</span>
+      </div>
+      <span class="plat-nom">Penne courgettes, chèvre frais &amp; thon</span>
+      <div class="infos">
+<span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>16 min</span>        <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 11h16M6 11v6a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3v-6M9 7c0-1 1-2 3-2s3 1 3 2"></path></svg>4 portions</span>
+      </div>
+      <span class="bouton-principal">Voir la recette
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+      </span>
+    </a>
+
+    <p class="ce-midi">Ce midi : Restes risotto</p>
+
+  </section>
+  <section class="jour" data-jour="2026-11-16" data-label="Lundi 16 novembre" hidden>
+    <a class="carte-plat" href="recettes/2026-S46-5.html">
+      <div class="photo-plat photo-vide">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.6"></circle><path d="M21 16l-5-5-8 8"></path></svg>Photo du plat
+      </div>
+      <div class="puces">
+        <span class="puce puce-accent">Dîner + déj de demain</span>
+        <span class="puce">Recette maison</span>
+      </div>
+      <span class="plat-nom">Nouilles sautées poulet &amp; légumes, sauce cacahuète</span>
+      <div class="infos">
+<span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>15 min</span>        <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 11h16M6 11v6a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3v-6M9 7c0-1 1-2 3-2s3 1 3 2"></path></svg>4 portions</span>
+      </div>
+      <span class="bouton-principal">Voir la recette
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+      </span>
+    </a>
+
+    <p class="ce-midi">Ce midi : Restes penne</p>
+
+    <div class="astuce">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"></path></svg>
+      <div class="astuce-textes">
+        <span class="astuce-quand">À anticiper · lundi soir, 2 min</span>
+        <span>faire la sauce yaourt-citron-ail, elle est meilleure le lendemain.</span>
+      </div>
+      <label class="fait"><input type="checkbox" data-fait="2026-S46-2026-11-16-6">Fait</label>
+    </div>
+  </section>
+  <section class="jour" data-jour="2026-11-17" data-label="Mardi 17 novembre" hidden>
+    <a class="carte-plat" href="recettes/2026-S46-6.html">
+      <div class="photo-plat photo-vide">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.6"></circle><path d="M21 16l-5-5-8 8"></path></svg>Photo du plat
+      </div>
+      <div class="puces">
+        <span class="puce puce-accent">Dîner + déj de demain</span>
+        <span class="puce">Recette maison</span>
+      </div>
+      <span class="plat-nom">Bowl tiède quinoa, poivrons-courgettes, feta &amp; sauce yaourt-citron</span>
+      <div class="infos">
+<span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>15 min</span>        <span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 11h16M6 11v6a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3v-6M9 7c0-1 1-2 3-2s3 1 3 2"></path></svg>4 portions</span>
+      </div>
+      <span class="bouton-principal">Voir la recette
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+      </span>
+    </a>
+
+    <p class="ce-midi">Ce midi : Restes nouilles</p>
+
+  </section>
+  <section class="jour" data-jour="2026-11-18" data-label="Mercredi 18 novembre" hidden>
+    <div class="carte-plat carte-simple">
+      <span class="plat-nom">— (prochain drive avancé)</span>
+    </div>
+
+    <p class="ce-midi">Ce midi : Restes bowl</p>
+
   </section>
 
-  <section class="section" id="favoris">
-    <h2 class="section-title">Favoris</h2>
-    <div class="card"><h1>Favoris — recettes vraiment adorées</h1>
-<p>Une ligne par recette. Alimenté <strong>uniquement</strong> quand Orane dit "celle-là j'ai vraiment adorée" ou équivalent.</p>
-<p>Format : <code>- **Nom** — temps | tags | ce qu'on a aimé | dernière fois faite</code></p>
-<hr />
-<h2>Plats principaux</h2>
-<ul>
-<li><strong>Fajitas de poulet, poivrons &amp; oignons</strong> (<a href="https://jow.com/fr/recipes/grilled-chicken-fajitas-8zzg34p97h3k033r0l2s">Jow</a>, épices maison) — 20 min | poulet, tex-mex, poêle, rapide | épices maison paprika-cumin-ail, poivrons-oignons surgelés dorés à feu vif, poulet mariné le midi ; tortillas + crème épaisse + fromage râpé | 2026-10-27</li>
-<li><strong>Boulettes de bœuf sauce tomate-mozzarella, riz</strong> (recette maison) — 25 min | viande rouge, poêle, réconfortant | boulettes viande hachée + chapelure + ail dorées avec oignons surgelés, pulpe de tomates + herbes de Provence mijotées 8 min, mozzarella fondue à couvert ; part Ludo servie avant la mozzarella | 2026-11-06</li>
-<li>
-<p><strong>Poulet curry rouge, coco &amp; haricots verts, riz</strong> (<a href="https://www.hellofresh.fr/recipes/curry-au-poulet-et-aux-haricots-verts-5c0109afe3f33939791482f2">HelloFresh</a>) — 20 min | poulet, curry, wok, crémeux | au wok poulet + oignons + haricots verts surgelés, pâte de curry rouge puis lait de coco, mijoter 6–10 min, filet de citron | 2026-10-21</p>
-</li>
-<li>
-<p><strong>Nouilles sautées sauce cacahuète</strong> — 15 min | nouilles, wok, rapide, anti-gaspi | nouilles de riz + légumes wok surgelés + restes de poulet (ici poulet miel-soja-poireaux) ; sauce hors du feu : beurre de cacahuète + sauce soja + jus de citron + eau chaude | 2026-10-15</p>
-</li>
-<li><strong>Riz sauté express (anti-gaspi reste de riz)</strong> — 10 min | riz, wok, rapide, anti-gaspi | reste de riz + légumes wok surgelés à feu vif, laisser griller le riz, sauce soja + miel (+ 1 œuf brouillé possible) ; à proposer dès qu'il reste du riz | 2026-10-14</li>
-<li><strong>Penne courgettes, chèvre frais &amp; thon</strong> (<a href="https://jow.fr/recipes/pates-aux-courgettes-et-chevre-frais-8nxaf7ledk3nczqo01wf">Jow</a> + thon) — 16 min | pâtes, crémeux, rapide | le chèvre fondu fait la sauce, courgettes surgelées dorées à feu vif ; penne Barilla Intégrale | 2026-10-02</li>
-</ul>
-<!-- Exemple (à supprimer / remplacer par des vraies entrées au fil de l'eau) :
-
-- **Pâtes crème champignons parmesan** — 20 min | pates, cremeux, vege | sauce ultra réconfortante, parmesan en pluie | -
--->
-
-<h2>À tester (Orane a vu passer, envie de goûter)</h2>
-<!-- Idées repérées mais pas encore testées. Si validées → remontent en haut. Si pas aimées → supprimées. -->
-
-<h2>À ne plus reproposer</h2>
-<!-- Plats explicitement rejetés. Brève raison. --></div>
+  <section class="bloc">
+    <div class="section-tete">
+      <h2>La semaine</h2>
+      <span class="discret petit">10 – 18 novembre</span>
+    </div>
+    <div class="carte liste-jours">
+      <div class="ligne-jour" data-ligne-jour="2026-11-10">
+        <span class="jour-court">MAR<br>10</span>
+        <div class="jour-repas">
+          <span class="discret">Midi · —</span>
+          <span class="soir">Soir · <a href="recettes/2026-S45-6.html">Poêlée façon tartiflette</a></span>
+        </div>
+      </div>
+      <div class="ligne-jour" data-ligne-jour="2026-11-11">
+        <span class="jour-court">MER<br>11</span>
+        <div class="jour-repas">
+          <span class="discret">Midi · Restes tartiflette</span>
+          <span class="soir">Soir · <a href="recettes/2026-S45-7.html">Raviolis frais crème-épinards-parmesan</a></span>
+        </div>
+      </div>
+      <div class="ligne-jour" data-ligne-jour="2026-11-12">
+        <span class="jour-court">JEU<br>12</span>
+        <div class="jour-repas">
+          <span class="discret">Midi · <a href="recettes/2026-S46-1.html">Gnocchis carbo crémeux aux lardons (faits le midi)</a></span>
+          <span class="soir">Soir · Resto</span>
+        </div>
+      </div>
+      <div class="ligne-jour" data-ligne-jour="2026-11-13">
+        <span class="jour-court">VEN<br>13</span>
+        <div class="jour-repas">
+          <span class="discret">Midi · Restes gnocchis</span>
+          <span class="soir">Soir · <a href="recettes/2026-S46-2.html">Poulet curry rouge, coco &amp; haricots verts, riz</a></span>
+        </div>
+      </div>
+      <div class="ligne-jour" data-ligne-jour="2026-11-14">
+        <span class="jour-court">SAM<br>14</span>
+        <div class="jour-repas">
+          <span class="discret">Midi · Restes curry</span>
+          <span class="soir">Soir · <a href="recettes/2026-S46-3.html">Risotto crémeux poireaux, jambon &amp; parmesan au Thermomix</a></span>
+        </div>
+      </div>
+      <div class="ligne-jour" data-ligne-jour="2026-11-15">
+        <span class="jour-court">DIM<br>15</span>
+        <div class="jour-repas">
+          <span class="discret">Midi · Restes risotto</span>
+          <span class="soir">Soir · <a href="recettes/2026-S46-4.html">Penne courgettes, chèvre frais &amp; thon</a></span>
+        </div>
+      </div>
+      <div class="ligne-jour" data-ligne-jour="2026-11-16">
+        <span class="jour-court">LUN<br>16</span>
+        <div class="jour-repas">
+          <span class="discret">Midi · Restes penne</span>
+          <span class="soir">Soir · <a href="recettes/2026-S46-5.html">Nouilles sautées poulet &amp; légumes, sauce cacahuète</a></span>
+        </div>
+      </div>
+      <div class="ligne-jour" data-ligne-jour="2026-11-17">
+        <span class="jour-court">MAR<br>17</span>
+        <div class="jour-repas">
+          <span class="discret">Midi · Restes nouilles</span>
+          <span class="soir">Soir · <a href="recettes/2026-S46-6.html">Bowl tiède quinoa, poivrons-courgettes, feta &amp; sauce yaourt-citron</a></span>
+        </div>
+      </div>
+      <div class="ligne-jour" data-ligne-jour="2026-11-18">
+        <span class="jour-court">MER<br>18</span>
+        <div class="jour-repas">
+          <span class="discret">Midi · Restes bowl</span>
+          <span class="soir">Soir · — (prochain drive avancé)</span>
+        </div>
+      </div>
+    </div>
   </section>
+
+  <p class="lien-bas"><a href="semaines.html">Semaines précédentes</a></p>
   </main>
 
-  <footer class="footer">
-    <small>Généré le 2026-11-10 14:08</small>
-  </footer>
+  <nav class="onglets" aria-label="Navigation">
+    <a href="index.html" aria-current="page">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="3"></rect><path d="M4 10h16M9 3v4M15 3v4"></path></svg>Semaine</a>
+    <a href="courses.html">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 7h14l-1.5 11a2 2 0 0 1-2 1.7h-7a2 2 0 0 1-2-1.7z"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg>Courses</a>
+    <a href="favoris.html">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg>Favoris</a>
+  </nav>
 
-  <script src="app.js?v=202611101408"></script>
-  <script src="boite.js?v=202611101408"></script>
+  <script src="app.js?v=202611101437"></script>
+  <script src="boite.js?v=202611101437"></script>
 </body>
 </html>

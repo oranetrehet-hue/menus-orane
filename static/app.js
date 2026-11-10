@@ -1,56 +1,113 @@
-/* app.js — gestion des cases à cocher de la liste de courses
-   Persistance locale via localStorage. Une clé par semaine.
-   Chaque tel a son propre état (volontaire : pas de backend).
-*/
+/* app.js — ce qui se passe sur le téléphone, sans réseau :
+   - « Ce soir » : affiche le jour d'aujourd'hui (ou le prochain) et le surligne dans la semaine ;
+   - cases « Fait » des astuces et ingrédients cochés (mémorisés sur ce téléphone) ;
+   - onglets Ingrédients / Étapes et mode cuisine (écran qui reste allumé) ;
+   - filtres des favoris.
+   Le partagé (courses, liste à penser, retours) est dans boite.js. */
 
 (function () {
-  function loadState(key) {
+  var JOURS = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
+  var MOIS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août",
+    "septembre", "octobre", "novembre", "décembre"];
+
+  function lire(cle) {
+    try { return localStorage.getItem(cle) || ""; } catch (_e) { return ""; }
+  }
+  function ecrire(cle, valeur) {
     try {
-      return JSON.parse(localStorage.getItem(key) || "{}");
-    } catch (_e) {
-      return {};
-    }
+      if (valeur) localStorage.setItem(cle, valeur);
+      else localStorage.removeItem(cle);
+    } catch (_e) { /* ignore */ }
+  }
+  function isoDuJour(d) {
+    return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
   }
 
-  function saveState(key, state) {
-    try {
-      localStorage.setItem(key, JSON.stringify(state));
-    } catch (_e) {
-      /* ignore quota */
+  /* ---------- Ce soir ---------- */
+  var jours = Array.prototype.slice.call(document.querySelectorAll("[data-jour]"));
+  if (jours.length) {
+    var maintenant = new Date();
+    var aujourdhui = isoDuJour(maintenant);
+    var choix = null;
+    var titre = "Ce soir";
+    jours.forEach(function (j) { if (j.getAttribute("data-jour") === aujourdhui) choix = j; });
+    if (!choix) {
+      choix = jours.filter(function (j) { return j.getAttribute("data-jour") > aujourdhui; })[0] || null;
+      if (choix) titre = choix.getAttribute("data-label").split(" ").slice(0, 2).join(" ");
+      else {
+        choix = jours[jours.length - 1];
+        titre = "Dernier soir";
+      }
     }
+    jours.forEach(function (j) { j.hidden = j !== choix; });
+    var h1 = document.querySelector("[data-titre-jour]");
+    if (h1) h1.textContent = titre;
+    var surtitre = document.querySelector("[data-aujourdhui]");
+    if (surtitre) {
+      var jour = JOURS[maintenant.getDay()];
+      surtitre.textContent = jour.charAt(0).toUpperCase() + jour.slice(1) + " " + maintenant.getDate() + " " +
+        MOIS[maintenant.getMonth()] + " · Semaine " + surtitre.getAttribute("data-semaine-num");
+    }
+    var ligne = document.querySelector('[data-ligne-jour="' + aujourdhui + '"]');
+    if (ligne) ligne.classList.add("aujourdhui");
   }
 
-  // Initialiser les cases à cocher
-  document.querySelectorAll(".shopping").forEach(function (container) {
-    var key = container.getAttribute("data-storage-key");
-    if (!key) return;
-    var state = loadState(key);
+  /* ---------- Cases mémorisées sur ce téléphone ---------- */
+  document.querySelectorAll("input[data-fait], input[data-ingredient]").forEach(function (c) {
+    var cle = "case:" + (c.getAttribute("data-fait") || c.getAttribute("data-ingredient"));
+    c.checked = lire(cle) === "1";
+    c.addEventListener("change", function () { ecrire(cle, c.checked ? "1" : ""); });
+  });
 
-    container.querySelectorAll('input[type="checkbox"][data-item]').forEach(function (input) {
-      var id = input.getAttribute("data-item");
-      if (state[id]) input.checked = true;
-      input.addEventListener("change", function () {
-        state[id] = input.checked;
-        saveState(key, state);
+  /* ---------- Onglets Ingrédients / Étapes ---------- */
+  var onglets = document.querySelectorAll("[data-onglet]");
+  function montrer(nom) {
+    onglets.forEach(function (b) { b.setAttribute("aria-selected", String(b.getAttribute("data-onglet") === nom)); });
+    document.querySelectorAll("[data-panneau]").forEach(function (p) { p.hidden = p.getAttribute("data-panneau") !== nom; });
+  }
+  onglets.forEach(function (b) {
+    b.addEventListener("click", function () { montrer(b.getAttribute("data-onglet")); });
+  });
+
+  /* ---------- Mode cuisine ---------- */
+  var cuisine = document.querySelector("[data-mode-cuisine]");
+  var verrou = null;
+  if (cuisine) {
+    cuisine.addEventListener("click", function () {
+      var actif = !document.body.classList.contains("mode-cuisine");
+      document.body.classList.toggle("mode-cuisine", actif);
+      cuisine.setAttribute("aria-pressed", String(actif));
+      if (actif) {
+        montrer("etapes");
+        if (navigator.wakeLock) {
+          navigator.wakeLock.request("screen").then(function (v) { verrou = v; }).catch(function () { /* refusé */ });
+        }
+      } else if (verrou) {
+        verrou.release().catch(function () { /* déjà relâché */ });
+        verrou = null;
+      }
+    });
+    document.addEventListener("visibilitychange", function () {
+      if (!document.hidden && document.body.classList.contains("mode-cuisine") && navigator.wakeLock) {
+        navigator.wakeLock.request("screen").then(function (v) { verrou = v; }).catch(function () { /* refusé */ });
+      }
+    });
+  }
+
+  /* ---------- Filtres des favoris ---------- */
+  var filtres = document.querySelectorAll("[data-filtre]");
+  filtres.forEach(function (b) {
+    b.addEventListener("click", function () {
+      var tag = b.getAttribute("data-filtre");
+      filtres.forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+      document.querySelectorAll(".favori[data-tags]").forEach(function (f) {
+        f.hidden = !!tag && f.getAttribute("data-tags").split("|").indexOf(tag) === -1;
       });
     });
   });
 
-  // Boutons "tout décocher"
-  document.querySelectorAll(".reset-btn").forEach(function (btn) {
-    var key = btn.getAttribute("data-reset-key");
-    btn.addEventListener("click", function () {
-      if (!confirm("Décocher tous les items de cette liste ?")) return;
-      localStorage.removeItem(key);
-      document.querySelectorAll('.shopping[data-storage-key="' + key + '"] input[type="checkbox"]').forEach(
-        function (inp) { inp.checked = false; }
-      );
-    });
-  });
-
-  // Service worker basique (offline minimal)
-  if ("serviceWorker" in navigator) {
-    var swPath = location.pathname.indexOf("/menus/") !== -1 ? "../sw.js" : "sw.js";
-    navigator.serviceWorker.register(swPath).catch(function () { /* ignore */ });
+  /* ---------- Appli installable ---------- */
+  if ("serviceWorker" in navigator && document.currentScript) {
+    navigator.serviceWorker.register(new URL("sw.js", document.currentScript.src)).catch(function () { /* ignore */ });
   }
 })();
