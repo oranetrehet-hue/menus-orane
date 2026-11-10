@@ -12,3 +12,7 @@ Thumbs.db
 worker/.secrets.json
 worker/.wrangler/
 worker/node_modules/
+
+# Journal du veilleur (ordinateur d Orane)
+tools/veilleur.log
+tools/veilleur.old.log

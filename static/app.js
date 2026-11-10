@@ -1,9 +1,10 @@
 /* app.js — ce qui se passe sur le téléphone, sans réseau :
-   - « Ce soir » : affiche le jour d'aujourd'hui (ou le prochain) et le surligne dans la semaine ;
+   - « Ce soir » : le repas du jour (le soir, ou le midi quand le soir est au resto), sinon le prochain ;
+     les gestes « À anticiper » du jour ; dans la semaine, « Aujourd'hui » et les jours passés en retrait ;
    - cases « Fait » des astuces et ingrédients cochés (mémorisés sur ce téléphone) ;
    - onglets Ingrédients / Étapes et mode cuisine (écran qui reste allumé) ;
-   - filtres des favoris.
-   Le partagé (courses, liste à penser, retours) est dans boite.js. */
+   - filtres des favoris ; bouton retour qui revient vraiment à l'écran d'avant.
+   Le partagé (profil, liste du drive, ♡, remarques) est dans boite.js, la semaine suivante dans plan.js. */
 
 (function () {
   var JOURS = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
@@ -22,43 +23,59 @@
   function isoDuJour(d) {
     return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
   }
+  function majuscule(t) { return t.charAt(0).toUpperCase() + t.slice(1); }
 
   /* ---------- Ce soir ---------- */
-  var jours = Array.prototype.slice.call(document.querySelectorAll("[data-jour]"));
-  if (jours.length) {
-    var maintenant = new Date();
-    var aujourdhui = isoDuJour(maintenant);
-    var choix = null;
-    var titre = "Ce soir";
-    jours.forEach(function (j) { if (j.getAttribute("data-jour") === aujourdhui) choix = j; });
-    if (!choix) {
-      choix = jours.filter(function (j) { return j.getAttribute("data-jour") > aujourdhui; })[0] || null;
-      if (choix) titre = choix.getAttribute("data-label").split(" ").slice(0, 2).join(" ");
-      else {
-        choix = jours[jours.length - 1];
-        titre = "Dernier soir";
-      }
-    }
-    jours.forEach(function (j) { j.hidden = j !== choix; });
-    var h1 = document.querySelector("[data-titre-jour]");
-    if (h1) h1.textContent = titre;
-    var dateDuJour = document.querySelector("[data-aujourdhui]");
-    if (dateDuJour) {
-      var jour = JOURS[maintenant.getDay()];
-      dateDuJour.textContent = jour.charAt(0).toUpperCase() + jour.slice(1) + " " + maintenant.getDate() + " " + MOIS[maintenant.getMonth()];
-    }
-    // La semaine en photos : « Aujourd'hui » sur le bon jour, les jours passés en retrait.
-    document.querySelectorAll("[data-tuile-jour]").forEach(function (t) {
-      var iso = t.getAttribute("data-tuile-jour");
-      if (iso === aujourdhui) {
-        t.classList.add("aujourdhui");
-        var label = t.querySelector("[data-jour-label]");
-        if (label) label.textContent = "Aujourd'hui";
-      } else if (iso && iso < aujourdhui) {
-        t.classList.add("passe");
-      }
-    });
+  var maintenant = new Date();
+  var aujourdhui = isoDuJour(maintenant);
+  var demain = isoDuJour(new Date(maintenant.getFullYear(), maintenant.getMonth(), maintenant.getDate() + 1));
+  var dateDuJour = document.querySelector("[data-aujourdhui]");
+  if (dateDuJour) {
+    dateDuJour.textContent = majuscule(JOURS[maintenant.getDay()]) + " " + maintenant.getDate() + " " + MOIS[maintenant.getMonth()];
   }
+
+  var jours = Array.prototype.slice.call(document.querySelectorAll("[data-jour]"));
+  var h1 = document.querySelector("[data-titre-jour]");
+  if (h1) {
+    // Le repas d'aujourd'hui ; un repas du midi n'est plus « le repas du jour » l'après-midi venu.
+    var choix = jours.filter(function (j) {
+      var iso = j.getAttribute("data-jour");
+      if (iso > aujourdhui) return true;
+      if (iso < aujourdhui) return false;
+      return !(j.getAttribute("data-moment") === "midi" && maintenant.getHours() >= 15);
+    })[0] || null;
+    jours.forEach(function (j) { j.hidden = j !== choix; });
+    if (choix) {
+      var iso = choix.getAttribute("data-jour");
+      var moment = choix.getAttribute("data-moment") || "soir";
+      var titre;
+      if (iso === aujourdhui) titre = moment === "midi" ? "Ce midi" : "Ce soir";
+      else if (iso === demain) titre = "Demain " + moment;
+      else titre = majuscule(choix.getAttribute("data-nom-jour") || "") + " " + moment;
+      h1.textContent = titre;
+      // « Ce midi » sous le plat du soir : seulement si c'est bien aujourd'hui.
+      choix.querySelectorAll("[data-midi-label]").forEach(function (l) {
+        l.textContent = iso === aujourdhui ? "Ce midi" : "Le midi";
+      });
+    } else {
+      // Plus rien de prévu cette semaine : place à la semaine suivante.
+      h1.textContent = "Semaine prochaine";
+    }
+  }
+  document.querySelectorAll("[data-astuce-jour]").forEach(function (a) {
+    a.hidden = a.getAttribute("data-astuce-jour") !== aujourdhui;
+  });
+  // La semaine en photos : « Aujourd'hui » sur le bon jour, les jours passés en retrait.
+  document.querySelectorAll("[data-tuile-jour]").forEach(function (t) {
+    var iso = t.getAttribute("data-tuile-jour");
+    if (iso === aujourdhui) {
+      t.classList.add("aujourdhui");
+      var label = t.querySelector("[data-jour-label]");
+      if (label) label.textContent = "Aujourd'hui";
+    } else if (iso && iso < aujourdhui) {
+      t.classList.add("passe");
+    }
+  });
 
   /* ---------- Cases mémorisées sur ce téléphone ---------- */
   document.querySelectorAll("input[data-fait], input[data-ingredient]").forEach(function (c) {
@@ -109,8 +126,18 @@
       var tag = b.getAttribute("data-filtre");
       filtres.forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
       document.querySelectorAll(".favori[data-tags]").forEach(function (f) {
-        f.hidden = !!tag && f.getAttribute("data-tags").split("|").indexOf(tag) === -1;
+        f.classList.toggle("filtre-cache", !!tag && f.getAttribute("data-tags").split("|").indexOf(tag) === -1);
       });
+    });
+  });
+
+  /* ---------- Retour : revient à l'écran d'avant (favoris, semaine…) ---------- */
+  document.querySelectorAll("[data-retour-auto]").forEach(function (a) {
+    a.addEventListener("click", function (ev) {
+      if (document.referrer && document.referrer.indexOf(location.origin) === 0 && history.length > 1) {
+        ev.preventDefault();
+        history.back();
+      }
     });
   });
 

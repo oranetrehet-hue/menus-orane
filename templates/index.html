@@ -2,90 +2,90 @@
 {% block title %}Ce soir – Menus{% endblock %}
 
 {% block content %}
-{% if not menu %}
-  <p class="vide">Aucun menu pour le moment.</p>
-{% else %}
-  <header class="tete">
-    <div class="tete-textes">
-      <p class="date-du-jour" data-aujourdhui>{{ menu.label }}</p>
-      <h1 class="titre-ecran" data-titre-jour>Ce soir</h1>
-    </div>
-    <div class="avatars" aria-hidden="true">
-      <span class="avatar avatar-o" data-avatar="O">O</span>
-      <span class="avatar avatar-l" data-avatar="L">L</span>
-    </div>
-  </header>
+<header class="tete">
+  <div class="tete-textes">
+    <p class="date-du-jour" data-aujourdhui>{{ menu.label if menu else "" }}</p>
+    <h1 class="titre-ecran" data-titre-jour>Ce soir</h1>
+  </div>
+  {% include "_moi.html" %}
+</header>
 
-  {% for j in menu.jours %}
-  <section class="jour" data-jour="{{ j.iso }}" data-label="{{ j.label }}"{% if not loop.first %} hidden{% endif %}>
-    {% set r = j.recette_soir %}
+{% if menu %}
+  {# Un bloc par repas cuisiné (le soir, ou le midi quand le soir est au resto) ; app.js montre celui du jour. #}
+  {% for j in menu.jours if j.afficher %}
+  <section class="jour" data-jour="{{ j.iso }}" data-moment="{{ j.moment }}" data-nom-jour="{{ j.nom_jour }}"{% if not loop.first %} hidden{% endif %}>
+    {% set r = j.plat %}
     {% if r %}
     <a class="plat-du-jour" href="recettes/{{ r.page }}">
       {% if j.photo %}<img class="plat-photo" src="{{ j.photo }}" alt="" referrerpolicy="no-referrer">{% endif %}
       <span class="plat-textes">
-        <span class="plat-nom">{{ j.soir_nom }}</span>
+        <span class="plat-nom">{{ r.nom }}</span>
         <span class="meta">{{ r.meta }}</span>
       </span>
     </a>
     {% else %}
-    <div class="plat-du-jour plat-sans-recette">
+    <div class="plat-du-jour">
       {% if j.photo %}<img class="plat-photo" src="{{ j.photo }}" alt="" referrerpolicy="no-referrer">{% endif %}
-      <span class="plat-textes"><span class="plat-nom">{{ j.soir_nom }}</span></span>
+      <span class="plat-textes"><span class="plat-nom">{{ j.plat_nom }}</span></span>
     </div>
     {% endif %}
 
-    {% if j.recette_midi %}
+    {% if j.moment == "soir" and j.recette_midi %}
     <a class="ligne-plat" href="recettes/{{ j.recette_midi.page }}">
       {% if j.recette_midi.photo %}<img class="ligne-plat-photo" src="{{ j.recette_midi.photo }}" alt="" referrerpolicy="no-referrer">{% endif %}
       <span class="ligne-plat-textes">
-        <span class="meta">Ce midi</span>
+        <span class="meta" data-midi-label>Ce midi</span>
         <span class="ligne-plat-nom">{{ j.recette_midi.nom }}</span>
       </span>
     </a>
-    {% elif j.midi_special %}
-    <p class="ce-midi">Ce midi : {{ j.midi_special }}</p>
+    {% elif j.moment == "soir" and j.midi_special %}
+    <p class="ce-midi"><span data-midi-label>Ce midi</span> : {{ j.midi_special }}</p>
     {% endif %}
-
-    {% for a in j.astuces %}
-    <div class="astuce">
-      <div class="astuce-textes">
-        <span class="astuce-titre">À anticiper{% if a.quand %} · {{ a.quand }}{% endif %}</span>
-        <span>{{ a.texte }}</span>
-      </div>
-      <label class="fait"><input type="checkbox" data-fait="{{ menu.slug }}-{{ j.iso }}-{{ a.cle }}">Fait</label>
-    </div>
-    {% endfor %}
   </section>
   {% endfor %}
 
-  <section class="bloc">
-    <h2 class="section-titre">Cette semaine</h2>
-    <div class="grille-semaine">
-      {% for j in menu.jours %}
-      {% set r = j.recette_soir %}
-      <a class="tuile"{% if r %} href="recettes/{{ r.page }}"{% endif %} data-tuile-jour="{{ j.iso }}">
-        {% if j.photo %}
-        <img class="tuile-photo" src="{{ j.photo }}" alt="" loading="lazy" referrerpolicy="no-referrer">
-        {% else %}
-        <span class="tuile-photo tuile-sans-photo" aria-hidden="true">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M7 3v8a2 2 0 0 0 2 2v8M5 3v6M9 3v6M17 21V3c-2 1.5-3 4-3 7s1 4 3 4"></path></svg>
-        </span>
-        {% endif %}
-        <span class="tuile-jour" data-jour-label>{{ j.label_court }}</span>
-        <span class="tuile-nom">{{ j.soir_nom }}</span>
-        {% if j.midi_special %}<span class="tuile-midi">Midi : {{ j.midi_special }}</span>{% endif %}
-      </a>
-      {% endfor %}
+  {# Les gestes à faire la veille : affichés le jour où il faut les faire. #}
+  {% for a in menu.astuces %}
+  <div class="astuce" data-astuce-jour="{{ a.iso }}" hidden>
+    <div class="astuce-textes">
+      <span class="astuce-titre">À anticiper{% if a.quand %} · {{ a.quand }}{% endif %}</span>
+      <span>{{ a.texte }}</span>
+      <a class="astuce-plat" href="recettes/{{ a.page }}">Pour : {{ a.plat }}</a>
     </div>
-  </section>
+    <label class="fait"><input type="checkbox" data-fait="{{ menu.slug }}-{{ a.iso }}-{{ a.cle }}">Fait</label>
+  </div>
+  {% endfor %}
+{% endif %}
 
-  <a class="carte carte-claude" href="https://claude.ai/code" target="_blank" rel="noopener">
-    <span class="carte-claude-titre">Préparer la semaine prochaine</span>
-    <span class="meta">Avec Claude, depuis ce téléphone, comme d'habitude. Ton ordinateur doit être allumé pour qu'il prépare le drive.</span>
-  </a>
+{% include "_plan_carte.html" %}
 
-  {% if archives %}
-  <a class="lien-texte lien-centre" href="semaines.html">Semaines précédentes</a>
-  {% endif %}
+{% if menu %}
+<section class="bloc">
+  <h2 class="section-titre">Cette semaine</h2>
+  <div class="grille-semaine">
+    {% for j in menu.jours if j.afficher %}
+    {% set r = j.plat %}
+    <a class="tuile"{% if r %} href="recettes/{{ r.page }}"{% endif %} data-tuile-jour="{{ j.iso }}">
+      {% if j.photo %}
+      <img class="tuile-photo" src="{{ j.photo }}" alt="" loading="lazy" referrerpolicy="no-referrer">
+      {% else %}
+      <span class="tuile-photo tuile-sans-photo" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M7 3v8a2 2 0 0 0 2 2v8M5 3v6M9 3v6M17 21V3c-2 1.5-3 4-3 7s1 4 3 4"></path></svg>
+      </span>
+      {% endif %}
+      <span class="tuile-jour"><span data-jour-label>{{ j.label_court }}</span>{% if j.moment == "midi" %} · midi{% endif %}</span>
+      <span class="tuile-nom">{{ j.plat_nom }}</span>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+{% else %}
+<p class="vide">Aucun menu pour le moment.</p>
+{% endif %}
+
+{% if archives %}
+<a class="lien-texte lien-centre" href="semaines.html">Semaines précédentes</a>
 {% endif %}
 {% endblock %}
+
+{% block scripts %}<script src="{{ root }}plan.js?v={{ version }}"></script>{% endblock %}

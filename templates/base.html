@@ -7,10 +7,11 @@
   <meta name="color-scheme" content="light">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Menus">
   <title>{% block title %}Menus{% endblock %}</title>
-  <link rel="manifest" href="{{ root }}manifest.json">
-  <link rel="apple-touch-icon" href="{{ root }}icon-192.png">
-  <link rel="icon" href="{{ root }}favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="{{ root }}manifest.json?v={{ version }}">
+  <link rel="apple-touch-icon" href="{{ root }}icon-180.png?v={{ version }}">
+  <link rel="icon" href="{{ root }}icon-192.png?v={{ version }}" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Inter:wght@400;500;600;700&display=swap">
@@ -24,7 +25,7 @@
 
   {% block bas %}
   <nav class="onglets" aria-label="Navigation">
-    <a href="{{ root }}index.html"{% if page == 'semaine' %} aria-current="page"{% endif %}>
+    <a href="{{ root }}index.html"{% if page in ('semaine', 'plan') %} aria-current="page"{% endif %}>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="3"></rect><path d="M4 10h16M9 3v4M15 3v4"></path></svg>Semaine</a>
     <a href="{{ root }}courses.html"{% if page == 'courses' %} aria-current="page"{% endif %}>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"></circle><circle cx="18" cy="20" r="1.4"></circle><path d="M2 3h3l2.4 11.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.5L21 7H6"></path></svg>Drive</a>
@@ -52,5 +53,6 @@
 
   <script src="{{ root }}app.js?v={{ version }}"></script>
   <script src="{{ root }}boite.js?v={{ version }}"></script>
+  {% block scripts %}{% endblock %}
 </body>
 </html>

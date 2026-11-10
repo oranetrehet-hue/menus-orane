@@ -7,21 +7,16 @@
     <p class="date-du-jour">Chronodrive Pessac</p>
     <h1 class="titre-ecran">Prochain drive</h1>
   </div>
+  {% include "_moi.html" %}
 </header>
 
 <section class="carte boite" data-boite>
-  <form class="boite-ajout" data-boite-ajout hidden>
+  <form class="boite-ajout" data-boite-ajout>
     <label for="boite-texte" class="sr-only">Article à ajouter</label>
     <input id="boite-texte" type="text" maxlength="120" placeholder="Essuie-tout, piles…" autocomplete="off" enterkeyhint="done">
     <button type="submit" class="bouton-principal">Ajouter</button>
   </form>
   <ul class="boite-liste" data-boite-liste></ul>
-  <form class="boite-code" data-code-form hidden>
-    <p class="boite-code-titre">À faire une seule fois sur ce téléphone</p>
-    <label for="boite-code">Code de la maison</label>
-    <input id="boite-code" type="text" autocomplete="off" autocapitalize="none" spellcheck="false">
-    <button type="submit" class="bouton-principal">Valider</button>
-  </form>
   <p class="meta" data-boite-msg role="status"></p>
 </section>
 

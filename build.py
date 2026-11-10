@@ -2,24 +2,37 @@
 build.py — génère l'appli des menus (site statique publié sur GitHub Pages).
 
 Lit les .md de menus (source de vérité, dans OneDrive) et favoris.md, et produit site/ :
-- index.html                  : « Ce soir » (le jour est choisi sur le téléphone) + la semaine
-- courses.html                : la liste de courses, cases cochées communes aux deux téléphones,
-                                + « À penser pour le prochain drive »
-- favoris.html                : les recettes adorées
-- recettes/<semaine>-<n>.html : une page par recette (photo, provenance, ingrédients, étapes,
-                                ♡, remarque, mode cuisine)
+- index.html                  : « Ce soir » (le jour est choisi sur le téléphone), la semaine en photos
+                                (seulement les repas cuisinés : pas les restos ni les soirs vides),
+                                et la préparation de la semaine suivante
+- semaine-prochaine.html      : préparer le menu suivant avec Claude depuis l'appli (soirs, envies,
+                                frigo → proposition en photos → plat par plat → validé → menu publié
+                                et panier Chronodrive préparé sur l'ordinateur d'Orane)
+- courses.html                : « Prochain drive » (ce que chacun note) + ce qui a été commandé
+- favoris.html                : les recettes adorées, et qui les a adorées
+- recettes/<semaine>-<n>.html : une page par recette (photo, ingrédients, étapes, parts d'Orane et de
+                                Ludo, ♡, remarques, mode cuisine) ; recettes/favoris-<n>.html pour les
+                                favoris qui ne sont dans aucun menu
 - semaines.html, semaines/<semaine>.html : les semaines précédentes
-Les retours, la liste « à penser » et les cases cochées passent par le service Cloudflare
+Le partagé (liste du drive, ♡, remarques, préparation de la semaine) passe par le service Cloudflare
 menus-orane (static/boite.js, worker/).
+
+Format d'une recette dans un menu (### N. Nom *(jour J soir + … — XX min)*) :
+  Source : [Jow](url)  ou  Photo : [Jow](url)
+  **Ingrédients (4 portions)** :  - …
+  **Étapes** :  1. …  2. …
+  **Part Orane** : …   **Part Ludo** : …
+  💡 **À anticiper** (quand) : …
 
 Usage:
     python build.py            # build standard
-    python build.py --keep 6   # garde 6 semaines au lieu de 5
+    python build.py --keep 6   # garde 6 semaines dans « Semaines précédentes » au lieu de 5
 """
 
 from __future__ import annotations
 
 import argparse
+import html as html_mod
 import json
 import re
 import shutil
@@ -56,6 +69,8 @@ MOIS_COURTS = ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août
                "sept.", "oct.", "nov.", "déc."]
 MOTS_VIDES = {"de", "du", "des", "la", "le", "les", "et", "au", "aux", "a", "en", "d", "l",
               "un", "une", "avec", "sans", "pour", "sur", "ou"}
+# Un soir (ou un midi) sans repas cuisiné à la maison : resto, soirée, libre, restes, « — »…
+_SANS_REPAS_RE = re.compile(r"^(—|-|resto|libre|restes?\b|soir[ée]e|rien|dehors|\()", re.IGNORECASE)
 
 # Préprocessing : insère une ligne vide entre un paragraphe et une liste qui suit
 # (sinon python-markdown ne reconnait pas la liste).
@@ -79,7 +94,7 @@ def _render_md(text: str) -> str:
 
 def _render_inline(text: str) -> str:
     """Rend du markdown court sans envelopper dans <p> (et sans le « N. » de tête)."""
-    text = re.sub(r"^(\d+)\.\s+", "", text)
+    text = re.sub(r"^(\d+)[.)]\s+", "", text)
     html = md.markdown(text, extensions=["sane_lists"])
     m = re.match(r"^<p>(.*)</p>\s*$", html, flags=re.DOTALL)
     return m.group(1) if m else html
@@ -91,6 +106,10 @@ def _plain(text: str) -> str:
     return re.sub(r"\s+", " ", text.replace("**", "").replace("*", "")).strip()
 
 
+def _majuscule(text: str) -> str:
+    return text[:1].upper() + text[1:]
+
+
 def _ascii(text: str) -> str:
     return unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode().lower()
 
@@ -99,12 +118,25 @@ def _mots(text: str) -> set[str]:
     return {w for w in re.findall(r"[a-z0-9]+", _ascii(text)) if w not in MOTS_VIDES and len(w) > 1}
 
 
+def _meme_plat(a: set[str], b: set[str]) -> bool:
+    """Deux noms désignent le même plat : au moins 2 mots en commun, et presque tous ceux du nom le plus court."""
+    if not a or not b:
+        return False
+    commun = len(a & b)
+    return commun >= 2 and commun / min(len(a), len(b)) >= 0.8
+
+
 def _cle(*parts: str) -> str:
     return "--".join(re.sub(r"[^a-z0-9]+", "-", _ascii(p)).strip("-")[:48] for p in parts)
 
 
 def _date_courte(d: date) -> str:
-    return f"{d.day} {MOIS_COURTS[d.month - 1]}"  # espace insécable : « 27 oct. » ne se coupe pas
+    return f"{d.day} {MOIS_COURTS[d.month - 1]}"  # espace insécable : « 27 oct. » ne se coupe pas
+
+
+def _sans_repas(texte: str) -> bool:
+    t = (texte or "").strip()
+    return not t or bool(_SANS_REPAS_RE.match(t)) or "hors maison" in t.lower()
 
 
 # --- Semaine ISO ----------------------------------------------------
@@ -273,8 +305,14 @@ def _jour_nomme(texte: str, jours_dates: list[date], debut: date) -> date | None
 
 
 def _etapes(texte: str) -> list[str]:
+    """Ancien format (un paragraphe) : une étape par phrase."""
     morceaux = re.split(r"(?<=[.!?])\s+(?=[A-ZÀÂÉÈÊÎÔÛÇ0-9])", texte)
     return [e.strip() for e in morceaux if e.strip()]
+
+
+def _portions(ligne: str) -> str:
+    m = re.search(r"\((\d+)\s*(portions?|repas|personnes?)", ligne, re.IGNORECASE)
+    return f"{m.group(1)} {m.group(2).lower()}" if m else "4 portions"
 
 
 def _recette(item: dict, index: int, slug: str, jours_dates: list[date], debut: date, cache: dict) -> dict:
@@ -296,21 +334,31 @@ def _recette(item: dict, index: int, slug: str, jours_dates: list[date], debut: 
         date_plat = _date_du_jour(int(quand.group(2)), jours_dates, debut)
         moment = (quand.group(3) or "").lower() or "soir"
 
-    source_nom, source_url, maison, photo_page = "", "", False, ""
-    lignes_etapes, astuce, astuce_quand, part_ludo = [], "", "", ""
-    ingredients_recette, dans_ingredients = [], False
+    source_nom, source_url, photo_page = "", "", ""
+    lignes_etapes, etapes_liste, astuce, astuce_quand = [], [], "", ""
+    part_ludo, part_orane, portions = "", "", "4 portions"
+    ingredients_recette, dans_ingredients, dans_etapes = [], False, False
     for line in item["lignes"]:
         s = line.strip()
         if not s or s == "---":
             continue
         # « **Ingrédients (4 portions)** : » suivi d'une liste : tout ce qu'il faut pour cuisiner.
         if re.match(r"^\*\*Ingr[ée]dients", s, re.IGNORECASE):
-            dans_ingredients = True
+            dans_ingredients, dans_etapes = True, False
+            portions = _portions(s)
             continue
         if dans_ingredients and s.startswith(("- ", "* ")):
             ingredients_recette.append(_plain(s[2:]))
             continue
         dans_ingredients = False
+        # « **Étapes** : » suivi d'une liste numérotée : la vraie recette, un geste par étape.
+        if re.match(r"^\*\*[ÉE]tapes", s, re.IGNORECASE):
+            dans_etapes = True
+            continue
+        if dans_etapes and re.match(r"^\d+[.)]\s+", s):
+            etapes_liste.append(_render_inline(s))
+            continue
+        dans_etapes = False
         if s.lower().startswith("photo"):
             lien = re.search(r"\((https?://[^)\s]+)\)", s) or re.search(r"(https?://\S+)", s)
             if lien:
@@ -325,40 +373,47 @@ def _recette(item: dict, index: int, slug: str, jours_dates: list[date], debut: 
         if s.startswith("💡"):
             a = re.match(r"💡\s*\*\*[^*]+\*\*\s*(?:\(([^)]*)\))?\s*:?\s*(.*)", s)
             if a:
-                astuce_quand, astuce = (a.group(1) or "").strip(), _plain(a.group(2))
+                astuce_quand, astuce = (a.group(1) or "").strip(), _majuscule(_plain(a.group(2)))
             continue
         if s.startswith("**Part Ludo**"):
-            part_ludo = _plain(s.split(":", 1)[1]) if ":" in s else ""
-            part_ludo = part_ludo[:1].upper() + part_ludo[1:]
+            part_ludo = _majuscule(_plain(s.split(":", 1)[1])) if ":" in s else ""
+            continue
+        if s.startswith("**Part Orane**"):
+            part_orane = _majuscule(_plain(s.split(":", 1)[1])) if ":" in s else ""
             continue
         if s.lower().startswith("recette maison"):
-            maison = True
             s = re.sub(r"^recette maison[^.:]*[.:]\s*", "", s, flags=re.IGNORECASE)
             if not s:
                 continue
         lignes_etapes.append(_plain(s))
 
+    etapes = etapes_liste or [html_mod.escape(e) for e in _etapes(" ".join(lignes_etapes))]
+    temps_txt = f"{temps.group(1)} min" if temps else ""
     return {
         "index": index,
         "page": f"{slug}-{index}.html",
+        "slug": slug,
         "nom": nom,
         "favori": favori,
-        "temps": f"{temps.group(1)} min" if temps else "",
+        "temps": temps_txt,
         "jours_txt": jours_txt,
         "date_plat": date_plat,
         "moment": moment,
         "source_label": source_nom or "Recette maison",
         "source_url": source_url,
         "photo": _photo(source_url, cache) or _photo(photo_page, cache),
-        "meta": " · ".join(x for x in (source_nom or "Recette maison", f"{temps.group(1)} min" if temps else "", "4 portions") if x),
-        "etapes": _etapes(" ".join(lignes_etapes)),
+        "portions": portions,
+        "meta": " · ".join(x for x in (source_nom or "Recette maison", temps_txt, portions) if x),
+        "etapes": etapes,
         "astuce": astuce,
         "astuce_quand": astuce_quand,
         "astuce_date": _jour_nomme(astuce_quand, jours_dates, debut) if astuce_quand else None,
         "part_ludo": part_ludo,
+        "part_orane": part_orane,
         "ingredients_recette": ingredients_recette,
         "ingredients": [],
         "mots": _mots(nom),
+        "coeurs": "",  # O, L ou OL : qui l'a adorée (favoris.md)
     }
 
 
@@ -379,7 +434,7 @@ def _depuis_courses(articles: list[dict]) -> list[str]:
             for x in re.split(r",\s*|\s+et\s+", morceaux):
                 x = re.sub(r"\(.*?\)", "", x).strip(" .")
                 if x:
-                    sortie.append(x[:1].upper() + x[1:])
+                    sortie.append(_majuscule(x))
     vus, uniques = set(), []
     for x in sortie:
         if _ascii(x) not in vus:
@@ -446,35 +501,34 @@ def parse_menu_md(path: Path, cache: dict) -> dict:
     for r in recettes:
         r["ingredients_liste"] = r["ingredients_recette"] or _depuis_courses(r["ingredients"])
 
-    # Les jours, avec la recette du soir (et du midi quand c'est un plat du midi).
+    # Les jours, avec la recette du soir (et du midi quand c'est un plat cuisiné le midi).
     jours = []
     for (jour, midi, soir), d in zip(rows, dates):
         r_soir = next((r for r in recettes if d and r["date_plat"] == d and r["moment"] == "soir"), None)
         r_midi = next((r for r in recettes if d and r["date_plat"] == d and r["moment"] == "midi"), None)
         jours.append({
             "iso": d.isoformat() if d else "",
-            "court1": JOURS_COURTS[d.weekday()] if d else _plain(jour)[:3].upper(),
-            "court2": str(d.day) if d else "",
+            "date": d,
             "label": f"{JOURS[d.weekday()].capitalize()} {d.day} {MOIS[d.month - 1]}" if d else _plain(jour),
             "label_court": f"{JOURS[d.weekday()].capitalize()} {d.day}" if d else _plain(jour),
+            "nom_jour": JOURS[d.weekday()] if d else "",
             "midi_txt": _texte_repas(midi),
             # Le midi ne vaut d'être affiché que si ce n'est pas simplement les restes de la veille.
-            "midi_special": "" if _texte_repas(midi).lower().startswith(("restes", "—", "libre", "(")) else _texte_repas(midi),
+            "midi_special": "" if _sans_repas(_texte_repas(midi)) else _texte_repas(midi),
             "soir_txt": _texte_repas(soir),
-            # Nom affiché : la recette de la semaine, sinon le texte du tableau sans « (S45, …) » ni « — ».
-            "soir_nom": r_soir["nom"] if r_soir else (
-                re.sub(r"\s*\([^)]*S\d+[^)]*\)", "", _texte_repas(soir)).strip()
-                if _texte_repas(soir) and not _texte_repas(soir).startswith("—") else "Rien de prévu"),
+            # Nom du plat du soir : la recette de la semaine, sinon le texte du tableau sans « (S45, …) ».
+            "soir_nom": r_soir["nom"] if r_soir else re.sub(r"\s*\([^)]*\)", "", _texte_repas(soir)).strip(),
             "recette_soir": r_soir,
             "recette_midi": r_midi,
-            "astuces": [
-                {"quand": r["astuce_quand"], "texte": r["astuce"], "cle": f"{r['index']}"}
-                for r in recettes if r["astuce"] and r["astuce_date"] == d
-            ] if d else [],
         })
 
     fin = jours_dates[-1] if jours_dates else dimanche
     drive = re.search(r"Drive[^.\n]*?\b(" + "|".join(JOURS) + r")\s+(\d{1,2})", "\n".join(parts["haut"]), re.IGNORECASE)
+    astuces = [
+        {"iso": r["astuce_date"].isoformat(), "quand": r["astuce_quand"], "texte": r["astuce"], "cle": f"{r['index']}",
+         "plat": r["nom"], "page": r["page"]}
+        for r in recettes if r["astuce"] and r["astuce_date"]
+    ]
     return {
         "year": year,
         "week": week,
@@ -485,23 +539,34 @@ def parse_menu_md(path: Path, cache: dict) -> dict:
         "jours": jours,
         "recettes": recettes,
         "courses": courses,
+        "astuces": astuces,
         "drive": f"drive {drive.group(1).lower()} {drive.group(2)}" if drive else "",
-        "is_current": lundi <= date.today() <= dimanche or debut <= date.today() <= fin,
     }
 
 
 # --- Favoris ----------------------------------------------------------
 
 
-def parse_favoris(path: Path, cache: dict) -> list[dict]:
+def parse_favoris(path: Path, cache: dict) -> tuple[list[dict], list[dict]]:
+    """Les favoris (une ligne chacun) et les recettes complètes des favoris hors menus."""
     if not path.exists():
-        return []
+        return [], []
     raw = re.sub(r"<!--.*?-->", "", path.read_text(encoding="utf-8"), flags=re.DOTALL)
     favoris, zone = [], ""
+    items, item = [], None
     for line in raw.splitlines():
         h2 = re.match(r"^##\s+(.*)", line)
         if h2:
             zone = h2.group(1).strip().lower()
+            item = None
+            continue
+        if zone.startswith("recettes des favoris"):
+            h3 = re.match(r"^###\s+(.*)", line)
+            if h3:
+                item = {"titre": h3.group(1).strip(), "lignes": []}
+                items.append(item)
+            elif item is not None:
+                item["lignes"].append(line)
             continue
         if not zone.startswith("plats") or not line.startswith("- **"):
             continue
@@ -513,9 +578,15 @@ def parse_favoris(path: Path, cache: dict) -> list[dict]:
         source_url = lien.group(2) if lien else ""
         source = re.split(r"\s+[—–-]\s+", lien.group(1))[0] if lien else ""
         champs = [c.strip() for c in reste.split("|")]
-        quand = re.search(r"(\d{4})-(\d{2})-(\d{2})", champs[-1]) if champs else None
+        quand = next((q for q in (re.search(r"(\d{4})-(\d{2})-(\d{2})", c) for c in reversed(champs)) if q), None)
+        coeurs = ""
+        for c in champs:
+            if c.startswith("♡"):
+                bas = _ascii(c)
+                coeurs = ("O" if "orane" in bas else "") + ("L" if "ludo" in bas else "")
         favoris.append({
             "nom": _plain(nom),
+            "mots": _mots(_plain(nom)),
             "meta": " · ".join(x for x in (source or "Recette maison", champs[0] if champs and "min" in champs[0] else "") if x),
             "source_label": source or "Recette maison",
             "source_url": source_url,
@@ -523,8 +594,14 @@ def parse_favoris(path: Path, cache: dict) -> list[dict]:
             "temps": champs[0] if champs and "min" in champs[0] else "",
             "tags": [t.strip() for t in champs[1].split(",") if t.strip()] if len(champs) > 1 else [],
             "date_txt": _date_courte(date(int(quand.group(1)), int(quand.group(2)), int(quand.group(3)))) if quand else "",
+            "coeurs": coeurs,
+            "page": "",
+            "recette_nom": "",
         })
-    return favoris
+    recettes = [_recette(it, i + 1, "favoris", [], date.today(), cache) for i, it in enumerate(items)]
+    for r in recettes:
+        r["ingredients_liste"] = r["ingredients_recette"]
+    return favoris, recettes
 
 
 # --- Build ----------------------------------------------------------
@@ -542,47 +619,65 @@ def build(keep_weeks: int = 5) -> None:
         shutil.copy(f, OUT / f.name)
 
     cache = json.loads(PHOTOS_CACHE.read_text(encoding="utf-8")) if PHOTOS_CACHE.exists() else {}
+    today = date.today()
 
     menus = [parse_menu_md(f, cache) for f in sorted(SOURCE_MENUS.glob("*.md")) if WEEK_FILE_RE.match(f.name)]
     menus.sort(key=lambda m: (m["year"], m["week"]), reverse=True)
-    menus = menus[:keep_weeks]
-    current = next((m for m in menus if m["is_current"]), menus[0] if menus else None)
-    archives = [m for m in menus if m is not current]
-    favoris = parse_favoris(SOURCE_FAVORIS, cache)
+    favoris, recettes_favoris = parse_favoris(SOURCE_FAVORIS, cache)
 
-    # Photos d'illustration pour les plats sans photo (illustrations.json), puis favoris → photo du même plat.
+    # Photos d'illustration pour les plats sans photo (illustrations.json).
     illus_brut = json.loads((REPO / "illustrations.json").read_text(encoding="utf-8")) if (REPO / "illustrations.json").exists() else {}
     illus = {_ascii(k): v for k, v in illus_brut.items() if not k.startswith("_")}
-    for m in menus:
-        for r in m["recettes"]:
-            if not r["photo"] and _ascii(r["nom"]) in illus:
-                r["photo"] = _photo(illus[_ascii(r["nom"])], cache)
-    avec_photo = [r for m in menus for r in m["recettes"] if r["photo"]]
-    for f in favoris:
-        if f["photo"]:
-            continue
-        if _ascii(f["nom"]) in illus:
-            f["photo"] = _photo(illus[_ascii(f["nom"])], cache)
-            continue
-        mots = _mots(f["nom"])
-        proche = max(avec_photo, key=lambda r: len(mots & r["mots"]), default=None)
-        if proche and len(mots & proche["mots"]) >= 2:
-            f["photo"] = proche["photo"]
+    toutes = [r for m in menus for r in m["recettes"]]  # de la plus récente à la plus ancienne
+    for r in toutes + recettes_favoris:
+        if not r["photo"] and _ascii(r["nom"]) in illus:
+            r["photo"] = _photo(illus[_ascii(r["nom"])], cache)
 
-    # Un soir qui reprend un plat d'une autre semaine (« Poêlée tartiflette (S45) ») pointe vers sa recette,
-    # seulement si c'est bien le même plat (tous les mots du tableau se retrouvent dans la recette).
-    toutes = [r for m in menus for r in m["recettes"]]
+    # Chaque favori ouvre sa vraie recette dans l'appli (la plus récente du même plat),
+    # et chaque recette sait qui l'a adorée.
+    for f in favoris:
+        r = next((r for r in recettes_favoris + toutes if _meme_plat(f["mots"], r["mots"])), None)
+        if r:
+            f["page"] = f"recettes/{r['page']}"
+            f["recette_nom"] = r["nom"]
+            f["photo"] = f["photo"] or r["photo"]
+        if not f["photo"] and _ascii(f["nom"]) in illus:
+            f["photo"] = _photo(illus[_ascii(f["nom"])], cache)
+    for r in toutes + recettes_favoris:
+        f = next((f for f in favoris if _meme_plat(f["mots"], r["mots"])), None)
+        if f:
+            r["coeurs"] = f["coeurs"] or "O"
+
+    # Les jours : le plat cuisiné (le soir, sinon le midi), sa photo ; restos et soirs vides ne s'affichent pas.
     for m in menus:
         for j in m["jours"]:
             texte = j["soir_txt"]
-            if not j["recette_soir"] and texte and not texte.startswith("—") and not texte.lower().startswith(("restes", "resto", "libre")):
+            # Un soir qui reprend un plat d'une autre semaine pointe vers sa recette,
+            # seulement si c'est bien le même plat (tous les mots du tableau se retrouvent dans la recette).
+            if not j["recette_soir"] and not _sans_repas(texte):
                 mots = _mots(re.sub(r"\([^)]*\)", "", texte))
                 j["recette_soir"] = next((r for r in toutes if mots and mots <= r["mots"]), None)
-            # Photo du soir : celle de la recette, sinon une photo d'illustration du plat nommé.
-            j["photo"] = j["recette_soir"]["photo"] if j["recette_soir"] else (
+            plat = j["recette_soir"] or j["recette_midi"]
+            j["plat"] = plat
+            j["moment"] = "soir" if j["recette_soir"] or not j["recette_midi"] else "midi"
+            j["plat_nom"] = plat["nom"] if plat else j["soir_nom"]
+            j["photo"] = plat["photo"] if plat else (
                 _photo(illus[_ascii(j["soir_nom"])], cache) if _ascii(j["soir_nom"]) in illus else "")
+            j["afficher"] = bool(j["iso"]) and (bool(plat) or not _sans_repas(texte))
 
     PHOTOS_CACHE.write_text(json.dumps(cache, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
+
+    # Semaine affichée : celle qu'on vit (dates réelles du menu), sinon la prochaine, sinon la dernière.
+    en_cours = [m for m in menus if m["debut"] <= today <= m["fin"]]
+    a_venir = sorted((m for m in menus if m["debut"] > today), key=lambda m: m["debut"])
+    current = en_cours[0] if en_cours else (a_venir[0] if a_venir else (menus[0] if menus else None))
+    prochain = next((m for m in a_venir if current and m["debut"] > current["debut"]), None)
+    archives = [m for m in menus if m is not current and m is not prochain and m["debut"] < today][:keep_weeks]
+
+    # La semaine suivante commence après le dernier repas prévu du dernier menu.
+    dernier = max(menus, key=lambda m: m["debut"]) if menus else None
+    jours_prevus = [j["date"] for j in dernier["jours"] if j["afficher"] and j["date"]] if dernier else []
+    prochain_debut = max(max(jours_prevus) + timedelta(days=1), today) if jours_prevus else today
 
     # Filtres des favoris : les étiquettes qui reviennent au moins deux fois.
     compte: dict[str, int] = {}
@@ -590,6 +685,11 @@ def build(keep_weeks: int = 5) -> None:
         for t in f["tags"]:
             compte[t] = compte.get(t, 0) + 1
     tags = [t for t, n in sorted(compte.items(), key=lambda x: (-x[1], x[0])) if n >= 2][:5]
+
+    # Index des recettes (nom → page, photo) : pour afficher tout de suite un ♡ donné dans l'appli.
+    index_recettes: dict[str, dict] = {}
+    for r in recettes_favoris + list(reversed(toutes)):
+        index_recettes[r["nom"]] = {"page": f"recettes/{r['page']}", "photo": r["photo"], "meta": r["meta"]}
 
     env = Environment(
         loader=FileSystemLoader(str(TEMPLATES)),
@@ -600,30 +700,42 @@ def build(keep_weeks: int = 5) -> None:
     commun = {
         "version": datetime.now().strftime("%Y%m%d%H%M"),
         "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
+        "photos_favoris": [f["photo"] for f in favoris if f["photo"]][:3],
     }
 
     def ecrire(nom: str, tpl: str, **ctx) -> None:
         (OUT / nom).write_text(env.get_template(tpl).render(**commun, **ctx), encoding="utf-8")
 
-    ecrire("index.html", "index.html", page="semaine", root="", menu=current, archives=archives)
+    ecrire("index.html", "index.html", page="semaine", root="", menu=current, prochain=prochain, archives=archives)
+    ecrire("semaine-prochaine.html", "semaine-prochaine.html", page="plan", root="",
+           prochain_debut=prochain_debut.isoformat(), prochain=prochain)
     ecrire("courses.html", "courses.html", page="courses", root="", menu=current)
-    ecrire("favoris.html", "favoris.html", page="favoris", root="", favoris=favoris, tags=tags)
+    ecrire("favoris.html", "favoris.html", page="favoris", root="", favoris=favoris, tags=tags,
+           index_recettes=json.dumps(index_recettes, ensure_ascii=False).replace("</", "<\\/"))
     ecrire("semaines.html", "semaines.html", page="semaine", root="", archives=archives)
     for m in menus:
         ecrire(f"semaines/{m['slug']}.html", "semaine.html", page="semaine", root="../", menu=m)
         for r in m["recettes"]:
             ecrire(f"recettes/{r['page']}", "recette.html", page="recette", root="../", menu=m, r=r)
+    for r in recettes_favoris:
+        ecrire(f"recettes/{r['page']}", "recette.html", page="recette", root="../", menu={"slug": "favoris"}, r=r)
 
     print(f"[OK] Site genere dans {OUT}")
-    print(f"  - {len(menus)} semaine(s) incluse(s) (max {keep_weeks}), {len(favoris)} favori(s)")
+    print(f"  - {len(menus)} semaine(s), {len(archives)} en archive (max {keep_weeks}), {len(favoris)} favori(s)")
     if current:
-        print(f"  - Semaine courante : {current['slug']} ({current['label']}), "
-              f"{len(current['recettes'])} recettes, {len(current['jours'])} jours")
+        affiches = [j for j in current["jours"] if j["afficher"]]
+        print(f"  - Semaine affichée : {current['slug']} ({current['label']}), "
+              f"{len(current['recettes'])} recettes, {len(affiches)} jours avec un repas")
+    sans_page = [f["nom"] for f in favoris if not f["page"]]
+    if sans_page:
+        print(f"  ! favoris sans recette dans l'appli : {', '.join(sans_page)}")
+    print(f"  - Semaine suivante à préparer à partir du {prochain_debut.isoformat()}"
+          + (f" (déjà prête : {prochain['slug']})" if prochain else ""))
 
 
 def main():
     parser = argparse.ArgumentParser(description="Génère l'appli des menus.")
-    parser.add_argument("--keep", type=int, default=5, help="Nombre de semaines à conserver (défaut 5).")
+    parser.add_argument("--keep", type=int, default=5, help="Nombre de semaines dans « Semaines précédentes » (défaut 5).")
     args = parser.parse_args()
     build(keep_weeks=args.keep)
 

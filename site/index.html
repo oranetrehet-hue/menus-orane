@@ -7,191 +7,184 @@
   <meta name="color-scheme" content="light">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Menus">
   <title>Ce soir – Menus</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="icon-192.png">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.json?v=202611101546">
+  <link rel="apple-touch-icon" href="icon-180.png?v=202611101546">
+  <link rel="icon" href="icon-192.png?v=202611101546" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="styles.css?v=202611101457">
+  <link rel="stylesheet" href="styles.css?v=202611101546">
 </head>
 <body class="page-semaine">
   <main class="ecran">
-  <header class="tete">
-    <div class="tete-textes">
-      <p class="date-du-jour" data-aujourdhui>10 – 18 novembre</p>
-      <h1 class="titre-ecran" data-titre-jour>Ce soir</h1>
-    </div>
-    <div class="avatars" aria-hidden="true">
-      <span class="avatar avatar-o" data-avatar="O">O</span>
-      <span class="avatar avatar-l" data-avatar="L">L</span>
-    </div>
-  </header>
+<header class="tete">
+  <div class="tete-textes">
+    <p class="date-du-jour" data-aujourdhui>10 – 18 novembre</p>
+    <h1 class="titre-ecran" data-titre-jour>Ce soir</h1>
+  </div>
+<button type="button" class="moi" data-moi aria-label="Choisir ton profil">
+  <span class="avatar avatar-vide" data-avatar-moi>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"></circle><path d="M5 20c1.2-3.6 3.8-5.5 7-5.5s5.8 1.9 7 5.5"></path></svg>
+  </span>
+</button></header>
 
-  <section class="jour" data-jour="2026-11-10" data-label="Mardi 10 novembre">
-    <a class="plat-du-jour" href="recettes/2026-S45-6.html">
+  <section class="jour" data-jour="2026-11-10" data-moment="soir" data-nom-jour="mardi">
+    <a class="plat-du-jour" href="recettes/2026-S46-1.html">
 <img class="plat-photo" src="https://static.jow.fr/1200x630/recipes/NL0bY1huFEVLvw.jpg" alt="" referrerpolicy="no-referrer">      <span class="plat-textes">
-        <span class="plat-nom">Poêlée tartiflette</span>
-        <span class="meta">Recette maison · 20 min · 4 portions</span>
-      </span>
-    </a>
-
-
-  </section>
-  <section class="jour" data-jour="2026-11-11" data-label="Mercredi 11 novembre" hidden>
-    <div class="plat-du-jour plat-sans-recette">
-<img class="plat-photo" src="https://static.jow.fr/1200x630/patterns/raddish-03-202309.png_merge_recipes/94Q0Gac02UDlEQ.png.jpg" alt="" referrerpolicy="no-referrer">      <span class="plat-textes"><span class="plat-nom">Raviolis crème-champignons-parmesan</span></span>
-    </div>
-
-
-  </section>
-  <section class="jour" data-jour="2026-11-12" data-label="Jeudi 12 novembre" hidden>
-    <div class="plat-du-jour plat-sans-recette">
-      <span class="plat-textes"><span class="plat-nom">Resto</span></span>
-    </div>
-
-    <a class="ligne-plat" href="recettes/2026-S46-1.html">
-<img class="ligne-plat-photo" src="https://static.jow.fr/1200x630/recipes/AKC28yUqC0EAIQ.jpg" alt="" referrerpolicy="no-referrer">      <span class="ligne-plat-textes">
-        <span class="meta">Ce midi</span>
-        <span class="ligne-plat-nom">Gnocchis carbo crémeux aux lardons</span>
+        <span class="plat-nom">Poêlée façon tartiflette</span>
+        <span class="meta">Recette maison · 25 min · 4 portions</span>
       </span>
     </a>
 
   </section>
-  <section class="jour" data-jour="2026-11-13" data-label="Vendredi 13 novembre" hidden>
+  <section class="jour" data-jour="2026-11-11" data-moment="soir" data-nom-jour="mercredi" hidden>
     <a class="plat-du-jour" href="recettes/2026-S46-2.html">
+<img class="plat-photo" src="https://static.jow.fr/1200x630/patterns/raddish-03-202309.png_merge_recipes/94Q0Gac02UDlEQ.png.jpg" alt="" referrerpolicy="no-referrer">      <span class="plat-textes">
+        <span class="plat-nom">Raviolis crème-champignons-parmesan</span>
+        <span class="meta">Recette maison · 15 min · 2 portions</span>
+      </span>
+    </a>
+
+  </section>
+  <section class="jour" data-jour="2026-11-12" data-moment="midi" data-nom-jour="jeudi" hidden>
+    <a class="plat-du-jour" href="recettes/2026-S46-3.html">
+<img class="plat-photo" src="https://static.jow.fr/1200x630/recipes/AKC28yUqC0EAIQ.jpg" alt="" referrerpolicy="no-referrer">      <span class="plat-textes">
+        <span class="plat-nom">Gnocchis carbo crémeux aux lardons</span>
+        <span class="meta">Recette maison · 15 min · 4 portions</span>
+      </span>
+    </a>
+
+  </section>
+  <section class="jour" data-jour="2026-11-13" data-moment="soir" data-nom-jour="vendredi" hidden>
+    <a class="plat-du-jour" href="recettes/2026-S46-4.html">
 <img class="plat-photo" src="https://img.hellofresh.com/hellofresh_s3/image/5c0109afe3f33939791482f2-83ef6d76.jpg" alt="" referrerpolicy="no-referrer">      <span class="plat-textes">
         <span class="plat-nom">Poulet curry rouge, coco &amp; haricots verts, riz</span>
-        <span class="meta">HelloFresh · 20 min · 4 portions</span>
+        <span class="meta">HelloFresh · 25 min · 4 portions</span>
       </span>
     </a>
 
-
-    <div class="astuce">
-      <div class="astuce-textes">
-        <span class="astuce-titre">À anticiper · vendredi midi, 3 min</span>
-        <span>poulet en lanières + 1 c. à s. de pâte de curry + filet d&#39;huile, au frigo jusqu&#39;au soir.</span>
-      </div>
-      <label class="fait"><input type="checkbox" data-fait="2026-S46-2026-11-13-2">Fait</label>
-    </div>
   </section>
-  <section class="jour" data-jour="2026-11-14" data-label="Samedi 14 novembre" hidden>
-    <a class="plat-du-jour" href="recettes/2026-S46-3.html">
+  <section class="jour" data-jour="2026-11-14" data-moment="soir" data-nom-jour="samedi" hidden>
+    <a class="plat-du-jour" href="recettes/2026-S46-5.html">
 <img class="plat-photo" src="https://static.jow.fr/1200x630/patterns/yolk-02-202309.png_merge_recipes/R5KPUdQPrD.png.jpg" alt="" referrerpolicy="no-referrer">      <span class="plat-textes">
         <span class="plat-nom">Risotto crémeux poireaux, jambon &amp; parmesan au Thermomix</span>
         <span class="meta">Recette maison · 30 min · 4 portions</span>
       </span>
     </a>
 
-
   </section>
-  <section class="jour" data-jour="2026-11-15" data-label="Dimanche 15 novembre" hidden>
-    <a class="plat-du-jour" href="recettes/2026-S46-4.html">
+  <section class="jour" data-jour="2026-11-15" data-moment="soir" data-nom-jour="dimanche" hidden>
+    <a class="plat-du-jour" href="recettes/2026-S46-6.html">
 <img class="plat-photo" src="https://static.jow.fr/1200x630/recipes/qVdnuqqBZGk1Fw.jpg" alt="" referrerpolicy="no-referrer">      <span class="plat-textes">
         <span class="plat-nom">Penne courgettes, chèvre frais &amp; thon</span>
-        <span class="meta">Jow · 16 min · 4 portions</span>
+        <span class="meta">Jow · 20 min · 4 portions</span>
       </span>
     </a>
 
-
   </section>
-  <section class="jour" data-jour="2026-11-16" data-label="Lundi 16 novembre" hidden>
-    <a class="plat-du-jour" href="recettes/2026-S46-5.html">
+  <section class="jour" data-jour="2026-11-16" data-moment="soir" data-nom-jour="lundi" hidden>
+    <a class="plat-du-jour" href="recettes/2026-S46-7.html">
 <img class="plat-photo" src="https://static.jow.fr/1200x630/recipes/9c16G1Sul904vg.jpg" alt="" referrerpolicy="no-referrer">      <span class="plat-textes">
         <span class="plat-nom">Nouilles sautées poulet &amp; légumes, sauce cacahuète</span>
-        <span class="meta">Recette maison · 15 min · 4 portions</span>
+        <span class="meta">Recette maison · 20 min · 4 portions</span>
       </span>
     </a>
 
-
-    <div class="astuce">
-      <div class="astuce-textes">
-        <span class="astuce-titre">À anticiper · lundi soir, 2 min</span>
-        <span>faire la sauce yaourt-citron-ail, elle est meilleure le lendemain.</span>
-      </div>
-      <label class="fait"><input type="checkbox" data-fait="2026-S46-2026-11-16-6">Fait</label>
-    </div>
   </section>
-  <section class="jour" data-jour="2026-11-17" data-label="Mardi 17 novembre" hidden>
-    <a class="plat-du-jour" href="recettes/2026-S46-6.html">
+  <section class="jour" data-jour="2026-11-17" data-moment="soir" data-nom-jour="mardi" hidden>
+    <a class="plat-du-jour" href="recettes/2026-S46-8.html">
 <img class="plat-photo" src="https://static.jow.fr/1200x630/patterns/beet-04-202309.png_merge_recipes/2KIWdGcbZ7FrmA.png.jpg" alt="" referrerpolicy="no-referrer">      <span class="plat-textes">
         <span class="plat-nom">Bowl tiède quinoa, poivrons-courgettes, feta &amp; sauce yaourt-citron</span>
-        <span class="meta">Recette maison · 15 min · 4 portions</span>
+        <span class="meta">Recette maison · 20 min · 4 portions</span>
       </span>
     </a>
 
-
   </section>
-  <section class="jour" data-jour="2026-11-18" data-label="Mercredi 18 novembre" hidden>
-    <div class="plat-du-jour plat-sans-recette">
-      <span class="plat-textes"><span class="plat-nom">Rien de prévu</span></span>
+
+  <div class="astuce" data-astuce-jour="2026-11-13" hidden>
+    <div class="astuce-textes">
+      <span class="astuce-titre">À anticiper · vendredi midi, 3 min</span>
+      <span>Coupe le poulet en lanières, mélange-le avec 1 c. à s. de pâte de curry et un filet d&#39;huile, et laisse-le au frigo jusqu&#39;au soir.</span>
+      <a class="astuce-plat" href="recettes/2026-S46-4.html">Pour : Poulet curry rouge, coco &amp; haricots verts, riz</a>
     </div>
-
-
-  </section>
-
-  <section class="bloc">
-    <h2 class="section-titre">Cette semaine</h2>
-    <div class="grille-semaine">
-      <a class="tuile" href="recettes/2026-S45-6.html" data-tuile-jour="2026-11-10">
-        <img class="tuile-photo" src="https://static.jow.fr/1200x630/recipes/NL0bY1huFEVLvw.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
-        <span class="tuile-jour" data-jour-label>Mardi 10</span>
-        <span class="tuile-nom">Poêlée tartiflette</span>
-      </a>
-      <a class="tuile" data-tuile-jour="2026-11-11">
-        <img class="tuile-photo" src="https://static.jow.fr/1200x630/patterns/raddish-03-202309.png_merge_recipes/94Q0Gac02UDlEQ.png.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
-        <span class="tuile-jour" data-jour-label>Mercredi 11</span>
-        <span class="tuile-nom">Raviolis crème-champignons-parmesan</span>
-      </a>
-      <a class="tuile" data-tuile-jour="2026-11-12">
-        <span class="tuile-photo tuile-sans-photo" aria-hidden="true">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M7 3v8a2 2 0 0 0 2 2v8M5 3v6M9 3v6M17 21V3c-2 1.5-3 4-3 7s1 4 3 4"></path></svg>
-        </span>
-        <span class="tuile-jour" data-jour-label>Jeudi 12</span>
-        <span class="tuile-nom">Resto</span>
-<span class="tuile-midi">Midi : Gnocchis carbo crémeux aux lardons (faits le midi)</span>      </a>
-      <a class="tuile" href="recettes/2026-S46-2.html" data-tuile-jour="2026-11-13">
-        <img class="tuile-photo" src="https://img.hellofresh.com/hellofresh_s3/image/5c0109afe3f33939791482f2-83ef6d76.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
-        <span class="tuile-jour" data-jour-label>Vendredi 13</span>
-        <span class="tuile-nom">Poulet curry rouge, coco &amp; haricots verts, riz</span>
-      </a>
-      <a class="tuile" href="recettes/2026-S46-3.html" data-tuile-jour="2026-11-14">
-        <img class="tuile-photo" src="https://static.jow.fr/1200x630/patterns/yolk-02-202309.png_merge_recipes/R5KPUdQPrD.png.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
-        <span class="tuile-jour" data-jour-label>Samedi 14</span>
-        <span class="tuile-nom">Risotto crémeux poireaux, jambon &amp; parmesan au Thermomix</span>
-      </a>
-      <a class="tuile" href="recettes/2026-S46-4.html" data-tuile-jour="2026-11-15">
-        <img class="tuile-photo" src="https://static.jow.fr/1200x630/recipes/qVdnuqqBZGk1Fw.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
-        <span class="tuile-jour" data-jour-label>Dimanche 15</span>
-        <span class="tuile-nom">Penne courgettes, chèvre frais &amp; thon</span>
-      </a>
-      <a class="tuile" href="recettes/2026-S46-5.html" data-tuile-jour="2026-11-16">
-        <img class="tuile-photo" src="https://static.jow.fr/1200x630/recipes/9c16G1Sul904vg.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
-        <span class="tuile-jour" data-jour-label>Lundi 16</span>
-        <span class="tuile-nom">Nouilles sautées poulet &amp; légumes, sauce cacahuète</span>
-      </a>
-      <a class="tuile" href="recettes/2026-S46-6.html" data-tuile-jour="2026-11-17">
-        <img class="tuile-photo" src="https://static.jow.fr/1200x630/patterns/beet-04-202309.png_merge_recipes/2KIWdGcbZ7FrmA.png.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
-        <span class="tuile-jour" data-jour-label>Mardi 17</span>
-        <span class="tuile-nom">Bowl tiède quinoa, poivrons-courgettes, feta &amp; sauce yaourt-citron</span>
-      </a>
-      <a class="tuile" data-tuile-jour="2026-11-18">
-        <span class="tuile-photo tuile-sans-photo" aria-hidden="true">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M7 3v8a2 2 0 0 0 2 2v8M5 3v6M9 3v6M17 21V3c-2 1.5-3 4-3 7s1 4 3 4"></path></svg>
-        </span>
-        <span class="tuile-jour" data-jour-label>Mercredi 18</span>
-        <span class="tuile-nom">Rien de prévu</span>
-      </a>
+    <label class="fait"><input type="checkbox" data-fait="2026-S46-2026-11-13-4">Fait</label>
+  </div>
+  <div class="astuce" data-astuce-jour="2026-11-12" hidden>
+    <div class="astuce-textes">
+      <span class="astuce-titre">À anticiper · jeudi, au retour du drive</span>
+      <span>Regarde la date du 2e paquet de poulet. S&#39;il ne tient pas jusqu&#39;à lundi, congèle-le, et dimanche soir passe-le du congélateur au frigo.</span>
+      <a class="astuce-plat" href="recettes/2026-S46-7.html">Pour : Nouilles sautées poulet &amp; légumes, sauce cacahuète</a>
     </div>
-  </section>
+    <label class="fait"><input type="checkbox" data-fait="2026-S46-2026-11-12-7">Fait</label>
+  </div>
+  <div class="astuce" data-astuce-jour="2026-11-16" hidden>
+    <div class="astuce-textes">
+      <span class="astuce-titre">À anticiper · lundi soir, 2 min</span>
+      <span>Prépare la sauce yaourt-citron-ail, elle est encore meilleure le lendemain.</span>
+      <a class="astuce-plat" href="recettes/2026-S46-8.html">Pour : Bowl tiède quinoa, poivrons-courgettes, feta &amp; sauce yaourt-citron</a>
+    </div>
+    <label class="fait"><input type="checkbox" data-fait="2026-S46-2026-11-16-8">Fait</label>
+  </div>
 
-  <a class="carte carte-claude" href="https://claude.ai/code" target="_blank" rel="noopener">
-    <span class="carte-claude-titre">Préparer la semaine prochaine</span>
-    <span class="meta">Avec Claude, depuis ce téléphone, comme d'habitude. Ton ordinateur doit être allumé pour qu'il prépare le drive.</span>
-  </a>
+<a class="plan-carte" href="semaine-prochaine.html" data-plan-carte>
+  <span class="plan-photos" data-plan-photos aria-hidden="true">
+<img src="https://static.jow.fr/1200x630/recipes/MoqoelabG9gI5w.jpg" alt="" loading="lazy" referrerpolicy="no-referrer"><img src="https://static.jow.fr/1200x630/recipes/dAU8MGdxM2KGaw.jpg" alt="" loading="lazy" referrerpolicy="no-referrer"><img src="https://img.hellofresh.com/hellofresh_s3/image/5c0109afe3f33939791482f2-83ef6d76.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">  </span>
+  <span class="plan-textes">
+    <span class="plan-surtitre" data-plan-surtitre>Semaine prochaine</span>
+    <span class="plan-titre" data-plan-titre>Préparer le menu avec Claude</span>
+    <span class="plan-texte" data-plan-texte>Il te pose ses questions, propose les plats en photos, puis prépare le panier du drive.</span>
+  </span>
+  <span class="plan-action" data-plan-action>Commencer</span>
+</a>
+<section class="bloc">
+  <h2 class="section-titre">Cette semaine</h2>
+  <div class="grille-semaine">
+    <a class="tuile" href="recettes/2026-S46-1.html" data-tuile-jour="2026-11-10">
+      <img class="tuile-photo" src="https://static.jow.fr/1200x630/recipes/NL0bY1huFEVLvw.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
+      <span class="tuile-jour"><span data-jour-label>Mardi 10</span></span>
+      <span class="tuile-nom">Poêlée façon tartiflette</span>
+    </a>
+    <a class="tuile" href="recettes/2026-S46-2.html" data-tuile-jour="2026-11-11">
+      <img class="tuile-photo" src="https://static.jow.fr/1200x630/patterns/raddish-03-202309.png_merge_recipes/94Q0Gac02UDlEQ.png.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
+      <span class="tuile-jour"><span data-jour-label>Mercredi 11</span></span>
+      <span class="tuile-nom">Raviolis crème-champignons-parmesan</span>
+    </a>
+    <a class="tuile" href="recettes/2026-S46-3.html" data-tuile-jour="2026-11-12">
+      <img class="tuile-photo" src="https://static.jow.fr/1200x630/recipes/AKC28yUqC0EAIQ.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
+      <span class="tuile-jour"><span data-jour-label>Jeudi 12</span> · midi</span>
+      <span class="tuile-nom">Gnocchis carbo crémeux aux lardons</span>
+    </a>
+    <a class="tuile" href="recettes/2026-S46-4.html" data-tuile-jour="2026-11-13">
+      <img class="tuile-photo" src="https://img.hellofresh.com/hellofresh_s3/image/5c0109afe3f33939791482f2-83ef6d76.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
+      <span class="tuile-jour"><span data-jour-label>Vendredi 13</span></span>
+      <span class="tuile-nom">Poulet curry rouge, coco &amp; haricots verts, riz</span>
+    </a>
+    <a class="tuile" href="recettes/2026-S46-5.html" data-tuile-jour="2026-11-14">
+      <img class="tuile-photo" src="https://static.jow.fr/1200x630/patterns/yolk-02-202309.png_merge_recipes/R5KPUdQPrD.png.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
+      <span class="tuile-jour"><span data-jour-label>Samedi 14</span></span>
+      <span class="tuile-nom">Risotto crémeux poireaux, jambon &amp; parmesan au Thermomix</span>
+    </a>
+    <a class="tuile" href="recettes/2026-S46-6.html" data-tuile-jour="2026-11-15">
+      <img class="tuile-photo" src="https://static.jow.fr/1200x630/recipes/qVdnuqqBZGk1Fw.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
+      <span class="tuile-jour"><span data-jour-label>Dimanche 15</span></span>
+      <span class="tuile-nom">Penne courgettes, chèvre frais &amp; thon</span>
+    </a>
+    <a class="tuile" href="recettes/2026-S46-7.html" data-tuile-jour="2026-11-16">
+      <img class="tuile-photo" src="https://static.jow.fr/1200x630/recipes/9c16G1Sul904vg.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
+      <span class="tuile-jour"><span data-jour-label>Lundi 16</span></span>
+      <span class="tuile-nom">Nouilles sautées poulet &amp; légumes, sauce cacahuète</span>
+    </a>
+    <a class="tuile" href="recettes/2026-S46-8.html" data-tuile-jour="2026-11-17">
+      <img class="tuile-photo" src="https://static.jow.fr/1200x630/patterns/beet-04-202309.png_merge_recipes/2KIWdGcbZ7FrmA.png.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
+      <span class="tuile-jour"><span data-jour-label>Mardi 17</span></span>
+      <span class="tuile-nom">Bowl tiède quinoa, poivrons-courgettes, feta &amp; sauce yaourt-citron</span>
+    </a>
+  </div>
+</section>
 
-  <a class="lien-texte lien-centre" href="semaines.html">Semaines précédentes</a>
+<a class="lien-texte lien-centre" href="semaines.html">Semaines précédentes</a>
   </main>
 
   <nav class="onglets" aria-label="Navigation">
@@ -218,7 +211,7 @@
     <button type="button" class="bouton-secondaire" data-feuille-fermer>Terminé</button>
   </div>
 
-  <script src="app.js?v=202611101457"></script>
-  <script src="boite.js?v=202611101457"></script>
-</body>
+  <script src="app.js?v=202611101546"></script>
+  <script src="boite.js?v=202611101546"></script>
+<script src="plan.js?v=202611101546"></script></body>
 </html>

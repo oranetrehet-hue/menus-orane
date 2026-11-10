@@ -7,23 +7,24 @@
   <meta name="color-scheme" content="light">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Menus">
   <title>Boulettes de bœuf sauce tomate-mozzarella – Menus</title>
-  <link rel="manifest" href="../manifest.json">
-  <link rel="apple-touch-icon" href="../icon-192.png">
-  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../manifest.json?v=202611101546">
+  <link rel="apple-touch-icon" href="../icon-180.png?v=202611101546">
+  <link rel="icon" href="../icon-192.png?v=202611101546" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="../styles.css?v=202611101457">
+  <link rel="stylesheet" href="../styles.css?v=202611101546">
 </head>
 <body class="page-recette">
   <main class="ecran">
-<div class="page-recette" data-retour data-recette="Boulettes de bœuf sauce tomate-mozzarella" data-semaine="2026-S45">
+<div class="page-recette" data-recette-page data-recette="Boulettes de bœuf sauce tomate-mozzarella" data-semaine="2026-S45" data-coeurs="O">
   <div class="barre-haut">
-    <a href="../index.html" class="bouton-rond" aria-label="Retour">
+    <a href="../index.html" class="bouton-rond" aria-label="Retour" data-retour-auto>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>
     </a>
-    <button type="button" class="bouton-rond coeur" data-retour-fav aria-pressed="false" aria-label="On a adoré">
+    <button type="button" class="bouton-rond coeur" data-retour-fav aria-pressed="false" aria-label="Ajouter à mes favoris">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg>
     </button>
   </div>
@@ -33,6 +34,7 @@
   <div class="recette-tete">
     <h1 class="titre-recette">Boulettes de bœuf sauce tomate-mozzarella</h1>
     <p class="meta">Recette maison · 25 min · 4 portions</p>
+    <p class="adoree" data-adoree hidden><span class="mini-avatars" data-adoree-avatars></span><span data-adoree-texte></span></p>
   </div>
 
   <div class="segments" role="tablist" aria-label="Recette">
@@ -41,20 +43,39 @@
   </div>
 
   <section class="carte liste" id="panneau-ingredients" role="tabpanel" aria-labelledby="onglet-ingredients" data-panneau="ingredients">
-      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S45-3.html-1"><span>500 g viande hachée fraîche pur bœuf 5 %</span></label>
-      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S45-3.html-2"><span>1 pulpe de tomates 400 g</span></label>
-      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S45-3.html-3"><span>1 mozzarella (125 g)</span></label>
-      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S45-3.html-4"><span>1 paquet chapelure</span></label>
-      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S45-3.html-5"><span>Herbes de Provence</span></label>
-      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S45-3.html-6"><span>Ail</span></label>
+      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S45-3.html-1"><span>500 g de viande hachée pur bœuf 5 %</span></label>
+      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S45-3.html-2"><span>4 c. à s. de chapelure</span></label>
+      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S45-3.html-3"><span>1 gousse d&#39;ail</span></label>
+      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S45-3.html-4"><span>2 poignées d&#39;oignons émincés surgelés</span></label>
+      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S45-3.html-5"><span>400 g de pulpe de tomates</span></label>
+      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S45-3.html-6"><span>1 c. à c. d&#39;herbes de Provence</span></label>
+      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S45-3.html-7"><span>1 mozzarella (125 g)</span></label>
+      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S45-3.html-8"><span>280 g de riz</span></label>
+      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S45-3.html-9"><span>1 c. à s. d&#39;huile, sel, poivre</span></label>
   </section>
 
   <section class="carte etapes" id="panneau-etapes" role="tabpanel" aria-labelledby="onglet-etapes" data-panneau="etapes" hidden>
     <ol>
-<li>Riz à cuire.</li><li>Viande hachée + chapelure + ail râpé + sel, poivre, boulettes dorées 5–6 min.</li><li>Oignons surgelés avec elles, ajouter la pulpe de tomates + herbes de Provence, mijoter 8 min.</li><li>Mozzarella en morceaux dessus, couvrir 3–4 min (ou gratiner 5 min au four).</li>    </ol>
+<li>Lance le riz : fais-le cuire dans une grande casserole d'eau salée bouillante le temps indiqué sur le paquet (environ 11 min), puis égoutte.</li><li>Dans un saladier, mélange la viande hachée, la chapelure, l'ail râpé, du sel et du poivre. Forme une vingtaine de boulettes de la taille d'une noix (avec les mains mouillées, ça ne colle pas).</li><li>Fais chauffer l'huile dans une grande poêle <strong>à feu moyen-vif</strong>. Fais dorer les boulettes <strong>5 à 6 min</strong> en les retournant, jusqu'à ce qu'elles soient dorées de tous les côtés.</li><li>Ajoute les oignons surgelés autour des boulettes et laisse-les fondre 2 min.</li><li>Verse la pulpe de tomates et les herbes de Provence, mélange doucement, couvre et laisse mijoter <strong>8 min à feu doux</strong>. Goûte et rectifie le sel.</li><li>Prélève les parts de Ludo (ce soir et demain midi), puis pose la mozzarella coupée en morceaux sur le reste. Couvre et laisse fondre 3 à 4 min.</li><li>Sers avec le riz.</li>    </ol>
+  </section>
+
+  <section class="carte parts" aria-labelledby="titre-parts">
+    <h2 class="encart-titre" id="titre-parts">Les parts</h2>
+    <div class="part">
+      <span class="avatar avatar-o" data-avatar="O">O</span>
+      <p class="part-textes"><span class="part-nom">Orane</span>Avec la mozzarella bien fondue.</p>
+    </div>
+    <div class="part">
+      <span class="avatar avatar-l" data-avatar="L">L</span>
+      <p class="part-textes"><span class="part-nom">Ludo</span>Servie avant la mozzarella, avec plus de sauce tomate et de riz.</p>
+    </div>
   </section>
 
 
+  <section class="carte remarques" data-remarques hidden aria-labelledby="titre-remarques">
+    <h2 class="encart-titre" id="titre-remarques">Vos remarques</h2>
+    <ul class="remarques-liste" data-remarques-liste></ul>
+  </section>
 
 
   <form class="retour-form" data-retour-form hidden>
@@ -72,7 +93,7 @@
   </main>
 
 
-  <script src="../app.js?v=202611101457"></script>
-  <script src="../boite.js?v=202611101457"></script>
+  <script src="../app.js?v=202611101546"></script>
+  <script src="../boite.js?v=202611101546"></script>
 </body>
 </html>

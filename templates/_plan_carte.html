@@ -1,0 +1,14 @@
+{# La semaine suivante : la préparer avec Claude, ou la voir si elle est déjà prête. plan.js met la carte à jour
+   (Claude prépare, proposition à valider, panier prêt…). #}
+{% set photos = (prochain.recettes|map(attribute="photo")|select|list)[:3] if prochain else photos_favoris %}
+<a class="plan-carte" href="{{ 'semaines/' ~ prochain.slug ~ '.html' if prochain else 'semaine-prochaine.html' }}" data-plan-carte{% if prochain %} data-prochain{% endif %}>
+  <span class="plan-photos" data-plan-photos aria-hidden="true">
+    {% for p in photos %}<img src="{{ p }}" alt="" loading="lazy" referrerpolicy="no-referrer">{% endfor %}
+  </span>
+  <span class="plan-textes">
+    <span class="plan-surtitre" data-plan-surtitre>Semaine prochaine</span>
+    <span class="plan-titre" data-plan-titre>{% if prochain %}Le menu est prêt{% else %}Préparer le menu avec Claude{% endif %}</span>
+    <span class="plan-texte" data-plan-texte>{% if prochain %}{{ prochain.label|capitalize }} · {{ prochain.recettes|length }} plats{% else %}Il te pose ses questions, propose les plats en photos, puis prépare le panier du drive.{% endif %}</span>
+  </span>
+  <span class="plan-action" data-plan-action>{% if prochain %}Voir la semaine{% else %}Commencer{% endif %}</span>
+</a>

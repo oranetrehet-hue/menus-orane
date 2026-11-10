@@ -7,23 +7,24 @@
   <meta name="color-scheme" content="light">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Menus">
   <title>Salade César maison au poulet – Menus</title>
-  <link rel="manifest" href="../manifest.json">
-  <link rel="apple-touch-icon" href="../icon-192.png">
-  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../manifest.json?v=202611101546">
+  <link rel="apple-touch-icon" href="../icon-180.png?v=202611101546">
+  <link rel="icon" href="../icon-192.png?v=202611101546" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="../styles.css?v=202611101457">
+  <link rel="stylesheet" href="../styles.css?v=202611101546">
 </head>
 <body class="page-recette">
   <main class="ecran">
-<div class="page-recette" data-retour data-recette="Salade César maison au poulet" data-semaine="2026-S44">
+<div class="page-recette" data-recette-page data-recette="Salade César maison au poulet" data-semaine="2026-S44" data-coeurs="">
   <div class="barre-haut">
-    <a href="../index.html" class="bouton-rond" aria-label="Retour">
+    <a href="../index.html" class="bouton-rond" aria-label="Retour" data-retour-auto>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>
     </a>
-    <button type="button" class="bouton-rond coeur" data-retour-fav aria-pressed="false" aria-label="On a adoré">
+    <button type="button" class="bouton-rond coeur" data-retour-fav aria-pressed="false" aria-label="Ajouter à mes favoris">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg>
     </button>
   </div>
@@ -33,6 +34,7 @@
   <div class="recette-tete">
     <h1 class="titre-recette">Salade César maison au poulet</h1>
     <p class="meta">Jow · 15 min · 4 portions</p>
+    <p class="adoree" data-adoree hidden><span class="mini-avatars" data-adoree-avatars></span><span data-adoree-texte></span></p>
   </div>
 
   <div class="segments" role="tablist" aria-label="Recette">
@@ -52,16 +54,21 @@
 
   <section class="carte etapes" id="panneau-etapes" role="tabpanel" aria-labelledby="onglet-etapes" data-panneau="etapes" hidden>
     <ol>
-<li>Poulet en lanières doré à la poêle 6–8 min, sel, poivre, paprika.</li><li>Sauce : 4 c. à s. de mayo + jus d&#39;½ citron + 1 c. à c. de moutarde + ½ gousse d&#39;ail râpée + 2 c. à s. de parmesan + un peu d&#39;eau pour détendre.</li><li>Sucrines émincées + tomates cerises + croûtons + poulet tiède + copeaux/pluie de parmesan, sauce par-dessus.</li><li>Pour le déj du lendemain : garder la sauce et les croûtons à part.</li>    </ol>
+<li>Poulet en lanières doré à la poêle 6–8 min, sel, poivre, paprika.</li><li>Sauce : 4 c. à s. de mayo + jus d&#x27;½ citron + 1 c. à c. de moutarde + ½ gousse d&#x27;ail râpée + 2 c. à s. de parmesan + un peu d&#x27;eau pour détendre.</li><li>Sucrines émincées + tomates cerises + croûtons + poulet tiède + copeaux/pluie de parmesan, sauce par-dessus.</li><li>Pour le déj du lendemain : garder la sauce et les croûtons à part.</li>    </ol>
   </section>
 
 
   <div class="astuce">
     <div class="astuce-textes">
       <span class="astuce-titre">À anticiper · mardi soir, 3 min, pendant les fajitas</span>
-      <span>préparer la sauce César dans un pot au frigo → l&#39;ail et le parmesan infusent, la sauce est meilleure et mercredi soir il ne reste que la salade à monter.</span>
+      <span>Préparer la sauce César dans un pot au frigo → l&#39;ail et le parmesan infusent, la sauce est meilleure et mercredi soir il ne reste que la salade à monter.</span>
     </div>
   </div>
+
+  <section class="carte remarques" data-remarques hidden aria-labelledby="titre-remarques">
+    <h2 class="encart-titre" id="titre-remarques">Vos remarques</h2>
+    <ul class="remarques-liste" data-remarques-liste></ul>
+  </section>
 
   <a class="lien-texte" href="https://jow.com/fr/recipes/crispy-chicken-caesar-salad-8unzi0yv9dk3690d0cpw" target="_blank" rel="noopener">Voir la recette d'origine sur Jow</a>
 
@@ -80,7 +87,7 @@
   </main>
 
 
-  <script src="../app.js?v=202611101457"></script>
-  <script src="../boite.js?v=202611101457"></script>
+  <script src="../app.js?v=202611101546"></script>
+  <script src="../boite.js?v=202611101546"></script>
 </body>
 </html>

@@ -7,23 +7,24 @@
   <meta name="color-scheme" content="light">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Menus">
   <title>Poulet au curry rouge, coco &amp; haricots verts, riz – Menus</title>
-  <link rel="manifest" href="../manifest.json">
-  <link rel="apple-touch-icon" href="../icon-192.png">
-  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../manifest.json?v=202611101546">
+  <link rel="apple-touch-icon" href="../icon-180.png?v=202611101546">
+  <link rel="icon" href="../icon-192.png?v=202611101546" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="../styles.css?v=202611101457">
+  <link rel="stylesheet" href="../styles.css?v=202611101546">
 </head>
 <body class="page-recette">
   <main class="ecran">
-<div class="page-recette" data-retour data-recette="Poulet au curry rouge, coco &amp; haricots verts, riz" data-semaine="2026-S43">
+<div class="page-recette" data-recette-page data-recette="Poulet au curry rouge, coco &amp; haricots verts, riz" data-semaine="2026-S43" data-coeurs="O">
   <div class="barre-haut">
-    <a href="../index.html" class="bouton-rond" aria-label="Retour">
+    <a href="../index.html" class="bouton-rond" aria-label="Retour" data-retour-auto>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>
     </a>
-    <button type="button" class="bouton-rond coeur" data-retour-fav aria-pressed="false" aria-label="On a adoré">
+    <button type="button" class="bouton-rond coeur" data-retour-fav aria-pressed="false" aria-label="Ajouter à mes favoris">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg>
     </button>
   </div>
@@ -33,6 +34,7 @@
   <div class="recette-tete">
     <h1 class="titre-recette">Poulet au curry rouge, coco &amp; haricots verts, riz</h1>
     <p class="meta">HelloFresh · 20 min · 4 portions</p>
+    <p class="adoree" data-adoree hidden><span class="mini-avatars" data-adoree-avatars></span><span data-adoree-texte></span></p>
   </div>
 
   <div class="segments" role="tablist" aria-label="Recette">
@@ -51,10 +53,15 @@
 
   <section class="carte etapes" id="panneau-etapes" role="tabpanel" aria-labelledby="onglet-etapes" data-panneau="etapes" hidden>
     <ol>
-<li>Riz à cuire.</li><li>Au wok, à feu vif dans un filet d&#39;huile : poulet en lanières + oignons surgelés + haricots verts surgelés, 4–5 min.</li><li>Ajouter 2–3 c. à s. de pâte de curry rouge, mélanger 1 min, puis le lait de coco.</li><li>Baisser le feu, couvrir, mijoter 6–10 min jusqu&#39;à ce que les haricots soient tendres et le poulet cuit.</li><li>Sel, filet de citron.</li>    </ol>
+<li>Riz à cuire.</li><li>Au wok, à feu vif dans un filet d&#x27;huile : poulet en lanières + oignons surgelés + haricots verts surgelés, 4–5 min.</li><li>Ajouter 2–3 c. à s. de pâte de curry rouge, mélanger 1 min, puis le lait de coco.</li><li>Baisser le feu, couvrir, mijoter 6–10 min jusqu&#x27;à ce que les haricots soient tendres et le poulet cuit.</li><li>Sel, filet de citron.</li>    </ol>
   </section>
 
 
+
+  <section class="carte remarques" data-remarques hidden aria-labelledby="titre-remarques">
+    <h2 class="encart-titre" id="titre-remarques">Vos remarques</h2>
+    <ul class="remarques-liste" data-remarques-liste></ul>
+  </section>
 
   <a class="lien-texte" href="https://www.hellofresh.fr/recipes/curry-au-poulet-et-aux-haricots-verts-5c0109afe3f33939791482f2" target="_blank" rel="noopener">Voir la recette d'origine sur HelloFresh</a>
 
@@ -73,7 +80,7 @@
   </main>
 
 
-  <script src="../app.js?v=202611101457"></script>
-  <script src="../boite.js?v=202611101457"></script>
+  <script src="../app.js?v=202611101546"></script>
+  <script src="../boite.js?v=202611101546"></script>
 </body>
 </html>

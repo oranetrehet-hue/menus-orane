@@ -7,23 +7,24 @@
   <meta name="color-scheme" content="light">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Menus">
   <title>Nouilles de riz sautées, poulet &amp; légumes miel-soja – Menus</title>
-  <link rel="manifest" href="../manifest.json">
-  <link rel="apple-touch-icon" href="../icon-192.png">
-  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../manifest.json?v=202611101546">
+  <link rel="apple-touch-icon" href="../icon-180.png?v=202611101546">
+  <link rel="icon" href="../icon-192.png?v=202611101546" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="../styles.css?v=202611101457">
+  <link rel="stylesheet" href="../styles.css?v=202611101546">
 </head>
 <body class="page-recette">
   <main class="ecran">
-<div class="page-recette" data-retour data-recette="Nouilles de riz sautées, poulet &amp; légumes miel-soja" data-semaine="2026-S41">
+<div class="page-recette" data-recette-page data-recette="Nouilles de riz sautées, poulet &amp; légumes miel-soja" data-semaine="2026-S41" data-coeurs="">
   <div class="barre-haut">
-    <a href="../index.html" class="bouton-rond" aria-label="Retour">
+    <a href="../index.html" class="bouton-rond" aria-label="Retour" data-retour-auto>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>
     </a>
-    <button type="button" class="bouton-rond coeur" data-retour-fav aria-pressed="false" aria-label="On a adoré">
+    <button type="button" class="bouton-rond coeur" data-retour-fav aria-pressed="false" aria-label="Ajouter à mes favoris">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg>
     </button>
   </div>
@@ -33,6 +34,7 @@
   <div class="recette-tete">
     <h1 class="titre-recette">Nouilles de riz sautées, poulet &amp; légumes miel-soja</h1>
     <p class="meta">HelloFresh · 15 min · 4 portions</p>
+    <p class="adoree" data-adoree hidden><span class="mini-avatars" data-adoree-avatars></span><span data-adoree-texte></span></p>
   </div>
 
   <div class="segments" role="tablist" aria-label="Recette">
@@ -49,10 +51,15 @@
 
   <section class="carte etapes" id="panneau-etapes" role="tabpanel" aria-labelledby="onglet-etapes" data-panneau="etapes" hidden>
     <ol>
-<li>Nouilles de riz à cuire selon paquet, égoutter, filet d&#39;huile.</li><li>Au wok à feu vif : légumes wok surgelés 5 min, débarrasser.</li><li>Poulet en lanières dorée 4–5 min avec l&#39;ail.</li><li>Sauce : miel + sauce soja (+ gingembre moulu si dispo) + un peu d&#39;eau.</li><li>Tout remettre dans le wok avec les nouilles et la sauce, sauter 1–2 min.</li>    </ol>
+<li>Nouilles de riz à cuire selon paquet, égoutter, filet d&#x27;huile.</li><li>Au wok à feu vif : légumes wok surgelés 5 min, débarrasser.</li><li>Poulet en lanières dorée 4–5 min avec l&#x27;ail.</li><li>Sauce : miel + sauce soja (+ gingembre moulu si dispo) + un peu d&#x27;eau.</li><li>Tout remettre dans le wok avec les nouilles et la sauce, sauter 1–2 min.</li>    </ol>
   </section>
 
 
+
+  <section class="carte remarques" data-remarques hidden aria-labelledby="titre-remarques">
+    <h2 class="encart-titre" id="titre-remarques">Vos remarques</h2>
+    <ul class="remarques-liste" data-remarques-liste></ul>
+  </section>
 
   <a class="lien-texte" href="https://www.hellofresh.fr/recipes/dinde-sauce-miel-gingembre-665994265a85f96229972d1e" target="_blank" rel="noopener">Voir la recette d'origine sur HelloFresh</a>
 
@@ -71,7 +78,7 @@
   </main>
 
 
-  <script src="../app.js?v=202611101457"></script>
-  <script src="../boite.js?v=202611101457"></script>
+  <script src="../app.js?v=202611101546"></script>
+  <script src="../boite.js?v=202611101546"></script>
 </body>
 </html>

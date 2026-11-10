@@ -2,12 +2,12 @@
 {% block title %}{{ r.nom }} – Menus{% endblock %}
 
 {% block content %}
-<div class="page-recette" data-retour data-recette="{{ r.nom }}" data-semaine="{{ menu.slug }}">
+<div class="page-recette" data-recette-page data-recette="{{ r.nom }}" data-semaine="{{ menu.slug }}" data-coeurs="{{ r.coeurs }}">
   <div class="barre-haut">
-    <a href="{{ root }}index.html" class="bouton-rond" aria-label="Retour">
+    <a href="{{ root }}index.html" class="bouton-rond" aria-label="Retour" data-retour-auto>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>
     </a>
-    <button type="button" class="bouton-rond coeur" data-retour-fav aria-pressed="false" aria-label="On a adoré">
+    <button type="button" class="bouton-rond coeur" data-retour-fav aria-pressed="false" aria-label="Ajouter à mes favoris">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg>
     </button>
   </div>
@@ -19,6 +19,8 @@
   <div class="recette-tete">
     <h1 class="titre-recette">{{ r.nom }}</h1>
     <p class="meta">{{ r.meta }}</p>
+    {# Qui l'a adorée : rempli par boite.js (favoris.md + les ♡ donnés dans l'appli) #}
+    <p class="adoree" data-adoree hidden><span class="mini-avatars" data-adoree-avatars></span><span data-adoree-texte></span></p>
   </div>
 
   <div class="segments" role="tablist" aria-label="Recette">
@@ -36,14 +38,23 @@
 
   <section class="carte etapes" id="panneau-etapes" role="tabpanel" aria-labelledby="onglet-etapes" data-panneau="etapes" hidden>
     <ol>
-      {% for e in r.etapes %}<li>{{ e }}</li>{% endfor %}
+      {% for e in r.etapes %}<li>{{ e|safe }}</li>{% endfor %}
     </ol>
   </section>
 
-  {% if r.part_ludo %}
-  <section class="carte encart">
-    <h2 class="encart-titre">Part de Ludo</h2>
-    <p>{{ r.part_ludo }}</p>
+  {% if r.part_ludo or r.part_orane %}
+  <section class="carte parts" aria-labelledby="titre-parts">
+    <h2 class="encart-titre" id="titre-parts">Les parts</h2>
+    <div class="part">
+      <span class="avatar avatar-o" data-avatar="O">O</span>
+      <p class="part-textes"><span class="part-nom">Orane</span>{{ r.part_orane or "Une part normale, voire généreuse." }}</p>
+    </div>
+    {% if r.part_ludo %}
+    <div class="part">
+      <span class="avatar avatar-l" data-avatar="L">L</span>
+      <p class="part-textes"><span class="part-nom">Ludo</span>{{ r.part_ludo }}</p>
+    </div>
+    {% endif %}
   </section>
   {% endif %}
 
@@ -55,6 +66,12 @@
     </div>
   </div>
   {% endif %}
+
+  {# Les remarques d'Orane et de Ludo sur ce plat : remplies par boite.js #}
+  <section class="carte remarques" data-remarques hidden aria-labelledby="titre-remarques">
+    <h2 class="encart-titre" id="titre-remarques">Vos remarques</h2>
+    <ul class="remarques-liste" data-remarques-liste></ul>
+  </section>
 
   {% if r.source_url %}
   <a class="lien-texte" href="{{ r.source_url }}" target="_blank" rel="noopener">Voir la recette d'origine sur {{ r.source_label }}</a>

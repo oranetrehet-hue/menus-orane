@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#faf7f2">
+  <meta name="color-scheme" content="light">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Menus">
+  <title>Semaine prochaine – Menus</title>
+  <link rel="manifest" href="manifest.json?v=202611101546">
+  <link rel="apple-touch-icon" href="icon-180.png?v=202611101546">
+  <link rel="icon" href="icon-192.png?v=202611101546" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="styles.css?v=202611101546">
+</head>
+<body class="page-plan">
+  <main class="ecran">
+<div class="plan" data-plan data-debut="2026-11-18">
+  <div class="barre-haut">
+    <a href="index.html" class="bouton-rond" aria-label="Retour" data-retour-auto>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>
+    </a>
+  </div>
+
+  <header class="plan-tete">
+    <p class="date-du-jour" data-plan-dates>Semaine prochaine</p>
+    <h1 class="titre-ecran" data-plan-h1>Le menu avec Claude</h1>
+  </header>
+
+  <p class="meta" data-plan-etat="chargement">Un instant…</p>
+
+  <section class="carte plan-bloc" data-plan-etat="sans-profil" hidden>
+    <p>Pour préparer le menu depuis l'appli, choisis d'abord ton profil : Claude saura qui lui répond.</p>
+    <button type="button" class="bouton-principal" data-ouvrir-profil>Choisir mon profil</button>
+  </section>
+
+  <form class="plan-form" data-plan-etat="questions" hidden>
+    <p class="plan-intro">Comme d'habitude, quelques questions avant que Claude propose les plats.</p>
+
+    <section class="carte question">
+      <h2 class="question-titre">Quels soirs mangez-vous à la maison ?</h2>
+      <p class="question-aide">Touche un soir pour l'enlever : resto, soirée, week-end ailleurs. Chaque dîner fait aussi le déjeuner du lendemain.</p>
+      <div class="jours-choix" data-soirs></div>
+      <p class="question-aide" data-soirs-compte></p>
+    </section>
+
+    <section class="carte question">
+      <h2 class="question-titre">Votre semaine : des soirs chargés, des invités, quelqu'un seul ?</h2>
+      <label class="sr-only" for="q-semaine">Votre semaine</label>
+      <textarea id="q-semaine" data-champ="semaine" rows="2" maxlength="600" placeholder="Mercredi chargé, des amis samedi, Ludo rentre tard lundi…"></textarea>
+    </section>
+
+    <section class="carte question">
+      <h2 class="question-titre">Une envie en ce moment ?</h2>
+      <div class="choix" data-envies>
+        <button type="button" aria-pressed="false">Réconfortant</button>
+        <button type="button" aria-pressed="false">Léger</button>
+        <button type="button" aria-pressed="false">Exotique</button>
+        <button type="button" aria-pressed="false">Frais ou cru</button>
+        <button type="button" aria-pressed="false">Très simple</button>
+        <button type="button" aria-pressed="false">Gourmand</button>
+      </div>
+      <label class="sr-only" for="q-envie">Une envie précise</label>
+      <input id="q-envie" type="text" data-champ="envie" maxlength="200" placeholder="Une envie précise ? (pâtes, curry…)" autocomplete="off">
+    </section>
+
+    <section class="carte question">
+      <h2 class="question-titre">Il fait quel temps ?</h2>
+      <div class="choix" data-meteo data-unique>
+        <button type="button" aria-pressed="false">Froid</button>
+        <button type="button" aria-pressed="false">Doux</button>
+        <button type="button" aria-pressed="false">Chaud</button>
+        <button type="button" aria-pressed="false">Canicule</button>
+      </div>
+    </section>
+
+    <section class="carte question">
+      <h2 class="question-titre">Des restes ou des produits à finir ?</h2>
+      <label class="sr-only" for="q-frigo">Restes et produits à finir</label>
+      <textarea id="q-frigo" data-champ="frigo" rows="2" maxlength="600" placeholder="Une demi-crème, 2 courgettes, du riz…"></textarea>
+    </section>
+
+    <section class="carte question">
+      <h2 class="question-titre">Le budget cette semaine ?</h2>
+      <div class="segments" data-budget>
+        <button type="button" aria-pressed="true" data-valeur="normal">Normal</button>
+        <button type="button" aria-pressed="false" data-valeur="serré">Serré</button>
+      </div>
+    </section>
+
+    <section class="carte question">
+      <h2 class="question-titre">Quel jour pour le drive ?</h2>
+      <div class="jours-choix" data-drive></div>
+    </section>
+
+    <section class="carte question">
+      <h2 class="question-titre">Autre chose à dire à Claude ?</h2>
+      <label class="sr-only" for="q-autre">Autre chose</label>
+      <textarea id="q-autre" data-champ="autre" rows="2" maxlength="600" placeholder="Un plat qui vous ferait plaisir, un midi à prévoir…"></textarea>
+    </section>
+
+    <p class="meta plan-note" data-pc-form></p>
+    <p class="retour-msg" data-form-msg role="status"></p>
+    <div class="barre-actions">
+      <button type="submit" class="bouton-principal plein">Demander le menu à Claude</button>
+    </div>
+  </form>
+
+  <section class="carte attente" data-plan-etat="attente" hidden>
+    <div class="marmite" aria-hidden="true">
+      <span class="vapeur"></span><span class="vapeur"></span><span class="vapeur"></span>
+      <svg width="72" height="56" viewBox="0 0 72 56" fill="none" aria-hidden="true"><path d="M10 22h52v14a16 16 0 0 1-16 16H26a16 16 0 0 1-16-16V22z" fill="currentColor"></path><rect x="4" y="18" width="64" height="7" rx="3.5" fill="currentColor"></rect><path d="M30 18v-3a6 6 0 0 1 12 0v3" stroke="currentColor" stroke-width="4"></path></svg>
+    </div>
+    <h2 class="attente-titre" data-attente-titre>Claude prépare votre menu</h2>
+    <p class="attente-texte" data-attente-texte></p>
+    <p class="pc" data-pc></p>
+    <button type="button" class="lien-action lien-centre" data-plan-annuler>Annuler la demande</button>
+  </section>
+
+  <section class="carte question" data-plan-etat="question" hidden>
+    <p class="question-de">Claude te demande</p>
+    <h2 class="question-titre" data-question-texte></h2>
+    <label class="sr-only" for="q-reponse">Ta réponse</label>
+    <textarea id="q-reponse" data-question-reponse rows="3" maxlength="1000" placeholder="Ta réponse"></textarea>
+    <p class="retour-msg" data-question-msg role="status"></p>
+    <button type="button" class="bouton-principal" data-question-envoyer>Répondre</button>
+  </section>
+
+  <div class="proposition" data-plan-etat="proposition" hidden>
+    <p class="message-claude" data-prop-message></p>
+    <div class="prop-liste" data-prop-liste></div>
+    <section class="carte question">
+      <h2 class="question-titre">Un mot pour Claude ?</h2>
+      <label class="sr-only" for="q-commentaire">Un mot pour Claude</label>
+      <textarea id="q-commentaire" data-prop-commentaire rows="2" maxlength="1000" placeholder="Facultatif"></textarea>
+    </section>
+    <p class="retour-msg" data-prop-msg role="status"></p>
+    <div class="barre-actions">
+      <button type="button" class="bouton-principal plein" data-prop-envoyer>Valider le menu</button>
+    </div>
+  </div>
+
+  <section class="carte attente fini" data-plan-etat="fini" hidden>
+    <span class="fini-coche" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg></span>
+    <h2 class="attente-titre">Menu publié</h2>
+    <p class="attente-texte" data-fini-texte></p>
+    <a class="bouton-principal bouton-lien" href="index.html" data-fini-voir>Voir le menu</a>
+    <button type="button" class="lien-action lien-centre" data-plan-nouveau>Préparer une autre semaine</button>
+  </section>
+
+  <section class="carte attente" data-plan-etat="erreur" hidden>
+    <h2 class="attente-titre">Claude n'a pas pu terminer</h2>
+    <p class="attente-texte" data-erreur-texte></p>
+    <button type="button" class="bouton-principal" data-plan-reessayer>Réessayer</button>
+    <button type="button" class="lien-action lien-centre" data-plan-annuler>Annuler la demande</button>
+  </section>
+</div>
+  </main>
+
+
+  <script src="app.js?v=202611101546"></script>
+  <script src="boite.js?v=202611101546"></script>
+<script src="plan.js?v=202611101546"></script></body>
+</html>

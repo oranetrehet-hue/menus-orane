@@ -7,23 +7,24 @@
   <meta name="color-scheme" content="light">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Menus">
   <title>Fajitas de poulet, poivrons &amp; oignons – Menus</title>
-  <link rel="manifest" href="../manifest.json">
-  <link rel="apple-touch-icon" href="../icon-192.png">
-  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../manifest.json?v=202611101546">
+  <link rel="apple-touch-icon" href="../icon-180.png?v=202611101546">
+  <link rel="icon" href="../icon-192.png?v=202611101546" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="../styles.css?v=202611101457">
+  <link rel="stylesheet" href="../styles.css?v=202611101546">
 </head>
 <body class="page-recette">
   <main class="ecran">
-<div class="page-recette" data-retour data-recette="Fajitas de poulet, poivrons &amp; oignons" data-semaine="2026-S44">
+<div class="page-recette" data-recette-page data-recette="Fajitas de poulet, poivrons &amp; oignons" data-semaine="2026-S44" data-coeurs="O">
   <div class="barre-haut">
-    <a href="../index.html" class="bouton-rond" aria-label="Retour">
+    <a href="../index.html" class="bouton-rond" aria-label="Retour" data-retour-auto>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>
     </a>
-    <button type="button" class="bouton-rond coeur" data-retour-fav aria-pressed="false" aria-label="On a adoré">
+    <button type="button" class="bouton-rond coeur" data-retour-fav aria-pressed="false" aria-label="Ajouter à mes favoris">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg>
     </button>
   </div>
@@ -33,6 +34,7 @@
   <div class="recette-tete">
     <h1 class="titre-recette">Fajitas de poulet, poivrons &amp; oignons</h1>
     <p class="meta">Jow · 20 min · 4 portions</p>
+    <p class="adoree" data-adoree hidden><span class="mini-avatars" data-adoree-avatars></span><span data-adoree-texte></span></p>
   </div>
 
   <div class="segments" role="tablist" aria-label="Recette">
@@ -41,27 +43,44 @@
   </div>
 
   <section class="carte liste" id="panneau-ingredients" role="tabpanel" aria-labelledby="onglet-ingredients" data-panneau="ingredients">
-      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S44-1.html-1"><span>~600 g filets de poulet frais (1 barquette sur 2, cf. César)</span></label>
-      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S44-1.html-2"><span>1 sachet poivrons tricolores surgelés (1 kg)</span></label>
-      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S44-1.html-3"><span>2 paquets tortillas de blé (×8)</span></label>
-      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S44-1.html-4"><span>1 crème fraîche épaisse légère 20 cl</span></label>
-      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S44-1.html-5"><span>1 sachet emmental râpé</span></label>
-      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S44-1.html-6"><span>Oignons</span></label>
-      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S44-1.html-7"><span>Stock à vérifier</span></label>
+      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S44-1.html-1"><span>600 g de filets de poulet</span></label>
+      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S44-1.html-2"><span>1 sachet de poivrons tricolores surgelés</span></label>
+      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S44-1.html-3"><span>2 poignées d&#39;oignons émincés surgelés</span></label>
+      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S44-1.html-4"><span>8 tortillas de blé (1 paquet)</span></label>
+      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S44-1.html-5"><span>20 cl de crème fraîche épaisse</span></label>
+      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S44-1.html-6"><span>1 sachet de fromage râpé</span></label>
+      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S44-1.html-7"><span>Épices : 2 c. à c. de paprika, 1 c. à c. de cumin, ½ c. à c. d&#39;ail en poudre</span></label>
+      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S44-1.html-8"><span>½ citron, 2 c. à s. d&#39;huile, sel, poivre</span></label>
   </section>
 
   <section class="carte etapes" id="panneau-etapes" role="tabpanel" aria-labelledby="onglet-etapes" data-panneau="etapes" hidden>
     <ol>
-<li>Épices maison : 2 c. à c. paprika + 1 c. à c. cumin + ½ c. à c. ail en poudre (ou ail râpé) + sel, poivre.</li><li>Poivrons + oignons surgelés à la poêle, feu vif sans couvercle, 8–10 min avec la moitié des épices.</li><li>Dans une autre poêle, poulet en lanières + reste des épices + filet d&#39;huile, 5–6 min.</li><li>Réunir.</li><li>Tortillas chauffées 1 min à la poêle ou au four.</li><li>Garnir : poulet-poivrons, crème, fromage râpé, (sucrine en lanières).</li>    </ol>
+<li>Mélange les épices dans un bol : le paprika, le cumin, l'ail en poudre, du sel et du poivre.</li><li>Coupe le poulet en fines lanières et mélange-le avec la moitié des épices, 1 c. à s. d'huile et un trait de citron (idéalement dès le midi, voir À anticiper).</li><li>Dans une grande poêle <strong>à feu vif</strong>, sans couvercle, fais cuire les poivrons et les oignons surgelés <strong>8 à 10 min</strong> avec un filet d'huile et le reste des épices, en remuant : ils doivent dorer un peu sur les bords.</li><li>Dans une autre poêle à feu vif, fais dorer le poulet <strong>5 à 6 min</strong> en remuant, jusqu'à ce qu'il soit bien cuit.</li><li>Réunis le poulet et les légumes dans une seule poêle.</li><li>Fais chauffer les tortillas 30 secondes de chaque côté dans une poêle sèche (ou 2 min au four chaud, enveloppées dans du papier alu).</li><li>Chacun garnit sa tortilla : poulet-poivrons, une cuillère de crème, du fromage râpé, puis on roule.</li><li>Pour demain midi : garde la garniture dans une boîte et les tortillas à part, et monte-les au moment de manger.</li>    </ol>
   </section>
 
+  <section class="carte parts" aria-labelledby="titre-parts">
+    <h2 class="encart-titre" id="titre-parts">Les parts</h2>
+    <div class="part">
+      <span class="avatar avatar-o" data-avatar="O">O</span>
+      <p class="part-textes"><span class="part-nom">Orane</span>Crème et fromage comme tu aimes.</p>
+    </div>
+    <div class="part">
+      <span class="avatar avatar-l" data-avatar="L">L</span>
+      <p class="part-textes"><span class="part-nom">Ludo</span>Plus de garniture poulet-poivrons, une demi-cuillère de crème et peu de fromage.</p>
+    </div>
+  </section>
 
   <div class="astuce">
     <div class="astuce-textes">
       <span class="astuce-titre">À anticiper · mardi midi, 3 min</span>
-      <span>couper le poulet en lanières et le mélanger avec la moitié des épices + 1 filet d&#39;huile + un trait de citron, au frigo jusqu&#39;au soir → plus tendre et plus parfumé, et le soir il n&#39;y a plus qu&#39;à le poêler.</span>
+      <span>Couper le poulet en lanières et le mélanger avec la moitié des épices + 1 filet d&#39;huile + un trait de citron, au frigo jusqu&#39;au soir : plus tendre et plus parfumé, et le soir il n&#39;y a plus qu&#39;à le poêler.</span>
     </div>
   </div>
+
+  <section class="carte remarques" data-remarques hidden aria-labelledby="titre-remarques">
+    <h2 class="encart-titre" id="titre-remarques">Vos remarques</h2>
+    <ul class="remarques-liste" data-remarques-liste></ul>
+  </section>
 
   <a class="lien-texte" href="https://jow.com/fr/recipes/grilled-chicken-fajitas-8zzg34p97h3k033r0l2s" target="_blank" rel="noopener">Voir la recette d'origine sur Jow</a>
 
@@ -80,7 +99,7 @@
   </main>
 
 
-  <script src="../app.js?v=202611101457"></script>
-  <script src="../boite.js?v=202611101457"></script>
+  <script src="../app.js?v=202611101546"></script>
+  <script src="../boite.js?v=202611101546"></script>
 </body>
 </html>

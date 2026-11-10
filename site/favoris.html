@@ -7,84 +7,121 @@
   <meta name="color-scheme" content="light">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Menus">
   <title>Favoris – Menus</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="apple-touch-icon" href="icon-192.png">
-  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.json?v=202611101546">
+  <link rel="apple-touch-icon" href="icon-180.png?v=202611101546">
+  <link rel="icon" href="icon-192.png?v=202611101546" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="styles.css?v=202611101457">
+  <link rel="stylesheet" href="styles.css?v=202611101546">
 </head>
 <body class="page-favoris">
   <main class="ecran">
 <header class="tete">
   <div class="tete-textes">
-    <p class="date-du-jour">6 recettes adorées</p>
+    <p class="date-du-jour" data-fav-compte>6 recettes adorées</p>
     <h1 class="titre-ecran">Favoris</h1>
   </div>
-</header>
+<button type="button" class="moi" data-moi aria-label="Choisir ton profil">
+  <span class="avatar avatar-vide" data-avatar-moi>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8.5" r="3.5"></circle><path d="M5 20c1.2-3.6 3.8-5.5 7-5.5s5.8 1.9 7 5.5"></path></svg>
+  </span>
+</button></header>
 
 <div class="filtres" data-filtres>
   <button type="button" aria-pressed="true" data-filtre="">Tout</button>
 <button type="button" aria-pressed="false" data-filtre="rapide">Rapide</button><button type="button" aria-pressed="false" data-filtre="wok">Wok</button><button type="button" aria-pressed="false" data-filtre="anti-gaspi">Anti-gaspi</button><button type="button" aria-pressed="false" data-filtre="crémeux">Crémeux</button><button type="button" aria-pressed="false" data-filtre="poulet">Poulet</button></div>
 
-<div class="liste-favoris">
-  <article class="favori" data-tags="poulet|tex-mex|poêle|rapide" data-retour data-recette="Fajitas de poulet, poivrons &amp; oignons" data-semaine="favoris">
-    <img class="vignette" src="https://static.jow.fr/1200x630/recipes/MoqoelabG9gI5w.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
-    <div class="favori-textes">
-      <a class="favori-nom" href="https://jow.com/fr/recipes/grilled-chicken-fajitas-8zzg34p97h3k033r0l2s" target="_blank" rel="noopener">Fajitas de poulet, poivrons &amp; oignons</a>
-      <span class="meta">Jow · 20 min · fait le 27 oct.</span>
-      <button type="button" class="lien-action" data-proposer>À refaire bientôt</button>
-      <p class="retour-msg" data-retour-msg role="status"></p>
-    </div>
+<div class="liste-favoris" data-liste-favoris>
+  <article class="favori" data-tags="poulet|tex-mex|poêle|rapide" data-favori data-recette="Fajitas de poulet, poivrons &amp; oignons" data-coeurs="O">
+    <a class="favori-lien" href="recettes/2026-S44-1.html">
+      <img class="vignette" src="https://static.jow.fr/1200x630/recipes/MoqoelabG9gI5w.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
+      <span class="favori-textes">
+        <span class="favori-nom">Fajitas de poulet, poivrons &amp; oignons</span>
+        <span class="meta">Jow · 20 min · fait le 27 oct.</span>
+        <span class="favori-coeurs" data-coeurs-zone>
+<span class="avatar mini avatar-o" data-avatar="O">O</span>          <span class="favori-coeurs-noms">Orane</span>
+        </span>
+      </span>
+    </a>
+    <button type="button" class="lien-action favori-action" data-proposer>À refaire bientôt</button>
+    <p class="retour-msg favori-action" data-retour-msg role="status"></p>
   </article>
-  <article class="favori" data-tags="viande rouge|poêle|réconfortant" data-retour data-recette="Boulettes de bœuf sauce tomate-mozzarella, riz" data-semaine="favoris">
-    <img class="vignette" src="https://static.jow.fr/1200x630/recipes/dAU8MGdxM2KGaw.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
-    <div class="favori-textes">
-      <span class="favori-nom">Boulettes de bœuf sauce tomate-mozzarella, riz</span>
-      <span class="meta">Recette maison · 25 min · fait le 6 nov.</span>
-      <button type="button" class="lien-action" data-proposer>À refaire bientôt</button>
-      <p class="retour-msg" data-retour-msg role="status"></p>
-    </div>
+  <article class="favori" data-tags="viande rouge|poêle|réconfortant" data-favori data-recette="Boulettes de bœuf sauce tomate-mozzarella" data-coeurs="O">
+    <a class="favori-lien" href="recettes/2026-S45-3.html">
+      <img class="vignette" src="https://static.jow.fr/1200x630/recipes/dAU8MGdxM2KGaw.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
+      <span class="favori-textes">
+        <span class="favori-nom">Boulettes de bœuf sauce tomate-mozzarella, riz</span>
+        <span class="meta">Recette maison · 25 min · fait le 6 nov.</span>
+        <span class="favori-coeurs" data-coeurs-zone>
+<span class="avatar mini avatar-o" data-avatar="O">O</span>          <span class="favori-coeurs-noms">Orane</span>
+        </span>
+      </span>
+    </a>
+    <button type="button" class="lien-action favori-action" data-proposer>À refaire bientôt</button>
+    <p class="retour-msg favori-action" data-retour-msg role="status"></p>
   </article>
-  <article class="favori" data-tags="poulet|curry|wok|crémeux" data-retour data-recette="Poulet curry rouge, coco &amp; haricots verts, riz" data-semaine="favoris">
-    <img class="vignette" src="https://img.hellofresh.com/hellofresh_s3/image/5c0109afe3f33939791482f2-83ef6d76.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
-    <div class="favori-textes">
-      <a class="favori-nom" href="https://www.hellofresh.fr/recipes/curry-au-poulet-et-aux-haricots-verts-5c0109afe3f33939791482f2" target="_blank" rel="noopener">Poulet curry rouge, coco &amp; haricots verts, riz</a>
-      <span class="meta">HelloFresh · 20 min · fait le 21 oct.</span>
-      <button type="button" class="lien-action" data-proposer>À refaire bientôt</button>
-      <p class="retour-msg" data-retour-msg role="status"></p>
-    </div>
+  <article class="favori" data-tags="poulet|curry|wok|crémeux" data-favori data-recette="Poulet curry rouge, coco &amp; haricots verts, riz" data-coeurs="O">
+    <a class="favori-lien" href="recettes/2026-S46-4.html">
+      <img class="vignette" src="https://img.hellofresh.com/hellofresh_s3/image/5c0109afe3f33939791482f2-83ef6d76.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
+      <span class="favori-textes">
+        <span class="favori-nom">Poulet curry rouge, coco &amp; haricots verts, riz</span>
+        <span class="meta">HelloFresh · 20 min · fait le 21 oct.</span>
+        <span class="favori-coeurs" data-coeurs-zone>
+<span class="avatar mini avatar-o" data-avatar="O">O</span>          <span class="favori-coeurs-noms">Orane</span>
+        </span>
+      </span>
+    </a>
+    <button type="button" class="lien-action favori-action" data-proposer>À refaire bientôt</button>
+    <p class="retour-msg favori-action" data-retour-msg role="status"></p>
   </article>
-  <article class="favori" data-tags="nouilles|wok|rapide|anti-gaspi" data-retour data-recette="Nouilles sautées sauce cacahuète" data-semaine="favoris">
-    <img class="vignette" src="https://static.jow.fr/1200x630/recipes/9c16G1Sul904vg.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
-    <div class="favori-textes">
-      <span class="favori-nom">Nouilles sautées sauce cacahuète</span>
-      <span class="meta">Recette maison · 15 min · fait le 15 oct.</span>
-      <button type="button" class="lien-action" data-proposer>À refaire bientôt</button>
-      <p class="retour-msg" data-retour-msg role="status"></p>
-    </div>
+  <article class="favori" data-tags="nouilles|wok|rapide|anti-gaspi" data-favori data-recette="Nouilles sautées poulet &amp; légumes, sauce cacahuète" data-coeurs="O">
+    <a class="favori-lien" href="recettes/2026-S46-7.html">
+      <img class="vignette" src="https://static.jow.fr/1200x630/recipes/9c16G1Sul904vg.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
+      <span class="favori-textes">
+        <span class="favori-nom">Nouilles sautées sauce cacahuète</span>
+        <span class="meta">Recette maison · 15 min · fait le 15 oct.</span>
+        <span class="favori-coeurs" data-coeurs-zone>
+<span class="avatar mini avatar-o" data-avatar="O">O</span>          <span class="favori-coeurs-noms">Orane</span>
+        </span>
+      </span>
+    </a>
+    <button type="button" class="lien-action favori-action" data-proposer>À refaire bientôt</button>
+    <p class="retour-msg favori-action" data-retour-msg role="status"></p>
   </article>
-  <article class="favori" data-tags="riz|wok|rapide|anti-gaspi" data-retour data-recette="Riz sauté express (anti-gaspi reste de riz)" data-semaine="favoris">
-    <img class="vignette" src="https://static.jow.fr/1200x630/recipes/I3ex9HaM0Zf0MA.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
-    <div class="favori-textes">
-      <span class="favori-nom">Riz sauté express (anti-gaspi reste de riz)</span>
-      <span class="meta">Recette maison · 10 min · fait le 14 oct.</span>
-      <button type="button" class="lien-action" data-proposer>À refaire bientôt</button>
-      <p class="retour-msg" data-retour-msg role="status"></p>
-    </div>
+  <article class="favori" data-tags="riz|wok|rapide|anti-gaspi" data-favori data-recette="Riz sauté express (anti-gaspi reste de riz)" data-coeurs="O">
+    <a class="favori-lien" href="recettes/favoris-1.html">
+      <img class="vignette" src="https://static.jow.fr/1200x630/recipes/I3ex9HaM0Zf0MA.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
+      <span class="favori-textes">
+        <span class="favori-nom">Riz sauté express (anti-gaspi reste de riz)</span>
+        <span class="meta">Recette maison · 10 min · fait le 14 oct.</span>
+        <span class="favori-coeurs" data-coeurs-zone>
+<span class="avatar mini avatar-o" data-avatar="O">O</span>          <span class="favori-coeurs-noms">Orane</span>
+        </span>
+      </span>
+    </a>
+    <button type="button" class="lien-action favori-action" data-proposer>À refaire bientôt</button>
+    <p class="retour-msg favori-action" data-retour-msg role="status"></p>
   </article>
-  <article class="favori" data-tags="pâtes|crémeux|rapide" data-retour data-recette="Penne courgettes, chèvre frais &amp; thon" data-semaine="favoris">
-    <img class="vignette" src="https://static.jow.fr/1200x630/recipes/qVdnuqqBZGk1Fw.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
-    <div class="favori-textes">
-      <a class="favori-nom" href="https://jow.fr/recipes/pates-aux-courgettes-et-chevre-frais-8nxaf7ledk3nczqo01wf" target="_blank" rel="noopener">Penne courgettes, chèvre frais &amp; thon</a>
-      <span class="meta">Jow · 16 min · fait le 2 oct.</span>
-      <button type="button" class="lien-action" data-proposer>À refaire bientôt</button>
-      <p class="retour-msg" data-retour-msg role="status"></p>
-    </div>
+  <article class="favori" data-tags="pâtes|crémeux|rapide" data-favori data-recette="Penne courgettes, chèvre frais &amp; thon" data-coeurs="O">
+    <a class="favori-lien" href="recettes/2026-S46-6.html">
+      <img class="vignette" src="https://static.jow.fr/1200x630/recipes/qVdnuqqBZGk1Fw.jpg" alt="" loading="lazy" referrerpolicy="no-referrer">
+      <span class="favori-textes">
+        <span class="favori-nom">Penne courgettes, chèvre frais &amp; thon</span>
+        <span class="meta">Jow · 16 min · fait le 2 oct.</span>
+        <span class="favori-coeurs" data-coeurs-zone>
+<span class="avatar mini avatar-o" data-avatar="O">O</span>          <span class="favori-coeurs-noms">Orane</span>
+        </span>
+      </span>
+    </a>
+    <button type="button" class="lien-action favori-action" data-proposer>À refaire bientôt</button>
+    <p class="retour-msg favori-action" data-retour-msg role="status"></p>
   </article>
+  <p class="vide" data-fav-vide hidden>Pas encore de favori : touche le cœur sur une recette que vous avez adorée.</p>
 </div>
+<script type="application/json" id="index-recettes">{"Riz sauté express (anti-gaspi reste de riz)": {"page": "recettes/favoris-1.html", "photo": "https://static.jow.fr/1200x630/recipes/I3ex9HaM0Zf0MA.jpg", "meta": "Recette maison · 10 min · 2 portions"}, "Tartines Mme Loïk + avocat + œuf mollet + tomates cerises": {"page": "recettes/2026-S23-4.html", "photo": "", "meta": "Recette maison · 10 min · 4 portions"}, "Salade de riz complet, tomates, maïs, feta, basilic": {"page": "recettes/2026-S23-3.html", "photo": "", "meta": "Recette maison · 15 min · 4 portions"}, "Pâtes courgettes-poulet-citron, yaourt grec & ail": {"page": "recettes/2026-S23-2.html", "photo": "", "meta": "Recette maison · 25 min · 4 portions"}, "Salade lentilles feta truite fumée tomates": {"page": "recettes/2026-S23-1.html", "photo": "", "meta": "Recette maison · 15 min · 4 portions"}, "Chili con carne Thermomix": {"page": "recettes/2026-S41-7.html", "photo": "https://static.jow.fr/1200x630/recipes/WV30c81DtAV2Dg.jpg", "meta": "Recette maison · 4 portions"}, "Dahl de lentilles corail, coco & carotte, riz, naans fromage": {"page": "recettes/2026-S41-6.html", "photo": "https://static.jow.fr/1200x630/patterns/powder-03-202309.png_merge_recipes/fDsi7eYncf7Rqg.png.jpg", "meta": "Jow · 21 min · 4 portions"}, "Salade feta, pois chiches rôtis & courgette marinée": {"page": "recettes/2026-S41-5.html", "photo": "", "meta": "Quitoque · 25 min · 4 portions"}, "Gnocchis poêlés, crème de basilic, courgettes, tomates cerises & jambon blanc": {"page": "recettes/2026-S41-4.html", "photo": "https://img.hellofresh.com/hellofresh_s3/image/HelloFresh_Y22_R221_W22_FR_PFR29804623-1_Main_high-f44ddc6d.jpg", "meta": "HelloFresh · 15 min · 4 portions"}, "Nouilles de riz sautées, poulet & légumes miel-soja": {"page": "recettes/2026-S41-3.html", "photo": "https://img.hellofresh.com/hellofresh_s3/image/HF_Y24_R232_W46_FR_QFR27739-1_MAIN_R_high-13d42af1.jpg", "meta": "HelloFresh · 15 min · 4 portions"}, "Poulet caramélisé miel-soja, poireaux fondants, riz": {"page": "recettes/2026-S41-2.html", "photo": "", "meta": "Quitoque · 20 min · 4 portions"}, "Penne courgettes, chèvre frais & thon": {"page": "recettes/2026-S46-6.html", "photo": "https://static.jow.fr/1200x630/recipes/qVdnuqqBZGk1Fw.jpg", "meta": "Jow · 20 min · 4 portions"}, "Croque-monsieur au four + salade": {"page": "recettes/2026-S43-6.html", "photo": "https://static.jow.fr/1200x630/recipes/YAkgjC68OTROGA.jpg", "meta": "Jow · 20 min · 4 portions"}, "Pommes de terre sautées, courgettes & chèvre fondu": {"page": "recettes/2026-S43-5.html", "photo": "https://static.jow.fr/1200x630/recipes/hyRWE7TDJD0IGA.jpg", "meta": "Jow · 20 min · 4 portions"}, "Pâtes crémeuses champignons, jambon blanc & parmesan": {"page": "recettes/2026-S43-4.html", "photo": "https://static.jow.fr/1200x630/recipes/YbChDmoXth4h3A.jpg", "meta": "Jow · 15 min · 4 portions"}, "Burgers maison au comté, salade sucrine-tomates": {"page": "recettes/2026-S43-3.html", "photo": "https://static.jow.fr/1200x630/recipes/0YeuQTs0ng0Nmw.jpg", "meta": "Jow · 20 min · 4 portions"}, "Poulet au curry rouge, coco & haricots verts, riz": {"page": "recettes/2026-S43-2.html", "photo": "https://img.hellofresh.com/hellofresh_s3/image/5c0109afe3f33939791482f2-83ef6d76.jpg", "meta": "HelloFresh · 20 min · 4 portions"}, "Salade feta, pois chiches rôtis & courgettes": {"page": "recettes/2026-S43-1.html", "photo": "", "meta": "Quitoque · 25 min · 4 portions"}, "Gnocchis gratinés tomate-mozzarella (alla sorrentina)": {"page": "recettes/2026-S44-5.html", "photo": "https://www.demotivateur.fr/images/cover_recette/1655481714-coverOK.jpg", "meta": "Demotivateur · 25 min · 4 portions"}, "Pâtes crémeuses poivrons, chèvre & paprika fumé": {"page": "recettes/2026-S44-4.html", "photo": "https://static.jow.fr/1200x630/recipes/0Mkjis0QaChW5A.jpg", "meta": "Recette maison · 15 min · 4 portions"}, "Bœuf haché sucré-salé façon coréenne, riz & haricots verts": {"page": "recettes/2026-S44-3.html", "photo": "https://static.jow.fr/1200x630/recipes/bHUDIDfHyDXGVw.jpg", "meta": "HelloFresh · 15 min · 4 portions"}, "Salade César maison au poulet": {"page": "recettes/2026-S44-2.html", "photo": "https://static.jow.fr/1200x630/recipes/ur9c0byhPQd13g.jpg", "meta": "Jow · 15 min · 4 portions"}, "Fajitas de poulet, poivrons & oignons": {"page": "recettes/2026-S44-1.html", "photo": "https://static.jow.fr/1200x630/recipes/MoqoelabG9gI5w.jpg", "meta": "Jow · 20 min · 4 portions"}, "Raviolis frais crème-épinards-parmesan": {"page": "recettes/2026-S45-7.html", "photo": "https://static.jow.fr/1200x630/recipes/SQiYvIFirgqd6Q.jpg", "meta": "Recette maison · 12 min · 2 repas"}, "Poêlée façon tartiflette": {"page": "recettes/2026-S46-1.html", "photo": "https://static.jow.fr/1200x630/recipes/NL0bY1huFEVLvw.jpg", "meta": "Recette maison · 25 min · 4 portions"}, "Salade de chèvre chaud, miel, noix & jambon": {"page": "recettes/2026-S45-5.html", "photo": "https://static.jow.fr/1200x630/patterns/beet-01-202309.png_merge_recipes/yyDiMBKoCA.png.jpg", "meta": "Recette maison · 15 min · 4 portions"}, "Pâtes crémeuses poireaux, lardons & parmesan": {"page": "recettes/2026-S45-4.html", "photo": "https://static.jow.fr/1200x630/patterns/powder-02-202309.png_merge_recipes/SnuQhlGqDYM0yQ.png.jpg", "meta": "Recette maison · 15 min · 4 portions"}, "Boulettes de bœuf sauce tomate-mozzarella": {"page": "recettes/2026-S45-3.html", "photo": "https://static.jow.fr/1200x630/recipes/dAU8MGdxM2KGaw.jpg", "meta": "Recette maison · 25 min · 4 portions"}, "Poulet crème-moutarde & champignons, riz": {"page": "recettes/2026-S45-2.html", "photo": "https://static.jow.fr/1200x630/recipes/F30qi7ocDCcY6A.jpg", "meta": "Recette maison · 20 min · 4 portions"}, "Avocado toast feta & miel": {"page": "recettes/2026-S45-1.html", "photo": "https://static.jow.fr/1200x630/patterns/yolk-01-202309.png_merge_recipes/cO0ybhI5FIGP7w.png.jpg", "meta": "Recette maison · 8 min · 4 portions"}, "Bowl tiède quinoa, poivrons-courgettes, feta & sauce yaourt-citron": {"page": "recettes/2026-S46-8.html", "photo": "https://static.jow.fr/1200x630/patterns/beet-04-202309.png_merge_recipes/2KIWdGcbZ7FrmA.png.jpg", "meta": "Recette maison · 20 min · 4 portions"}, "Nouilles sautées poulet & légumes, sauce cacahuète": {"page": "recettes/2026-S46-7.html", "photo": "https://static.jow.fr/1200x630/recipes/9c16G1Sul904vg.jpg", "meta": "Recette maison · 20 min · 4 portions"}, "Risotto crémeux poireaux, jambon & parmesan au Thermomix": {"page": "recettes/2026-S46-5.html", "photo": "https://static.jow.fr/1200x630/patterns/yolk-02-202309.png_merge_recipes/R5KPUdQPrD.png.jpg", "meta": "Recette maison · 30 min · 4 portions"}, "Poulet curry rouge, coco & haricots verts, riz": {"page": "recettes/2026-S46-4.html", "photo": "https://img.hellofresh.com/hellofresh_s3/image/5c0109afe3f33939791482f2-83ef6d76.jpg", "meta": "HelloFresh · 25 min · 4 portions"}, "Gnocchis carbo crémeux aux lardons": {"page": "recettes/2026-S46-3.html", "photo": "https://static.jow.fr/1200x630/recipes/AKC28yUqC0EAIQ.jpg", "meta": "Recette maison · 15 min · 4 portions"}, "Raviolis crème-champignons-parmesan": {"page": "recettes/2026-S46-2.html", "photo": "https://static.jow.fr/1200x630/patterns/raddish-03-202309.png_merge_recipes/94Q0Gac02UDlEQ.png.jpg", "meta": "Recette maison · 15 min · 2 portions"}}</script>
   </main>
 
   <nav class="onglets" aria-label="Navigation">
@@ -111,7 +148,7 @@
     <button type="button" class="bouton-secondaire" data-feuille-fermer>Terminé</button>
   </div>
 
-  <script src="app.js?v=202611101457"></script>
-  <script src="boite.js?v=202611101457"></script>
+  <script src="app.js?v=202611101546"></script>
+  <script src="boite.js?v=202611101546"></script>
 </body>
 </html>
