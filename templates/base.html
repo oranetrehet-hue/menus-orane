@@ -8,7 +8,9 @@
   <link rel="manifest" href="{{ '../' if subpage else '' }}manifest.json">
   <link rel="apple-touch-icon" href="{{ '../' if subpage else '' }}icon-192.png">
   <link rel="icon" href="{{ '../' if subpage else '' }}favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="{{ '../' if subpage else '' }}styles.css">
+  {# ?v=… : force les téléphones à recharger la mise en forme et les scripts à chaque publication #}
+  {% set v = generated_at|replace(' ', '')|replace(':', '')|replace('-', '') %}
+  <link rel="stylesheet" href="{{ '../' if subpage else '' }}styles.css?v={{ v }}">
 </head>
 <body>
   <header class="topbar">
@@ -24,7 +26,7 @@
     <small>Généré le {{ generated_at }}</small>
   </footer>
 
-  <script src="{{ '../' if subpage else '' }}app.js"></script>
-  <script src="{{ '../' if subpage else '' }}boite.js"></script>
+  <script src="{{ '../' if subpage else '' }}app.js?v={{ v }}"></script>
+  <script src="{{ '../' if subpage else '' }}boite.js?v={{ v }}"></script>
 </body>
 </html>
