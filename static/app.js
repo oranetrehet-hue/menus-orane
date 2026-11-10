@@ -148,6 +148,87 @@
     });
   });
 
+  /* ---------- Toujours la dernière version, et « tirer vers le bas pour actualiser » ---------- */
+  var RACINE = document.currentScript ? new URL(".", document.currentScript.src).href : "";
+  var MA_VERSION = document.documentElement.getAttribute("data-version") || "";
+
+  // Recharge la page en allant vraiment la chercher sur le site (pas dans la mémoire du téléphone).
+  function actualiser() {
+    fetch(location.href, { cache: "reload" })
+      .catch(function () { /* hors ligne : on recharge quand même */ })
+      .then(function () { location.reload(); });
+  }
+
+  // Dès qu'une nouvelle version de l'appli est publiée, le téléphone la prend tout seul.
+  function verifierVersion() {
+    if (!MA_VERSION || !window.fetch) return;
+    fetch(RACINE + "version.json?t=" + Date.now(), { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (!d || !d.version || d.version === MA_VERSION) return;
+        // Une seule tentative par version ; sans mémoire de session, pas de rechargement automatique (jamais de boucle).
+        var cle = "maj-" + d.version;
+        var deja = true;
+        try {
+          deja = !!sessionStorage.getItem(cle);
+          if (!deja) sessionStorage.setItem(cle, "1");
+        } catch (_e) { deja = true; }
+        if (!deja) actualiser();
+      })
+      .catch(function () { /* pas de réseau : on garde la version actuelle */ });
+  }
+  verifierVersion();
+  document.addEventListener("visibilitychange", function () { if (!document.hidden) verifierVersion(); });
+
+  // Le geste habituel : tirer l'écran vers le bas, en haut de page, puis lâcher.
+  (function () {
+    var rond = document.createElement("div");
+    rond.className = "actualiser";
+    rond.setAttribute("aria-hidden", "true");
+    rond.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.34-5.66"></path><path d="M20 4v5h-5"></path></svg>';
+    document.body.appendChild(rond);
+    var SEUIL = 70;
+    var depart = null;
+    var tire = 0;
+    function feuilleOuverte() {
+      return Array.prototype.some.call(document.querySelectorAll(".feuille"), function (f) { return !f.hidden; });
+    }
+    function placer(d) {
+      rond.style.transform = "translate(-50%, " + d + "px) rotate(" + Math.round(d * 4) + "deg)";
+    }
+    window.addEventListener("touchstart", function (e) {
+      depart = null;
+      if (window.scrollY > 0 || e.touches.length !== 1 || feuilleOuverte() || document.body.classList.contains("mode-cuisine")) return;
+      depart = e.touches[0].clientY;
+      tire = 0;
+    }, { passive: true });
+    window.addEventListener("touchmove", function (e) {
+      if (depart === null) return;
+      tire = Math.min(Math.max(0, (e.touches[0].clientY - depart) * 0.5), 110);
+      if (!tire || window.scrollY > 0) {
+        rond.classList.remove("visible", "pret");
+        rond.style.transform = "";
+        return;
+      }
+      rond.classList.add("visible");
+      rond.classList.toggle("pret", tire >= SEUIL);
+      placer(tire);
+    }, { passive: true });
+    window.addEventListener("touchend", function () {
+      if (depart === null) return;
+      depart = null;
+      if (tire >= SEUIL) {
+        rond.classList.add("charge");
+        placer(SEUIL);
+        actualiser();
+      } else {
+        rond.classList.remove("visible", "pret");
+        rond.style.transform = "";
+      }
+      tire = 0;
+    });
+  })();
+
   /* ---------- Appli installable ---------- */
   if ("serviceWorker" in navigator && document.currentScript) {
     navigator.serviceWorker.register(new URL("sw.js", document.currentScript.src)).catch(function () { /* ignore */ });

@@ -735,6 +735,9 @@ def build(keep_weeks: int = 5) -> None:
     for r in recettes_favoris:
         ecrire(f"recettes/{r['page']}", "recette.html", page="recette", root="../", menu={"slug": "favoris"}, r=r)
 
+    # Le téléphone compare sa version à celle-ci et se met à jour tout seul (static/app.js).
+    (OUT / "version.json").write_text(json.dumps({"version": commun["version"]}), encoding="utf-8")
+
     print(f"[OK] Site genere dans {OUT}")
     print(f"  - {len(menus)} semaine(s), {len(archives)} en archive (max {keep_weeks}), {len(favoris)} favori(s)")
     if current:
