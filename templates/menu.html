@@ -28,7 +28,21 @@
           <span class="recipe-title">{{ r.title_html|safe }}</span>
           <span class="chev">▾</span>
         </summary>
-        <div class="recipe-body">{{ r.html|safe }}</div>
+        <div class="recipe-body">
+          {{ r.html|safe }}
+          <div class="retour" data-retour data-recette="{{ r.title }}" data-semaine="{{ menu.slug }}">
+            <div class="retour-boutons">
+              <button type="button" class="retour-btn" data-retour-fav aria-pressed="false">♡ On a adoré</button>
+              <button type="button" class="retour-btn" data-retour-ouvrir>Une remarque</button>
+            </div>
+            <form class="retour-form" data-retour-form hidden>
+              <label class="sr-only" for="rem-{{ menu.slug }}-{{ loop.index }}">Remarque sur la recette</label>
+              <textarea id="rem-{{ menu.slug }}-{{ loop.index }}" maxlength="1000" rows="3" placeholder="Ex. : pas assez de riz, trop épicé pour Ludo…"></textarea>
+              <button type="submit" class="retour-envoyer">Envoyer à Claude</button>
+            </form>
+            <p class="retour-msg" data-retour-msg role="status"></p>
+          </div>
+        </div>
       </details>
       {% endfor %}
     </div>

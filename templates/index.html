@@ -17,6 +17,26 @@
       <h1>Cette semaine</h1>
     </section>
 
+    <section class="section" id="a-penser">
+      <h2 class="section-title">À penser pour le prochain drive</h2>
+      <div class="card boite" data-boite>
+        <form class="boite-ajout" data-boite-ajout hidden>
+          <label for="boite-texte" class="sr-only">Article à ajouter</label>
+          <input id="boite-texte" type="text" maxlength="120" placeholder="Essuie-tout, piles…" autocomplete="off">
+          <button type="submit">Ajouter</button>
+        </form>
+        <ul class="boite-liste" data-boite-liste></ul>
+        <form class="boite-code" data-boite-code hidden>
+          <label for="boite-code">Code de la maison (à taper une seule fois sur ce téléphone)</label>
+          <div class="boite-ligne">
+            <input id="boite-code" type="text" autocomplete="off" autocapitalize="none" spellcheck="false">
+            <button type="submit">Valider</button>
+          </div>
+        </form>
+        <p class="boite-msg" data-boite-msg role="status"></p>
+      </div>
+    </section>
+
     {% if current.context %}
     <section class="card context">
       {{ current.context|safe }}
@@ -33,7 +53,21 @@
             <span class="recipe-title">{{ r.title_html|safe }}</span>
             <span class="chev">▾</span>
           </summary>
-          <div class="recipe-body">{{ r.html|safe }}</div>
+          <div class="recipe-body">
+            {{ r.html|safe }}
+            <div class="retour" data-retour data-recette="{{ r.title }}" data-semaine="{{ current.slug }}">
+              <div class="retour-boutons">
+                <button type="button" class="retour-btn" data-retour-fav aria-pressed="false">♡ On a adoré</button>
+                <button type="button" class="retour-btn" data-retour-ouvrir>Une remarque</button>
+              </div>
+              <form class="retour-form" data-retour-form hidden>
+                <label class="sr-only" for="rem-{{ current.slug }}-{{ loop.index }}">Remarque sur la recette</label>
+                <textarea id="rem-{{ current.slug }}-{{ loop.index }}" maxlength="1000" rows="3" placeholder="Ex. : pas assez de riz, trop épicé pour Ludo…"></textarea>
+                <button type="submit" class="retour-envoyer">Envoyer à Claude</button>
+              </form>
+              <p class="retour-msg" data-retour-msg role="status"></p>
+            </div>
+          </div>
         </details>
         {% endfor %}
       </div>

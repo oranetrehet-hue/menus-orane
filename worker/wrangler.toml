@@ -1,0 +1,14 @@
+name = "menus-orane"
+main = "src/index.js"
+compatibility_date = "2026-05-01"
+workers_dev = true
+
+# Base partagée : liste « À penser pour le prochain drive » + retours sur les recettes.
+# Schéma : schema.sql (npx wrangler d1 execute menus-orane --remote --file schema.sql).
+[[d1_databases]]
+binding = "DB"
+database_name = "menus-orane"
+database_id = "2547a5ed-6afc-4897-a3fb-cfc3ed8d72c7"
+
+# Secret CODE : `npx wrangler secret put CODE`. Sans lui, tout est refusé.
+# Le code est aussi dans worker/.secrets.json (jamais sur GitHub) pour tools/boite.py.

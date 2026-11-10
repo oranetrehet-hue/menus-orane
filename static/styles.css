@@ -12,6 +12,7 @@
   --line: #e9e3d8;
   --accent: #b25c3a;
   --accent-soft: #f3e3da;
+  --on-accent: #ffffff;
   --ok: #4c8a4a;
   --radius: 14px;
   --shadow: 0 1px 0 rgba(0,0,0,0.03), 0 8px 24px -16px rgba(0,0,0,0.15);
@@ -27,6 +28,7 @@
     --line: #353129;
     --accent: #d97a55;
     --accent-soft: #3a2820;
+    --on-accent: #1c1a17;
   }
 }
 
@@ -296,3 +298,46 @@ main {
 }
 
 a { color: var(--accent); }
+
+/* Boîte partagée : « À penser pour le prochain drive » + retours sur les recettes (boite.js) */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+.boite-ajout, .boite-ligne { display: flex; gap: 8px; }
+.boite input[type="text"], .retour-form textarea {
+  flex: 1; min-width: 0; font: inherit; color: var(--ink); background: var(--bg);
+  border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px;
+}
+.boite button, .retour-envoyer {
+  font: inherit; font-size: 15px; font-weight: 600; min-height: 44px; padding: 10px 14px;
+  border: 1px solid var(--accent); border-radius: 10px;
+  background: var(--accent); color: var(--on-accent); cursor: pointer;
+}
+.boite-liste { list-style: none; margin: 12px 0 0; padding: 0; }
+.boite-liste:empty { display: none; }
+.boite-liste li {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  padding: 6px 0; border-bottom: 1px solid var(--line);
+}
+.boite-liste li:last-child { border-bottom: 0; }
+.boite .boite-retirer {
+  min-width: 44px; padding: 6px 10px; font-size: 20px; line-height: 1;
+  background: transparent; color: var(--ink-soft); border-color: var(--line);
+}
+.boite-code label { display: block; margin-bottom: 6px; font-size: 15px; color: var(--ink-soft); }
+.boite-msg { margin: 10px 0 0; font-size: 14px; color: var(--ink-soft); }
+.boite-msg:empty { display: none; }
+
+.retour { margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--line); }
+.retour-boutons { display: flex; flex-wrap: wrap; gap: 8px; }
+.retour-btn {
+  font: inherit; font-size: 15px; font-weight: 600; min-height: 44px; padding: 8px 14px;
+  border: 0; border-radius: 10px; background: var(--accent-soft); color: var(--ink); cursor: pointer;
+}
+.retour-btn:disabled { opacity: 0.75; cursor: default; }
+.retour-form { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.retour-msg { margin: 8px 0 0; font-size: 14px; color: var(--ink-soft); }
+.retour-msg:empty { display: none; }
+.boite button:focus-visible, .retour-btn:focus-visible, .retour-envoyer:focus-visible,
+.boite input:focus-visible, .retour-form textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }

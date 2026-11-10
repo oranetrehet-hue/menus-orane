@@ -7,3 +7,8 @@ venv/
 Thumbs.db
 .vscode/
 .idea/
+
+# Service Cloudflare (le code ne doit jamais aller sur GitHub)
+worker/.secrets.json
+worker/.wrangler/
+worker/node_modules/
