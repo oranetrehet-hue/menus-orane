@@ -15,6 +15,7 @@ Journal : tools/veilleur.log
 from __future__ import annotations
 
 import json
+import os
 import socket
 import subprocess
 import sys
@@ -28,10 +29,33 @@ ICI = Path(__file__).resolve().parent
 SECRETS = ICI.parent / "worker" / ".secrets.json"
 JOURNAL = ICI / "veilleur.log"
 MENUS = Path(r"C:\Users\orane\OneDrive\Documents\5. DOCUMENTS PERSO\10. RECETTES ET MENUS")
-CLAUDE = Path(r"C:\Users\orane\AppData\Roaming\npm\node_modules\@anthropic-ai\claude-code\bin\claude.exe")
+# L'appli Claude (paquet Windows) range npm, les bibliothèques Python et la config GitHub dans son dossier
+# privé. Lancé au démarrage de Windows, le veilleur ne le voit pas tout seul : on lui donne les vrais chemins.
+PAQUET = Path(r"C:\Users\orane\AppData\Local\Packages\Claude_pzs8sxrjxfjjc\LocalCache\Roaming")
+_CLAUDES = [
+    PAQUET / "npm" / "node_modules" / "@anthropic-ai" / "claude-code" / "bin" / "claude.exe",
+    Path(r"C:\Users\orane\AppData\Roaming\npm\node_modules\@anthropic-ai\claude-code\bin\claude.exe"),
+]
+CLAUDE = next((c for c in _CLAUDES if c.exists()), _CLAUDES[0])
 PAUSE = 20
 DUREE_MAX = {"proposer": 30 * 60, "finaliser": 75 * 60}
 SANS_FENETRE = getattr(subprocess, "CREATE_NO_WINDOW", 0)
+
+
+def environnement() -> dict:
+    """Variables pour Claude et ce qu'il lance (python build.py, git, gh), même hors de l'appli Claude."""
+    env = dict(os.environ)
+    site = PAQUET / "Python" / "Python314" / "site-packages"
+    if site.exists():
+        env["PYTHONPATH"] = str(site) + (os.pathsep + env["PYTHONPATH"] if env.get("PYTHONPATH") else "")
+    npm = PAQUET / "npm"
+    if npm.exists():
+        env["PATH"] = str(npm) + os.pathsep + env.get("PATH", "")
+    gh = PAQUET / "GitHub CLI"
+    if gh.exists() and not env.get("GH_CONFIG_DIR"):
+        env["GH_CONFIG_DIR"] = str(gh)
+    env["PYTHONIOENCODING"] = "utf-8"
+    return env
 
 
 def noter(message: str) -> None:
@@ -76,7 +100,8 @@ def lancer_claude(consigne: str, pid: int, chrome: bool) -> str:
     noter(f"plan {pid} : Claude démarre ({consigne})")
     with JOURNAL.open("a", encoding="utf-8") as sortie:
         proc = subprocess.Popen(
-            commande, cwd=MENUS, stdin=subprocess.PIPE, stdout=sortie, stderr=sortie, creationflags=SANS_FENETRE
+            commande, cwd=MENUS, stdin=subprocess.PIPE, stdout=sortie, stderr=sortie,
+            creationflags=SANS_FENETRE, env=environnement(),
         )
         proc.stdin.write(message.encode("utf-8"))
         proc.stdin.close()
@@ -95,7 +120,8 @@ def lancer_claude(consigne: str, pid: int, chrome: bool) -> str:
 def claude_connecte() -> bool:
     """Claude Code (la commande claude) doit être connecté une fois au compte d'Orane : claude auth login."""
     try:
-        r = subprocess.run([str(CLAUDE), "auth", "status"], capture_output=True, timeout=60, creationflags=SANS_FENETRE)
+        r = subprocess.run([str(CLAUDE), "auth", "status"], capture_output=True, timeout=60,
+                           creationflags=SANS_FENETRE, env=environnement())
         return bool(json.loads(r.stdout.decode("utf-8", "replace") or "{}").get("loggedIn"))
     except Exception:  # noqa: BLE001
         return False
