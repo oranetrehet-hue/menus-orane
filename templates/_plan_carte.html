@@ -1,7 +1,10 @@
 {# La semaine suivante : la préparer avec Claude, ou la voir si elle est déjà prête. plan.js met la carte à jour
-   (Claude prépare, proposition à valider, panier prêt…). #}
+   (Claude prépare, proposition à valider, panier prêt…) et, quand la semaine « prochaine » a commencé,
+   la carte repropose de préparer la suivante, sans attendre une nouvelle publication. #}
 {% set photos = (prochain.recettes|map(attribute="photo")|select|list)[:3] if prochain else photos_favoris %}
-<a class="plan-carte" href="{{ 'semaines/' ~ prochain.slug ~ '.html' if prochain else 'semaine-prochaine.html' }}" data-plan-carte{% if prochain %} data-prochain{% endif %}>
+<a class="plan-carte" href="{{ 'semaines/' ~ prochain.slug ~ '.html' if prochain else 'semaine-prochaine.html' }}" data-plan-carte
+   {% if prochain %}data-prochain data-prochain-debut="{{ prochain.debut.isoformat() }}"{% endif %}
+   data-photos-defaut="{{ photos_favoris|tojson|forceescape }}">
   <span class="plan-photos" data-plan-photos aria-hidden="true">
     {% for p in photos %}<img src="{{ p }}" alt="" loading="lazy" referrerpolicy="no-referrer">{% endfor %}
   </span>

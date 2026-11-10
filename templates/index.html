@@ -11,8 +11,9 @@
 </header>
 
 {% if menu %}
-  {# Un bloc par repas cuisiné (le soir, ou le midi quand le soir est au resto) ; app.js montre celui du jour. #}
-  {% for j in menu.jours if j.afficher %}
+  {# Un bloc par repas cuisiné (le soir, ou le midi quand le soir est au resto), pour cette semaine et la suivante
+     si elle est déjà prête : app.js montre celui du jour, même sans republier l'appli. #}
+  {% for j in jours_accueil %}
   <section class="jour" data-jour="{{ j.iso }}" data-moment="{{ j.moment }}" data-nom-jour="{{ j.nom_jour }}"{% if not loop.first %} hidden{% endif %}>
     {% set r = j.plat %}
     {% if r %}
@@ -45,14 +46,14 @@
   {% endfor %}
 
   {# Les gestes à faire la veille : affichés le jour où il faut les faire. #}
-  {% for a in menu.astuces %}
+  {% for a in astuces_accueil %}
   <div class="astuce" data-astuce-jour="{{ a.iso }}" hidden>
     <div class="astuce-textes">
       <span class="astuce-titre">À anticiper{% if a.quand %} · {{ a.quand }}{% endif %}</span>
       <span>{{ a.texte }}</span>
       <a class="astuce-plat" href="recettes/{{ a.page }}">Pour : {{ a.plat }}</a>
     </div>
-    <label class="fait"><input type="checkbox" data-fait="{{ menu.slug }}-{{ a.iso }}-{{ a.cle }}">Fait</label>
+    <label class="fait"><input type="checkbox" data-fait="{{ a.slug }}-{{ a.iso }}-{{ a.cle }}">Fait</label>
   </div>
   {% endfor %}
 {% endif %}
@@ -60,10 +61,12 @@
 {% include "_plan_carte.html" %}
 
 {% if menu %}
-<section class="bloc">
+{# La semaine en photos : celle en cours ; quand elle est finie, la suivante (app.js choisit). #}
+{% for m in semaines_accueil %}
+<section class="bloc" data-grille data-au="{{ m.au }}"{% if not loop.first %} hidden{% endif %}>
   <h2 class="section-titre">Cette semaine</h2>
   <div class="grille-semaine">
-    {% for j in menu.jours if j.afficher %}
+    {% for j in m.jours_affiches %}
     {% set r = j.plat %}
     <a class="tuile"{% if r %} href="recettes/{{ r.page }}"{% endif %} data-tuile-jour="{{ j.iso }}">
       {% if j.photo %}
@@ -79,6 +82,7 @@
     {% endfor %}
   </div>
 </section>
+{% endfor %}
 {% else %}
 <p class="vide">Aucun menu pour le moment.</p>
 {% endif %}

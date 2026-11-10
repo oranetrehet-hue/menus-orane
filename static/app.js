@@ -77,6 +77,13 @@
     }
   });
 
+  // La semaine en photos : celle en cours ; une fois finie, la suivante si elle est déjà prête.
+  var grilles = Array.prototype.slice.call(document.querySelectorAll("[data-grille]"));
+  if (grilles.length) {
+    var grille = grilles.filter(function (g) { return g.getAttribute("data-au") >= aujourdhui; })[0] || grilles[grilles.length - 1];
+    grilles.forEach(function (g) { g.hidden = g !== grille; });
+  }
+
   /* ---------- Cases mémorisées sur ce téléphone ---------- */
   document.querySelectorAll("input[data-fait], input[data-ingredient]").forEach(function (c) {
     var cle = "case:" + (c.getAttribute("data-fait") || c.getAttribute("data-ingredient"));

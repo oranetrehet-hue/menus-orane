@@ -34,6 +34,7 @@ from __future__ import annotations
 import argparse
 import html as html_mod
 import json
+import os
 import re
 import shutil
 import unicodedata
@@ -48,9 +49,9 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 # --- Config ---------------------------------------------------------
 
 REPO = Path(__file__).parent
-SOURCE_MENUS = Path(
-    r"C:\Users\orane\OneDrive\Documents\5. DOCUMENTS PERSO\10. RECETTES ET MENUS\menus"
-)
+SOURCE_MENUS = Path(os.environ.get(  # MENUS_SOURCE : seulement pour tester avec d'autres menus
+    "MENUS_SOURCE", r"C:\Users\orane\OneDrive\Documents\5. DOCUMENTS PERSO\10. RECETTES ET MENUS\menus"
+))
 SOURCE_FAVORIS = Path(
     r"C:\Users\orane\OneDrive\Documents\5. DOCUMENTS PERSO\10. RECETTES ET MENUS\favoris.md"
 )
@@ -674,6 +675,19 @@ def build(keep_weeks: int = 5) -> None:
     prochain = next((m for m in a_venir if current and m["debut"] > current["debut"]), None)
     archives = [m for m in menus if m is not current and m is not prochain and m["debut"] < today][:keep_weeks]
 
+    # L'accueil contient aussi les jours de la semaine suivante déjà publiée : le téléphone passe tout seul
+    # d'une semaine à l'autre, même si personne ne republie l'appli (ordinateur éteint).
+    semaines_accueil = [m for m in (current, prochain) if m]
+    jours_accueil, vus = [], set()
+    for m in semaines_accueil:
+        m["jours_affiches"] = [j for j in m["jours"] if j["afficher"]]
+        m["au"] = m["jours_affiches"][-1]["iso"] if m["jours_affiches"] else m["fin"].isoformat()
+        for j in m["jours_affiches"]:
+            if j["iso"] not in vus:
+                vus.add(j["iso"])
+                jours_accueil.append(j)
+    astuces_accueil = [dict(a, slug=m["slug"]) for m in semaines_accueil for a in m["astuces"]]
+
     # La semaine suivante commence après le dernier repas prévu du dernier menu.
     dernier = max(menus, key=lambda m: m["debut"]) if menus else None
     jours_prevus = [j["date"] for j in dernier["jours"] if j["afficher"] and j["date"]] if dernier else []
@@ -706,7 +720,8 @@ def build(keep_weeks: int = 5) -> None:
     def ecrire(nom: str, tpl: str, **ctx) -> None:
         (OUT / nom).write_text(env.get_template(tpl).render(**commun, **ctx), encoding="utf-8")
 
-    ecrire("index.html", "index.html", page="semaine", root="", menu=current, prochain=prochain, archives=archives)
+    ecrire("index.html", "index.html", page="semaine", root="", menu=current, prochain=prochain, archives=archives,
+           jours_accueil=jours_accueil, astuces_accueil=astuces_accueil, semaines_accueil=semaines_accueil)
     ecrire("semaine-prochaine.html", "semaine-prochaine.html", page="plan", root="",
            prochain_debut=prochain_debut.isoformat(), prochain=prochain)
     ecrire("courses.html", "courses.html", page="courses", root="", menu=current)

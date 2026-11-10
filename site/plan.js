@@ -45,6 +45,25 @@
 
   /* ---------- Accueil : la carte « Semaine prochaine » ---------- */
   var carte = document.querySelector("[data-plan-carte]");
+  if (carte && carte.hasAttribute("data-prochain-debut") && iso(new Date()) >= carte.getAttribute("data-prochain-debut")) {
+    // La semaine « prochaine » a commencé (sans nouvelle publication) : la carte propose de préparer la suivante.
+    carte.removeAttribute("data-prochain");
+    carte.href = "semaine-prochaine.html";
+    carte.querySelector("[data-plan-titre]").textContent = "Préparer le menu avec Claude";
+    carte.querySelector("[data-plan-texte]").textContent = "Il te pose ses questions, propose les plats en photos, puis prépare le panier du drive.";
+    carte.querySelector("[data-plan-action]").textContent = "Commencer";
+    var zoneDefaut = carte.querySelector("[data-plan-photos]");
+    var photosDefaut = [];
+    try { photosDefaut = JSON.parse(carte.getAttribute("data-photos-defaut") || "[]"); } catch (_e) { photosDefaut = []; }
+    zoneDefaut.innerHTML = "";
+    photosDefaut.slice(0, 3).forEach(function (src) {
+      var img = B.el("img");
+      img.src = src;
+      img.alt = "";
+      img.setAttribute("referrerpolicy", "no-referrer");
+      zoneDefaut.appendChild(img);
+    });
+  }
   if (carte && B.pret()) {
     B.appel("GET", "/api/plan").then(function (etat) {
       var p = etat.plan;
