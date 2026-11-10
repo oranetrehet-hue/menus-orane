@@ -14,13 +14,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="../styles.css?v=202611101437">
+  <link rel="stylesheet" href="../styles.css?v=202611101457">
 </head>
 <body class="page-recette">
   <main class="ecran">
 <div class="page-recette" data-retour data-recette="Burgers maison au comté, salade sucrine-tomates" data-semaine="2026-S43">
   <div class="barre-haut">
-    <a href="../index.html" class="bouton-rond" aria-label="Retour à la semaine">
+    <a href="../index.html" class="bouton-rond" aria-label="Retour">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>
     </a>
     <button type="button" class="bouton-rond coeur" data-retour-fav aria-pressed="false" aria-label="On a adoré">
@@ -31,12 +31,8 @@
   <img class="photo-recette" src="https://static.jow.fr/1200x630/recipes/0YeuQTs0ng0Nmw.jpg" alt="" referrerpolicy="no-referrer">
 
   <div class="recette-tete">
-    <a class="source" href="https://jow.fr/recipes/burger-a-la-parisienne-et-frites-87qahcph8pgw6wh21azs" target="_blank" rel="noopener">Jow
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"></path></svg></a>
     <h1 class="titre-recette">Burgers maison au comté, salade sucrine-tomates</h1>
-    <div class="puces">
-<span class="puce puce-contour">20 min</span>      <span class="puce puce-contour">4 portions</span>
-<span class="puce puce-accent">jeudi 22 soir + vendredi midi</span>    </div>
+    <p class="meta">Jow · 20 min · 4 portions</p>
   </div>
 
   <div class="segments" role="tablist" aria-label="Recette">
@@ -50,7 +46,7 @@
       <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S43-3.html-3"><span>1 morceau de comté (~250 g)</span></label>
       <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S43-3.html-4"><span>4 tomates</span></label>
       <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S43-3.html-5"><span>1 sachet sucrines (×3)</span></label>
-      <p class="note"><em>Stock à vérifier : mayo, ketchup, moutarde</em></p>
+      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S43-3.html-6"><span>Stock à vérifier</span></label>
   </section>
 
   <section class="carte etapes" id="panneau-etapes" role="tabpanel" aria-labelledby="onglet-etapes" data-panneau="etapes" hidden>
@@ -60,24 +56,24 @@
 
 
 
+  <a class="lien-texte" href="https://jow.fr/recipes/burger-a-la-parisienne-et-frites-87qahcph8pgw6wh21azs" target="_blank" rel="noopener">Voir la recette d'origine sur Jow</a>
+
   <form class="retour-form" data-retour-form hidden>
     <label for="remarque">Ta remarque sur cette recette</label>
-    <textarea id="remarque" maxlength="1000" rows="3" placeholder="Ex. : pas assez de riz, trop épicé pour Ludo…"></textarea>
+    <textarea id="remarque" maxlength="1000" rows="3" placeholder="Pas assez de riz, trop épicé pour Ludo…"></textarea>
     <button type="submit" class="bouton-principal">Envoyer à Claude</button>
   </form>
   <p class="retour-msg" data-retour-msg role="status"></p>
 
   <div class="barre-actions">
-    <button type="button" class="bouton-secondaire" data-retour-ouvrir>
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"></path></svg>Une remarque</button>
-    <button type="button" class="bouton-sombre" data-mode-cuisine aria-pressed="false">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>Mode cuisine</button>
+    <button type="button" class="bouton-secondaire" data-retour-ouvrir>Une remarque</button>
+    <button type="button" class="bouton-sombre" data-mode-cuisine aria-pressed="false">Mode cuisine</button>
   </div>
 </div>
   </main>
 
 
-  <script src="../app.js?v=202611101437"></script>
-  <script src="../boite.js?v=202611101437"></script>
+  <script src="../app.js?v=202611101457"></script>
+  <script src="../boite.js?v=202611101457"></script>
 </body>
 </html>

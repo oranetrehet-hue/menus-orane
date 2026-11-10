@@ -36,7 +36,73 @@
     });
   }
 
-  var SANS_CODE = "Entre d'abord le code de la maison (onglet Courses, en bas).";
+  var SANS_CODE = "Entre d'abord le code de la maison dans l'onglet Drive.";
+
+  /* ---------- Bouton + : noter un article pour le prochain drive, en un geste ---------- */
+  var plus = document.querySelector("[data-ajout-rapide]");
+  if (plus) {
+    var feuille = document.querySelector("[data-feuille]");
+    var voile = document.querySelector("[data-feuille-voile]");
+    var feuilleForm = feuille.querySelector("[data-feuille-form]");
+    var feuilleChamp = feuilleForm.querySelector("input");
+    var feuilleMsg = feuille.querySelector("[data-feuille-msg]");
+    var fermer = function () {
+      feuille.hidden = true;
+      voile.hidden = true;
+      feuilleChamp.blur();
+    };
+    plus.addEventListener("click", function () {
+      feuille.hidden = false;
+      voile.hidden = false;
+      if (!lire(CLE_CODE)) {
+        feuilleForm.hidden = true;
+        feuilleMsg.textContent = SANS_CODE;
+        return;
+      }
+      feuilleForm.hidden = false;
+      feuilleMsg.textContent = "";
+      feuilleChamp.focus();  // dans le geste : le clavier s'ouvre tout de suite
+    });
+    voile.addEventListener("click", fermer);
+    feuille.querySelector("[data-feuille-fermer]").addEventListener("click", fermer);
+    feuilleForm.addEventListener("submit", function (ev) {
+      ev.preventDefault();
+      var texte = feuilleChamp.value.trim();
+      if (!texte) return;
+      feuilleChamp.value = "";
+      feuilleMsg.textContent = "Ajout…";
+      appel("POST", "/api/achats", { texte: texte })
+        .then(function () {
+          feuilleMsg.textContent = texte + " : noté pour le prochain drive.";
+          feuilleChamp.focus();
+        })
+        .catch(function (e) {
+          feuilleChamp.value = texte;
+          feuilleMsg.textContent = e && e.code === 401
+            ? "Code incorrect : entre-le à nouveau dans l'onglet Drive."
+            : "Pas de connexion, réessaie.";
+        });
+    });
+  }
+
+  /* ---------- Nos photos (gardées derrière le code de la maison) ---------- */
+  if (lire(CLE_CODE)) {
+    document.querySelectorAll("[data-avatar]").forEach(function (el) {
+      fetch(API + "/api/avatars/" + el.getAttribute("data-avatar"), { headers: { "x-code": lire(CLE_CODE) } })
+        .then(function (r) {
+          if (!r.ok) throw r.status;
+          return r.blob();
+        })
+        .then(function (b) {
+          var img = document.createElement("img");
+          img.alt = "";
+          img.src = URL.createObjectURL(b);
+          el.textContent = "";
+          el.appendChild(img);
+        })
+        .catch(function () { /* on garde l'initiale */ });
+    });
+  }
 
   /* ---------- Code de la maison ---------- */
   var codeForm = document.querySelector("[data-code-form]");
@@ -85,7 +151,7 @@
       });
       msg.textContent = achats.length
         ? "Claude les ajoutera au prochain drive."
-        : "Rien pour l'instant. Ajoute ce qui manque : Claude le mettra dans le prochain drive.";
+        : "Rien pour l'instant. Note ici ce qui manque, Claude l'ajoutera au prochain drive.";
     };
 
     var erreur = function (e) {
@@ -236,7 +302,7 @@
         .then(reussi)
         .catch(function (e) {
           if (bouton) bouton.disabled = false;
-          dire(e && e.code === 401 ? "Code incorrect : entre-le à nouveau dans l'onglet Courses." : "Pas envoyé (pas de connexion ?). Réessaie.");
+          dire(e && e.code === 401 ? "Code incorrect : entre-le à nouveau dans l'onglet Drive." : "Pas envoyé (pas de connexion ?). Réessaie.");
         });
     };
 

@@ -75,6 +75,24 @@ export default {
       return json(req, { ok: true });
     }
 
+    // Photos d'Orane (O) et de Ludo (L) : servies seulement avec le code, jamais publiques.
+    const av = p.match(/^\/api\/avatars\/(O|L)$/);
+    if (av && m === "GET") {
+      const row = await db.prepare("SELECT mime, data FROM avatars WHERE qui = ?").bind(av[1]).first();
+      if (!row) return json(req, { erreur: "absent" }, 404);
+      const octets = Uint8Array.from(atob(row.data), (c) => c.charCodeAt(0));
+      return new Response(octets, {
+        headers: { "content-type": row.mime, "cache-control": "private, max-age=86400", ...cors(req) },
+      });
+    }
+    if (av && m === "POST") {
+      const mime = propre(corps.mime, 40);
+      const data = typeof corps.data === "string" ? corps.data : "";
+      if (!mime.startsWith("image/") || !data || data.length > 200000) return json(req, { erreur: "image" }, 400);
+      await db.prepare("INSERT OR REPLACE INTO avatars (qui, mime, data) VALUES (?, ?, ?)").bind(av[1], mime, data).run();
+      return json(req, { ok: true });
+    }
+
     if (m === "GET" && p === "/api/coches") {
       const semaine = propre(url.searchParams.get("semaine"), 20);
       const r = await db.prepare("SELECT item, par FROM coches WHERE semaine = ?").bind(semaine).all();

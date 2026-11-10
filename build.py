@@ -104,7 +104,7 @@ def _cle(*parts: str) -> str:
 
 
 def _date_courte(d: date) -> str:
-    return f"{d.day} {MOIS_COURTS[d.month - 1]}"
+    return f"{d.day} {MOIS_COURTS[d.month - 1]}"  # espace insécable : « 27 oct. » ne se coupe pas
 
 
 # --- Semaine ISO ----------------------------------------------------
@@ -153,6 +153,8 @@ def _photo(url: str, cache: dict) -> str:
     """Photo publiée par le site source (balise og:image), mémorisée dans photos.json."""
     if not url or not url.startswith("http") or url.lower().endswith(".pdf"):
         return ""
+    if re.search(r"\.(jpe?g|png|webp)(\?|$)", url, re.IGNORECASE):
+        return url
     deja = cache.get(url)
     recent = (date.today() - timedelta(days=7)).isoformat()
     if deja and (deja.get("img") or deja.get("essai", "") > recent):
@@ -294,11 +296,25 @@ def _recette(item: dict, index: int, slug: str, jours_dates: list[date], debut: 
         date_plat = _date_du_jour(int(quand.group(2)), jours_dates, debut)
         moment = (quand.group(3) or "").lower() or "soir"
 
-    source_nom, source_url, maison = "", "", False
+    source_nom, source_url, maison, photo_page = "", "", False, ""
     lignes_etapes, astuce, astuce_quand, part_ludo = [], "", "", ""
+    ingredients_recette, dans_ingredients = [], False
     for line in item["lignes"]:
         s = line.strip()
         if not s or s == "---":
+            continue
+        # « **Ingrédients (4 portions)** : » suivi d'une liste : tout ce qu'il faut pour cuisiner.
+        if re.match(r"^\*\*Ingr[ée]dients", s, re.IGNORECASE):
+            dans_ingredients = True
+            continue
+        if dans_ingredients and s.startswith(("- ", "* ")):
+            ingredients_recette.append(_plain(s[2:]))
+            continue
+        dans_ingredients = False
+        if s.lower().startswith("photo"):
+            lien = re.search(r"\((https?://[^)\s]+)\)", s) or re.search(r"(https?://\S+)", s)
+            if lien:
+                photo_page = lien.group(1)
             continue
         if s.lower().startswith("source"):
             lien = re.search(r"\[([^\]]+)\]\(([^)]+)\)", s)
@@ -313,6 +329,7 @@ def _recette(item: dict, index: int, slug: str, jours_dates: list[date], debut: 
             continue
         if s.startswith("**Part Ludo**"):
             part_ludo = _plain(s.split(":", 1)[1]) if ":" in s else ""
+            part_ludo = part_ludo[:1].upper() + part_ludo[1:]
             continue
         if s.lower().startswith("recette maison"):
             maison = True
@@ -332,15 +349,43 @@ def _recette(item: dict, index: int, slug: str, jours_dates: list[date], debut: 
         "moment": moment,
         "source_label": source_nom or "Recette maison",
         "source_url": source_url,
-        "photo": _photo(source_url, cache),
+        "photo": _photo(source_url, cache) or _photo(photo_page, cache),
+        "meta": " · ".join(x for x in (source_nom or "Recette maison", f"{temps.group(1)} min" if temps else "", "4 portions") if x),
         "etapes": _etapes(" ".join(lignes_etapes)),
         "astuce": astuce,
         "astuce_quand": astuce_quand,
         "astuce_date": _jour_nomme(astuce_quand, jours_dates, debut) if astuce_quand else None,
         "part_ludo": part_ludo,
+        "ingredients_recette": ingredients_recette,
         "ingredients": [],
         "mots": _mots(nom),
     }
+
+
+def _depuis_courses(articles: list[dict]) -> list[str]:
+    """Repli pour un ancien menu sans liste d'ingrédients : ce qui est acheté ET ce qui est en stock,
+    sans distinction (pour cuisiner, on s'en fiche)."""
+    sortie: list[str] = []
+    for a in articles:
+        if not a["is_note"]:
+            sortie.append(a["plain"])
+            continue
+        for phrase in re.split(r"(?<=\.)\s+", a["plain"]):
+            if ":" not in phrase:
+                continue
+            avant, apres = phrase.split(":", 1)
+            morceaux = apres if re.search(r"rien à acheter", avant, re.IGNORECASE) else avant
+            morceaux = re.sub(r"\s*à la maison\.?$", "", morceaux.strip())
+            for x in re.split(r",\s*|\s+et\s+", morceaux):
+                x = re.sub(r"\(.*?\)", "", x).strip(" .")
+                if x:
+                    sortie.append(x[:1].upper() + x[1:])
+    vus, uniques = set(), []
+    for x in sortie:
+        if _ascii(x) not in vus:
+            vus.add(_ascii(x))
+            uniques.append(x)
+    return uniques
 
 
 def _articles(lignes: list[str]) -> list[dict]:
@@ -376,7 +421,9 @@ def parse_menu_md(path: Path, cache: dict) -> dict:
     dates = _dates(rows, debut)
     jours_dates = [d for d in dates if d]
 
-    recettes = [_recette(it, i + 1, slug, jours_dates, debut, cache) for i, it in enumerate(parts["recettes"])]
+    # Seuls les vrais plats (« ### 1. Nom *(…)* ») deviennent des recettes, pas « ### Soirée samedi — à apporter ».
+    plats = [it for it in parts["recettes"] if re.match(r"^\s*\d+\.", it["titre"]) or "*(" in it["titre"]]
+    recettes = [_recette(it, i + 1, slug, jours_dates, debut, cache) for i, it in enumerate(plats)]
 
     # Liste de courses : groupes, et ingrédients rattachés à leur recette.
     courses = []
@@ -396,6 +443,9 @@ def parse_menu_md(path: Path, cache: dict) -> dict:
             "notes": [a["text"] for a in articles if a["is_note"]],
         })
 
+    for r in recettes:
+        r["ingredients_liste"] = r["ingredients_recette"] or _depuis_courses(r["ingredients"])
+
     # Les jours, avec la recette du soir (et du midi quand c'est un plat du midi).
     jours = []
     for (jour, midi, soir), d in zip(rows, dates):
@@ -406,8 +456,15 @@ def parse_menu_md(path: Path, cache: dict) -> dict:
             "court1": JOURS_COURTS[d.weekday()] if d else _plain(jour)[:3].upper(),
             "court2": str(d.day) if d else "",
             "label": f"{JOURS[d.weekday()].capitalize()} {d.day} {MOIS[d.month - 1]}" if d else _plain(jour),
+            "label_court": f"{JOURS[d.weekday()].capitalize()} {d.day}" if d else _plain(jour),
             "midi_txt": _texte_repas(midi),
+            # Le midi ne vaut d'être affiché que si ce n'est pas simplement les restes de la veille.
+            "midi_special": "" if _texte_repas(midi).lower().startswith(("restes", "—", "libre", "(")) else _texte_repas(midi),
             "soir_txt": _texte_repas(soir),
+            # Nom affiché : la recette de la semaine, sinon le texte du tableau sans « (S45, …) » ni « — ».
+            "soir_nom": r_soir["nom"] if r_soir else (
+                re.sub(r"\s*\([^)]*S\d+[^)]*\)", "", _texte_repas(soir)).strip()
+                if _texte_repas(soir) and not _texte_repas(soir).startswith("—") else "Rien de prévu"),
             "recette_soir": r_soir,
             "recette_midi": r_midi,
             "astuces": [
@@ -454,12 +511,13 @@ def parse_favoris(path: Path, cache: dict) -> list[dict]:
         nom, parenthese, reste = m.group(1), m.group(3) or "", m.group(4)
         lien = re.search(r"\[([^\]]+)\]\(([^)]+)\)", parenthese)
         source_url = lien.group(2) if lien else ""
-        source = re.split(r"\s+[—–-]\s+", lien.group(1))[0] if lien else ("Maison" if "maison" in parenthese.lower() else "")
+        source = re.split(r"\s+[—–-]\s+", lien.group(1))[0] if lien else ""
         champs = [c.strip() for c in reste.split("|")]
         quand = re.search(r"(\d{4})-(\d{2})-(\d{2})", champs[-1]) if champs else None
         favoris.append({
             "nom": _plain(nom),
-            "source_label": source or "Maison",
+            "meta": " · ".join(x for x in (source or "Recette maison", champs[0] if champs and "min" in champs[0] else "") if x),
+            "source_label": source or "Recette maison",
             "source_url": source_url,
             "photo": _photo(source_url, cache),
             "temps": champs[0] if champs and "min" in champs[0] else "",
@@ -492,20 +550,37 @@ def build(keep_weeks: int = 5) -> None:
     archives = [m for m in menus if m is not current]
     favoris = parse_favoris(SOURCE_FAVORIS, cache)
 
-    # Un soir qui reprend un plat d'une autre semaine (« Poêlée tartiflette (S45) ») pointe vers sa recette.
+    # Photos d'illustration pour les plats sans photo (illustrations.json), puis favoris → photo du même plat.
+    illus_brut = json.loads((REPO / "illustrations.json").read_text(encoding="utf-8")) if (REPO / "illustrations.json").exists() else {}
+    illus = {_ascii(k): v for k, v in illus_brut.items() if not k.startswith("_")}
+    for m in menus:
+        for r in m["recettes"]:
+            if not r["photo"] and _ascii(r["nom"]) in illus:
+                r["photo"] = _photo(illus[_ascii(r["nom"])], cache)
+    avec_photo = [r for m in menus for r in m["recettes"] if r["photo"]]
+    for f in favoris:
+        if f["photo"]:
+            continue
+        if _ascii(f["nom"]) in illus:
+            f["photo"] = _photo(illus[_ascii(f["nom"])], cache)
+            continue
+        mots = _mots(f["nom"])
+        proche = max(avec_photo, key=lambda r: len(mots & r["mots"]), default=None)
+        if proche and len(mots & proche["mots"]) >= 2:
+            f["photo"] = proche["photo"]
+
+    # Un soir qui reprend un plat d'une autre semaine (« Poêlée tartiflette (S45) ») pointe vers sa recette,
+    # seulement si c'est bien le même plat (tous les mots du tableau se retrouvent dans la recette).
     toutes = [r for m in menus for r in m["recettes"]]
     for m in menus:
         for j in m["jours"]:
             texte = j["soir_txt"]
-            if j["recette_soir"] or not texte or texte.startswith("—") or texte.lower().startswith(("restes", "resto", "libre")):
-                continue
-            mots = _mots(re.sub(r"\(S\d+[^)]*\)", "", texte))
-            meilleure, score = None, 1
-            for r in toutes:
-                s = len(mots & r["mots"])
-                if s > score:
-                    meilleure, score = r, s
-            j["recette_soir"] = meilleure
+            if not j["recette_soir"] and texte and not texte.startswith("—") and not texte.lower().startswith(("restes", "resto", "libre")):
+                mots = _mots(re.sub(r"\([^)]*\)", "", texte))
+                j["recette_soir"] = next((r for r in toutes if mots and mots <= r["mots"]), None)
+            # Photo du soir : celle de la recette, sinon une photo d'illustration du plat nommé.
+            j["photo"] = j["recette_soir"]["photo"] if j["recette_soir"] else (
+                _photo(illus[_ascii(j["soir_nom"])], cache) if _ascii(j["soir_nom"]) in illus else "")
 
     PHOTOS_CACHE.write_text(json.dumps(cache, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
 

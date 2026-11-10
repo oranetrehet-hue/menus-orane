@@ -4,7 +4,7 @@
 {% block content %}
 <header class="tete">
   <div class="tete-textes">
-    <p class="surtitre">Vos pépites · {{ favoris|length }} recette{{ "s" if favoris|length > 1 }}</p>
+    <p class="date-du-jour">{{ favoris|length }} recette{{ "s" if favoris|length > 1 }} adorée{{ "s" if favoris|length > 1 }}</p>
     <h1 class="titre-ecran">Favoris</h1>
   </div>
 </header>
@@ -18,29 +18,25 @@
 
 <div class="liste-favoris">
   {% for f in favoris %}
-  <article class="carte favori" data-tags="{{ f.tags|join('|') }}" data-retour data-recette="{{ f.nom }}" data-semaine="favoris">
+  <article class="favori" data-tags="{{ f.tags|join('|') }}" data-retour data-recette="{{ f.nom }}" data-semaine="favoris">
     {% if f.photo %}
     <img class="vignette" src="{{ f.photo }}" alt="" loading="lazy" referrerpolicy="no-referrer">
     {% else %}
-    <div class="vignette photo-vide"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.6"></circle><path d="M21 16l-5-5-8 8"></path></svg></div>
+    <span class="vignette tuile-sans-photo" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M7 3v8a2 2 0 0 0 2 2v8M5 3v6M9 3v6M17 21V3c-2 1.5-3 4-3 7s1 4 3 4"></path></svg></span>
     {% endif %}
     <div class="favori-textes">
-      <div class="favori-ligne1">
-        <span class="puce-source">{{ f.source_label }}</span>
-        {% if f.temps %}<span class="petit discret">{{ f.temps }}</span>{% endif %}
-      </div>
       {% if f.source_url %}
       <a class="favori-nom" href="{{ f.source_url }}" target="_blank" rel="noopener">{{ f.nom }}</a>
       {% else %}
       <span class="favori-nom">{{ f.nom }}</span>
       {% endif %}
-      {% if f.date_txt %}<span class="petit discret">Dernière fois : {{ f.date_txt }}</span>{% endif %}
+      <span class="meta">{{ f.meta }}{% if f.date_txt %} · fait le {{ f.date_txt }}{% endif %}</span>
       <button type="button" class="lien-action" data-proposer>À refaire bientôt</button>
       <p class="retour-msg" data-retour-msg role="status"></p>
     </div>
   </article>
   {% else %}
-  <p class="vide">Pas encore de favori : touche ♡ sur une recette que vous avez adorée.</p>
+  <p class="vide">Pas encore de favori : touche le cœur sur une recette que vous avez adorée.</p>
   {% endfor %}
 </div>
 {% endblock %}

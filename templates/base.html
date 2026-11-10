@@ -27,10 +27,27 @@
     <a href="{{ root }}index.html"{% if page == 'semaine' %} aria-current="page"{% endif %}>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="3"></rect><path d="M4 10h16M9 3v4M15 3v4"></path></svg>Semaine</a>
     <a href="{{ root }}courses.html"{% if page == 'courses' %} aria-current="page"{% endif %}>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 7h14l-1.5 11a2 2 0 0 1-2 1.7h-7a2 2 0 0 1-2-1.7z"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg>Courses</a>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"></circle><circle cx="18" cy="20" r="1.4"></circle><path d="M2 3h3l2.4 11.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.5L21 7H6"></path></svg>Drive</a>
     <a href="{{ root }}favoris.html"{% if page == 'favoris' %} aria-current="page"{% endif %}>
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg>Favoris</a>
   </nav>
+
+  {% if page in ("semaine", "favoris") %}
+  <button type="button" class="ajout-rapide" data-ajout-rapide aria-label="Ajouter un article au prochain drive">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>Au drive
+  </button>
+  <div class="voile" data-feuille-voile hidden></div>
+  <div class="feuille" data-feuille role="dialog" aria-modal="true" aria-labelledby="feuille-titre" hidden>
+    <p class="feuille-titre" id="feuille-titre">Ajouter au prochain drive</p>
+    <form class="boite-ajout" data-feuille-form>
+      <label for="feuille-texte" class="sr-only">Article</label>
+      <input id="feuille-texte" type="text" maxlength="120" placeholder="Essuie-tout, piles…" autocomplete="off" enterkeyhint="done">
+      <button type="submit" class="bouton-principal">Ajouter</button>
+    </form>
+    <p class="meta" data-feuille-msg role="status"></p>
+    <button type="button" class="bouton-secondaire" data-feuille-fermer>Terminé</button>
+  </div>
+  {% endif %}
   {% endblock %}
 
   <script src="{{ root }}app.js?v={{ version }}"></script>

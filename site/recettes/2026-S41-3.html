@@ -14,13 +14,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="../styles.css?v=202611101437">
+  <link rel="stylesheet" href="../styles.css?v=202611101457">
 </head>
 <body class="page-recette">
   <main class="ecran">
 <div class="page-recette" data-retour data-recette="Nouilles de riz sautées, poulet &amp; légumes miel-soja" data-semaine="2026-S41">
   <div class="barre-haut">
-    <a href="../index.html" class="bouton-rond" aria-label="Retour à la semaine">
+    <a href="../index.html" class="bouton-rond" aria-label="Retour">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>
     </a>
     <button type="button" class="bouton-rond coeur" data-retour-fav aria-pressed="false" aria-label="On a adoré">
@@ -31,12 +31,8 @@
   <img class="photo-recette" src="https://img.hellofresh.com/hellofresh_s3/image/HF_Y24_R232_W46_FR_QFR27739-1_MAIN_R_high-13d42af1.jpg" alt="" referrerpolicy="no-referrer">
 
   <div class="recette-tete">
-    <a class="source" href="https://www.hellofresh.fr/recipes/dinde-sauce-miel-gingembre-665994265a85f96229972d1e" target="_blank" rel="noopener">HelloFresh
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"></path></svg></a>
     <h1 class="titre-recette">Nouilles de riz sautées, poulet &amp; légumes miel-soja</h1>
-    <div class="puces">
-<span class="puce puce-contour">15 min</span>      <span class="puce puce-contour">4 portions</span>
-<span class="puce puce-accent">dimanche 4 soir + lundi midi</span>    </div>
+    <p class="meta">HelloFresh · 15 min · 4 portions</p>
   </div>
 
   <div class="segments" role="tablist" aria-label="Recette">
@@ -48,7 +44,7 @@
       <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S41-3.html-1"><span>400 g nouilles de riz Wei Ming</span></label>
       <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S41-3.html-2"><span>½ barquette filets de poulet Auchan (1 seule barquette de 670 g pour les 2 plats)</span></label>
       <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S41-3.html-3"><span>1 sachet légumes pour wok surgelés (750 g)</span></label>
-      <p class="note"><em>Stock à vérifier : miel, sauce soja, gingembre moulu (optionnel), ail</em></p>
+      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S41-3.html-4"><span>Stock à vérifier</span></label>
   </section>
 
   <section class="carte etapes" id="panneau-etapes" role="tabpanel" aria-labelledby="onglet-etapes" data-panneau="etapes" hidden>
@@ -58,24 +54,24 @@
 
 
 
+  <a class="lien-texte" href="https://www.hellofresh.fr/recipes/dinde-sauce-miel-gingembre-665994265a85f96229972d1e" target="_blank" rel="noopener">Voir la recette d'origine sur HelloFresh</a>
+
   <form class="retour-form" data-retour-form hidden>
     <label for="remarque">Ta remarque sur cette recette</label>
-    <textarea id="remarque" maxlength="1000" rows="3" placeholder="Ex. : pas assez de riz, trop épicé pour Ludo…"></textarea>
+    <textarea id="remarque" maxlength="1000" rows="3" placeholder="Pas assez de riz, trop épicé pour Ludo…"></textarea>
     <button type="submit" class="bouton-principal">Envoyer à Claude</button>
   </form>
   <p class="retour-msg" data-retour-msg role="status"></p>
 
   <div class="barre-actions">
-    <button type="button" class="bouton-secondaire" data-retour-ouvrir>
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"></path></svg>Une remarque</button>
-    <button type="button" class="bouton-sombre" data-mode-cuisine aria-pressed="false">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>Mode cuisine</button>
+    <button type="button" class="bouton-secondaire" data-retour-ouvrir>Une remarque</button>
+    <button type="button" class="bouton-sombre" data-mode-cuisine aria-pressed="false">Mode cuisine</button>
   </div>
 </div>
   </main>
 
 
-  <script src="../app.js?v=202611101437"></script>
-  <script src="../boite.js?v=202611101437"></script>
+  <script src="../app.js?v=202611101457"></script>
+  <script src="../boite.js?v=202611101457"></script>
 </body>
 </html>

@@ -71,6 +71,17 @@ def main() -> None:
     elif args[0] == "vider-achats":
         appel("DELETE", "/api/achats")
         print("Liste à penser vidée.")
+    elif args[0] == "avatar" and len(args) == 3 and args[1] in ("O", "L"):
+        import base64
+        import io
+
+        from PIL import Image, ImageOps
+
+        im = ImageOps.fit(ImageOps.exif_transpose(Image.open(args[2])).convert("RGB"), (192, 192))
+        tampon = io.BytesIO()
+        im.save(tampon, "JPEG", quality=85)
+        appel("POST", f"/api/avatars/{args[1]}", {"mime": "image/jpeg", "data": base64.b64encode(tampon.getvalue()).decode()})
+        print(f"Photo {args[1]} envoyée ({len(tampon.getvalue()) // 1024} Ko).")
     elif args[0] == "traite" and len(args) == 2:
         appel("DELETE", f"/api/retours/{int(args[1])}")
         print(f"Retour {args[1]} marqué pris en compte.")

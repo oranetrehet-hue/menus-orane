@@ -16,6 +16,13 @@ CREATE TABLE IF NOT EXISTS coches (
   PRIMARY KEY (semaine, item)
 );
 
+-- Photos d'Orane (O) et de Ludo (L), en base64, servies seulement avec le code.
+CREATE TABLE IF NOT EXISTS avatars (
+  qui TEXT PRIMARY KEY,
+  mime TEXT NOT NULL,
+  data TEXT NOT NULL
+);
+
 -- Retours sur les recettes : ♡ (favori), « à refaire bientôt » (proposer) ou remarque libre. Claude les marque traités une fois pris en compte.
 CREATE TABLE IF NOT EXISTS retours (
   id INTEGER PRIMARY KEY AUTOINCREMENT,

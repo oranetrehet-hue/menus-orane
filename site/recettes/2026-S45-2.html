@@ -14,13 +14,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="../styles.css?v=202611101437">
+  <link rel="stylesheet" href="../styles.css?v=202611101457">
 </head>
 <body class="page-recette">
   <main class="ecran">
 <div class="page-recette" data-retour data-recette="Poulet crème-moutarde &amp; champignons, riz" data-semaine="2026-S45">
   <div class="barre-haut">
-    <a href="../index.html" class="bouton-rond" aria-label="Retour à la semaine">
+    <a href="../index.html" class="bouton-rond" aria-label="Retour">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>
     </a>
     <button type="button" class="bouton-rond coeur" data-retour-fav aria-pressed="false" aria-label="On a adoré">
@@ -28,16 +28,11 @@
     </button>
   </div>
 
-  <div class="photo-recette photo-vide">
-    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="9" cy="10" r="1.6"></circle><path d="M21 16l-5-5-8 8"></path></svg>Photo du plat
-  </div>
+  <img class="photo-recette" src="https://static.jow.fr/1200x630/recipes/F30qi7ocDCcY6A.jpg" alt="" referrerpolicy="no-referrer">
 
   <div class="recette-tete">
-    <span class="source">Recette maison</span>
     <h1 class="titre-recette">Poulet crème-moutarde &amp; champignons, riz</h1>
-    <div class="puces">
-<span class="puce puce-contour">20 min</span>      <span class="puce puce-contour">4 portions</span>
-<span class="puce puce-accent">lundi 2 soir + mardi midi</span>    </div>
+    <p class="meta">Recette maison · 20 min · 4 portions</p>
   </div>
 
   <div class="segments" role="tablist" aria-label="Recette">
@@ -49,8 +44,9 @@
       <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S45-2.html-1"><span>~600 g filets de poulet frais</span></label>
       <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S45-2.html-2"><span>1 sachet champignons émincés surgelés</span></label>
       <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S45-2.html-3"><span>1 crème fraîche épaisse 20 cl</span></label>
-      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S45-2.html-4"><span>1 pot de moutarde à l'ancienne</span></label>
-      <p class="note"><em>Riz et oignons : voir Commun</em></p>
+      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S45-2.html-4"><span>1 pot de moutarde à l&#39;ancienne</span></label>
+      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S45-2.html-5"><span>Riz</span></label>
+      <label class="ligne-case"><input type="checkbox" data-ingredient="2026-S45-2.html-6"><span>Oignons</span></label>
   </section>
 
   <section class="carte etapes" id="panneau-etapes" role="tabpanel" aria-labelledby="onglet-etapes" data-panneau="etapes" hidden>
@@ -60,28 +56,29 @@
 
 
   <div class="astuce">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"></path></svg>
-    <div class="astuce-textes"><span class="astuce-quand">À anticiper · lundi matin, 2 min</span><span>poulet en lanières + moutarde + filet d&#39;huile au frigo.</span></div>
+    <div class="astuce-textes">
+      <span class="astuce-titre">À anticiper · lundi matin, 2 min</span>
+      <span>poulet en lanières + moutarde + filet d&#39;huile au frigo.</span>
+    </div>
   </div>
+
 
   <form class="retour-form" data-retour-form hidden>
     <label for="remarque">Ta remarque sur cette recette</label>
-    <textarea id="remarque" maxlength="1000" rows="3" placeholder="Ex. : pas assez de riz, trop épicé pour Ludo…"></textarea>
+    <textarea id="remarque" maxlength="1000" rows="3" placeholder="Pas assez de riz, trop épicé pour Ludo…"></textarea>
     <button type="submit" class="bouton-principal">Envoyer à Claude</button>
   </form>
   <p class="retour-msg" data-retour-msg role="status"></p>
 
   <div class="barre-actions">
-    <button type="button" class="bouton-secondaire" data-retour-ouvrir>
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"></path></svg>Une remarque</button>
-    <button type="button" class="bouton-sombre" data-mode-cuisine aria-pressed="false">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>Mode cuisine</button>
+    <button type="button" class="bouton-secondaire" data-retour-ouvrir>Une remarque</button>
+    <button type="button" class="bouton-sombre" data-mode-cuisine aria-pressed="false">Mode cuisine</button>
   </div>
 </div>
   </main>
 
 
-  <script src="../app.js?v=202611101437"></script>
-  <script src="../boite.js?v=202611101437"></script>
+  <script src="../app.js?v=202611101457"></script>
+  <script src="../boite.js?v=202611101457"></script>
 </body>
 </html>

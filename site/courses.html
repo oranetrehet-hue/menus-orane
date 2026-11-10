@@ -7,197 +7,87 @@
   <meta name="color-scheme" content="light">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <title>Courses – Menus</title>
+  <title>Drive – Menus</title>
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Inter:wght@400;500;600;700&display=swap">
-  <link rel="stylesheet" href="styles.css?v=202611101437">
+  <link rel="stylesheet" href="styles.css?v=202611101457">
 </head>
 <body class="page-courses">
   <main class="ecran">
 <header class="tete">
   <div class="tete-textes">
-    <p class="surtitre">Semaine 46 · drive jeudi 12</p>
-    <h1 class="titre-ecran">Courses</h1>
+    <p class="date-du-jour">Chronodrive Pessac</p>
+    <h1 class="titre-ecran">Prochain drive</h1>
   </div>
 </header>
 
-<div class="carte progression" data-courses data-semaine="2026-S46">
-  <div class="progression-tete">
-    <span data-progression>0 article rangé</span>
-    <span class="synchro" data-synchro hidden>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 12l4 4 10-10"></path></svg>Synchro avec Ludo</span>
-  </div>
-  <div class="jauge"><div class="jauge-plein" data-jauge></div></div>
-  <p class="petit discret" data-courses-msg hidden></p>
-</div>
-
-<section class="groupe">
-  <h2 class="groupe-titre">Gnocchis carbo (jeudi midi)</h2>
-  <div class="carte liste">
-<p class="note"><em>Rien à acheter : gnocchis, lardons, crème, parmesan, oignons à la maison.</em></p>  </div>
-</section>
-<section class="groupe">
-  <h2 class="groupe-titre">Poulet curry rouge (vendredi)</h2>
-  <div class="carte liste">
-    <label class="ligne-case">
-      <input type="checkbox" data-cle="poulet-curry-rouge-vendredi--600-g-filets-de-poulet-frais">
-      <span class="ligne-texte">~600 g filets de poulet frais</span>
-      <span class="qui" data-qui hidden></span>
-    </label>
-    <label class="ligne-case">
-      <input type="checkbox" data-cle="poulet-curry-rouge-vendredi--40-cl-de-lait-de-coco-pour-cuisiner">
-      <span class="ligne-texte">40 cl de lait de coco pour cuisiner</span>
-      <span class="qui" data-qui hidden></span>
-    </label>
-<p class="note"><em>Riz et haricots verts surgelés : stock. Pâte de curry rouge : stock à vérifier (pot Real Thai du 20/10). Citron : voir Commun</em></p>  </div>
-</section>
-<section class="groupe">
-  <h2 class="groupe-titre">Risotto poireaux jambon (samedi)</h2>
-  <div class="carte liste">
-    <label class="ligne-case">
-      <input type="checkbox" data-cle="risotto-poireaux-jambon-samedi--1-paquet-riz-arborio-500-g">
-      <span class="ligne-texte">1 paquet riz arborio (500 g)</span>
-      <span class="qui" data-qui hidden></span>
-    </label>
-    <label class="ligne-case">
-      <input type="checkbox" data-cle="risotto-poireaux-jambon-samedi--1-paquet-jambon-blanc-sans-nitrite-4-tranches">
-      <span class="ligne-texte">1 paquet jambon blanc sans nitrite (4 tranches)</span>
-      <span class="qui" data-qui hidden></span>
-    </label>
-<p class="note"><em>Poireaux surgelés et parmesan : stock. Bouillon cube : stock à vérifier. Beurre : voir au fil de l'eau</em></p>  </div>
-</section>
-<section class="groupe">
-  <h2 class="groupe-titre">Penne courgettes chèvre thon (dimanche)</h2>
-  <div class="carte liste">
-    <label class="ligne-case">
-      <input type="checkbox" data-cle="penne-courgettes-chevre-thon-dimanche--280-g-de-thon-au-naturel">
-      <span class="ligne-texte">280 g de thon au naturel</span>
-      <span class="qui" data-qui hidden></span>
-    </label>
-<p class="note"><em>Pâtes, courgettes surgelées, chèvre (reste de la salade de chèvre chaud annulée), ail : stock</em></p>  </div>
-</section>
-<section class="groupe">
-  <h2 class="groupe-titre">Nouilles cacahuète poulet (lundi)</h2>
-  <div class="carte liste">
-    <label class="ligne-case">
-      <input type="checkbox" data-cle="nouilles-cacahuete-poulet-lundi--600-g-filets-de-poulet-frais">
-      <span class="ligne-texte">~600 g filets de poulet frais</span>
-      <span class="qui" data-qui hidden></span>
-    </label>
-    <label class="ligne-case">
-      <input type="checkbox" data-cle="nouilles-cacahuete-poulet-lundi--1-paquet-nouilles-de-riz">
-      <span class="ligne-texte">1 paquet nouilles de riz</span>
-      <span class="qui" data-qui hidden></span>
-    </label>
-<p class="note"><em>Légumes wok surgelés et carottes : stock. Beurre de cacahuète : voir Energy balls. Sauce soja : stock à vérifier. Citron : voir Commun</em></p>  </div>
-</section>
-<section class="groupe">
-  <h2 class="groupe-titre">Bowl quinoa (mardi)</h2>
-  <div class="carte liste">
-    <label class="ligne-case">
-      <input type="checkbox" data-cle="bowl-quinoa-mardi--1-paquet-quinoa-500-g">
-      <span class="ligne-texte">1 paquet quinoa (500 g)</span>
-      <span class="qui" data-qui hidden></span>
-    </label>
-    <label class="ligne-case">
-      <input type="checkbox" data-cle="bowl-quinoa-mardi--1-feta-200-g">
-      <span class="ligne-texte">1 feta (200 g)</span>
-      <span class="qui" data-qui hidden></span>
-    </label>
-    <label class="ligne-case">
-      <input type="checkbox" data-cle="bowl-quinoa-mardi--1-pack-yaourts-a-la-grecque-nature-4-150-g-2-pou">
-      <span class="ligne-texte">1 pack yaourts à la grecque nature (4 × 150 g, 2 pour la sauce)</span>
-      <span class="qui" data-qui hidden></span>
-    </label>
-<p class="note"><em>Poivrons et courgettes surgelés, carottes restantes, paprika, cumin, ail : stock. Citron : voir Commun</em></p>  </div>
-</section>
-<section class="groupe">
-  <h2 class="groupe-titre">Commun</h2>
-  <div class="carte liste">
-    <label class="ligne-case">
-      <input type="checkbox" data-cle="commun--2-citrons">
-      <span class="ligne-texte">2 citrons</span>
-      <span class="qui" data-qui hidden></span>
-    </label>
-<p class="note"><em>Parmesan (2 sachets) et oignons surgelés : stock</em></p>  </div>
-</section>
-<section class="groupe">
-  <h2 class="groupe-titre">Energy balls (en-cas sport)</h2>
-  <div class="carte liste">
-    <label class="ligne-case">
-      <input type="checkbox" data-cle="energy-balls-en-cas-sport--250-g-dattes-moelleuses">
-      <span class="ligne-texte">250 g dattes moelleuses</span>
-      <span class="qui" data-qui hidden></span>
-    </label>
-    <label class="ligne-case">
-      <input type="checkbox" data-cle="energy-balls-en-cas-sport--500-g-flocons-d-avoine">
-      <span class="ligne-texte">500 g flocons d'avoine</span>
-      <span class="qui" data-qui hidden></span>
-    </label>
-    <label class="ligne-case">
-      <input type="checkbox" data-cle="energy-balls-en-cas-sport--1-pot-beurre-de-cacahuete-sert-aussi-pour-les-no">
-      <span class="ligne-texte">1 pot beurre de cacahuète (sert aussi pour les nouilles)</span>
-      <span class="qui" data-qui hidden></span>
-    </label>
-<p class="note"><em>Pas de cacao (pas besoin)</em></p>  </div>
-</section>
-<section class="groupe">
-  <h2 class="groupe-titre">Produits notés au fil de l&#39;eau</h2>
-  <div class="carte liste">
-    <label class="ligne-case">
-      <input type="checkbox" data-cle="produits-notes-au-fil-de-l-eau--3-boisson-vegetale-coco-alpro">
-      <span class="ligne-texte">3 × boisson végétale coco Alpro</span>
-      <span class="qui" data-qui hidden></span>
-    </label>
-    <label class="ligne-case">
-      <input type="checkbox" data-cle="produits-notes-au-fil-de-l-eau--1-beurre-demi-sel-grand-format">
-      <span class="ligne-texte">1 beurre demi-sel grand format</span>
-      <span class="qui" data-qui hidden></span>
-    </label>
-  </div>
+<section class="carte boite" data-boite>
+  <form class="boite-ajout" data-boite-ajout hidden>
+    <label for="boite-texte" class="sr-only">Article à ajouter</label>
+    <input id="boite-texte" type="text" maxlength="120" placeholder="Essuie-tout, piles…" autocomplete="off" enterkeyhint="done">
+    <button type="submit" class="bouton-principal">Ajouter</button>
+  </form>
+  <ul class="boite-liste" data-boite-liste></ul>
+  <form class="boite-code" data-code-form hidden>
+    <p class="boite-code-titre">À faire une seule fois sur ce téléphone</p>
+    <label for="boite-code">Code de la maison</label>
+    <input id="boite-code" type="text" autocomplete="off" autocapitalize="none" spellcheck="false">
+    <button type="submit" class="bouton-principal">Valider</button>
+  </form>
+  <p class="meta" data-boite-msg role="status"></p>
 </section>
 
-<section class="groupe" id="a-penser">
-  <h2 class="groupe-titre">À penser pour le prochain drive</h2>
-  <div class="carte boite" data-boite>
-    <form class="boite-ajout" data-boite-ajout hidden>
-      <label for="boite-texte" class="sr-only">Article à ajouter</label>
-      <input id="boite-texte" type="text" maxlength="120" placeholder="Essuie-tout, piles…" autocomplete="off">
-      <button type="submit" class="bouton-ajouter" aria-label="Ajouter">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
-      </button>
-    </form>
-    <ul class="boite-liste" data-boite-liste></ul>
-    <form class="boite-code" data-code-form hidden>
-      <p class="boite-code-titre">Une seule fois sur ce téléphone :</p>
-      <label for="boite-code">Code de la maison</label>
-      <input id="boite-code" type="text" autocomplete="off" autocapitalize="none" spellcheck="false">
-      <fieldset class="qui-choix">
-        <legend>Je suis</legend>
-        <label><input type="radio" name="qui" value="O" checked> Orane</label>
-        <label><input type="radio" name="qui" value="L"> Ludo</label>
-      </fieldset>
-      <button type="submit" class="bouton-principal">Valider</button>
-    </form>
-    <p class="boite-msg" data-boite-msg role="status"></p>
+<details class="carte commande">
+  <summary>
+    <span>Commandé pour cette semaine<span class="meta"> · drive jeudi 12</span></span>
+    <span class="bascule" aria-hidden="true"></span>
+  </summary>
+  <div class="commande-groupe">
+    <h2 class="groupe-titre">Poulet curry rouge (vendredi)</h2>
+    <ul><li>~600 g filets de poulet frais</li><li>40 cl de lait de coco pour cuisiner</li></ul>
   </div>
-</section>
+  <div class="commande-groupe">
+    <h2 class="groupe-titre">Risotto poireaux jambon (samedi)</h2>
+    <ul><li>1 paquet riz arborio (500 g)</li><li>1 paquet jambon blanc sans nitrite (4 tranches)</li></ul>
+  </div>
+  <div class="commande-groupe">
+    <h2 class="groupe-titre">Penne courgettes chèvre thon (dimanche)</h2>
+    <ul><li>280 g de thon au naturel</li></ul>
+  </div>
+  <div class="commande-groupe">
+    <h2 class="groupe-titre">Nouilles cacahuète poulet (lundi)</h2>
+    <ul><li>~600 g filets de poulet frais</li><li>1 paquet nouilles de riz</li><li>1 pot beurre de cacahuète</li></ul>
+  </div>
+  <div class="commande-groupe">
+    <h2 class="groupe-titre">Bowl quinoa (mardi)</h2>
+    <ul><li>1 paquet quinoa (500 g)</li><li>1 feta (200 g)</li><li>1 pack yaourts à la grecque nature (4 × 150 g, 2 pour la sauce)</li></ul>
+  </div>
+  <div class="commande-groupe">
+    <h2 class="groupe-titre">Commun</h2>
+    <ul><li>2 citrons</li></ul>
+  </div>
+  <div class="commande-groupe">
+    <h2 class="groupe-titre">Produits notés au fil de l&#39;eau</h2>
+    <ul><li>3 × boisson végétale coco Alpro</li><li>1 beurre demi-sel grand format</li></ul>
+  </div>
+</details>
   </main>
 
   <nav class="onglets" aria-label="Navigation">
     <a href="index.html">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="3"></rect><path d="M4 10h16M9 3v4M15 3v4"></path></svg>Semaine</a>
     <a href="courses.html" aria-current="page">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 7h14l-1.5 11a2 2 0 0 1-2 1.7h-7a2 2 0 0 1-2-1.7z"></path><path d="M9 7a3 3 0 0 1 6 0"></path></svg>Courses</a>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.4"></circle><circle cx="18" cy="20" r="1.4"></circle><path d="M2 3h3l2.4 11.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.5L21 7H6"></path></svg>Drive</a>
     <a href="favoris.html">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"></path></svg>Favoris</a>
   </nav>
 
-  <script src="app.js?v=202611101437"></script>
-  <script src="boite.js?v=202611101437"></script>
+
+  <script src="app.js?v=202611101457"></script>
+  <script src="boite.js?v=202611101457"></script>
 </body>
 </html>

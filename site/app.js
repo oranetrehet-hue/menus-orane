@@ -42,14 +42,22 @@
     jours.forEach(function (j) { j.hidden = j !== choix; });
     var h1 = document.querySelector("[data-titre-jour]");
     if (h1) h1.textContent = titre;
-    var surtitre = document.querySelector("[data-aujourdhui]");
-    if (surtitre) {
+    var dateDuJour = document.querySelector("[data-aujourdhui]");
+    if (dateDuJour) {
       var jour = JOURS[maintenant.getDay()];
-      surtitre.textContent = jour.charAt(0).toUpperCase() + jour.slice(1) + " " + maintenant.getDate() + " " +
-        MOIS[maintenant.getMonth()] + " · Semaine " + surtitre.getAttribute("data-semaine-num");
+      dateDuJour.textContent = jour.charAt(0).toUpperCase() + jour.slice(1) + " " + maintenant.getDate() + " " + MOIS[maintenant.getMonth()];
     }
-    var ligne = document.querySelector('[data-ligne-jour="' + aujourdhui + '"]');
-    if (ligne) ligne.classList.add("aujourdhui");
+    // La semaine en photos : « Aujourd'hui » sur le bon jour, les jours passés en retrait.
+    document.querySelectorAll("[data-tuile-jour]").forEach(function (t) {
+      var iso = t.getAttribute("data-tuile-jour");
+      if (iso === aujourdhui) {
+        t.classList.add("aujourdhui");
+        var label = t.querySelector("[data-jour-label]");
+        if (label) label.textContent = "Aujourd'hui";
+      } else if (iso && iso < aujourdhui) {
+        t.classList.add("passe");
+      }
+    });
   }
 
   /* ---------- Cases mémorisées sur ce téléphone ---------- */
