@@ -1,6 +1,6 @@
 """icone.py — dessine l'icône de l'appli : « miam » crème sur fond tomate, avec un peu de vapeur.
 
-  python tools/icone.py   # écrit static/icon-512.png, icon-192.png, icon-180.png (iPhone)
+  python tools/icone.py   # écrit static/miam-512.png, miam-192.png, miam-180.png (iPhone)
 
 Police : Cooper Black (installée avec Office sur l'ordinateur d'Orane).
 """
@@ -50,7 +50,7 @@ def dessiner(taille: int = 1024) -> Image.Image:
 
 def main() -> None:
     grand = dessiner(1024)
-    for nom, cote in (("icon-512.png", 512), ("icon-192.png", 192), ("icon-180.png", 180)):
+    for nom, cote in (("miam-512.png", 512), ("miam-192.png", 192), ("miam-180.png", 180)):
         grand.resize((cote, cote), Image.LANCZOS).save(STATIC / nom, optimize=True)
         print(f"{nom} ({cote} px)")
 
