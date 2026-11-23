@@ -75,6 +75,10 @@
   "essai": "2026-11-10",
   "img": "https://static.jow.fr/1200x630/recipes/AKC28yUqC0EAIQ.jpg"
  },
+ "https://jow.fr/recipes/pates-au-poulet-et-chorizo-a-la-creme-8pueasx96gsw8yr516nh": {
+  "essai": "2026-11-23",
+  "img": "https://static.jow.fr/1200x630/recipes/Z4S9mj9QXU7y7w.jpg"
+ },
  "https://jow.fr/recipes/pates-aux-courgettes-et-chevre-frais-8nxaf7ledk3nczqo01wf": {
   "essai": "2026-11-10",
   "img": "https://static.jow.fr/1200x630/recipes/qVdnuqqBZGk1Fw.jpg"
@@ -86,6 +90,14 @@
  "https://jow.fr/recipes/ravioles-a-la-toscane-8ekx43augkyoka5t0v68": {
   "essai": "2026-11-10",
   "img": "https://static.jow.fr/1200x630/recipes/SQiYvIFirgqd6Q.jpg"
+ },
+ "https://jow.fr/recipes/spaghetti-alla-bolognese-express-8brzbxsb20wygkm60m13": {
+  "essai": "2026-11-23",
+  "img": "https://static.jow.fr/1200x630/patterns/kale-04-202309.png_merge_recipes/wDtLu899cJiwYw.png.jpg"
+ },
+ "https://jow.fr/recipes/steak-hache-pommes-grenaille-et-salade-976wbvd30w5ih5j11ebl": {
+  "essai": "2026-11-23",
+  "img": "https://static.jow.fr/1200x630/recipes/sSN496NokKTiXw.jpg"
  },
  "https://jow.fr/recipes/tartiflette-express-7wp5ckwt2dxs043u07v3": {
   "essai": "2026-11-10",
@@ -112,11 +124,11 @@
   "img": "https://img.hellofresh.com/hellofresh_s3/image/HelloFresh_Y22_R221_W22_FR_PFR29804623-1_Main_high-f44ddc6d.jpg"
  },
  "https://www.quitoque.fr/recettes/poulet-caramelise-au-miel-et-poireaux": {
-  "essai": "2026-11-10",
+  "essai": "2026-11-23",
   "img": ""
  },
  "https://www.quitoque.fr/recettes/salade-de-feta-pois-chiches-rotis-et-courgette-marinee": {
-  "essai": "2026-11-10",
+  "essai": "2026-11-23",
   "img": ""
  }
 }
