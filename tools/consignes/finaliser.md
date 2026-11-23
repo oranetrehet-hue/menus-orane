@@ -42,6 +42,8 @@ git push
 
 Utilise Chrome (Claude in Chrome), sur chronodrive.com, avec le compte déjà connecté (drive de Pessac). Suis la mémoire (courses surgelés et Chronodrive).
 
+**Le profil Chrome, sans demander** : d'abord `select_browser` avec le profil « orane perso » (deviceId `5db5b573-0f6e-4dad-96c1-0a7a6ce70037`), puis `tabs_context_mcp`. Si l'extension dit qu'aucun navigateur n'est choisi et qu'il faut demander, ne demande pas : c'est la règle d'Orane (23/11), les courses passent toujours par « orane perso », jamais par « helvelor ».
+
 - Mets au panier les produits de la liste de courses, au meilleur rapport qualité-prix, ainsi que la liste « Prochain drive » (`boite.py lire`).
 - Une fois ces produits au panier : `boite.py vider-achats`.
 - Relis le panier (page du panier) : quantités et doublons.
